@@ -1,9 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routers/authRoutes");
-
+const expenseRoutes = require("./routers/expenseRoutes");
 const app = express();
-
+const analyticsRoutes = require("./routers/analyticsRoutes");
 // Middleware to parse JSON bodies
 app.use(express.json());
 
@@ -18,10 +18,10 @@ mongoose.connect(MONGO_URI)
   .catch((err) => {
     console.error("Connection error:", err);
   });
-
+app.use("/api/analytics", analyticsRoutes);
 // Mount Routes
 app.use("/api/auth", authRoutes);
-
+app.use("/api/expenses", expenseRoutes);
 const transactionRoutes = require("./routers/transactionRoutes");
 app.use("/api/transactions", transactionRoutes);
 // Start the server
@@ -30,5 +30,3 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-const analyticsRoutes = require("./routers/analyticsRoutes");
-app.use("/api/analytics", analyticsRoutes);
