@@ -5,7 +5,6 @@ const registerUser = async (req, res) => {
     try {
         const { surname, firstname, name, email, password } = req.body;
 
-        // Automatically joins Surname and First Name together
         const fullName = name || (surname && firstname ? `${surname}, ${firstname}` : '');
 
         if (!fullName || !email || !password) {
