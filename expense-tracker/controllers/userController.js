@@ -7,7 +7,7 @@ const registerUser = async (req, res) => {
 
         const fullName = `${surname || ''} ${firstname || ''}`.trim();
 
-        if (!surname || !firstname || !email || !password) {
+        if (!fullName || !email || !password) {
             return res.status(400).json({
                 message: "Please fill in all fields"
             });
