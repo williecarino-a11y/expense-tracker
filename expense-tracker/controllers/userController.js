@@ -3,10 +3,11 @@ const bcrypt = require("bcryptjs");
 
 const registerUser = async (req, res) => {
     try {
-        const { surname, firstname, name, email, password } = req.body;
-const fullName = name || (surname && firstname ? `${surname}, ${firstname}` : '');
-        
-        if (!fullName || !email || !password) {
+        const { surname, firstname, email, password } = req.body;
+
+        const fullName = `${surname || ''} ${firstname || ''}`.trim();
+
+        if (!surname || !firstname || !email || !password) {
             return res.status(400).json({
                 message: "Please fill in all fields"
             });
