@@ -19,16 +19,20 @@ mongoose.connect(MONGO_URI)
     console.error("Connection error:", err);
   });
 
-// Mount Routes
+const analyticsRoutes = require("./routers/analyticsRoutes");// Mount Routes
 app.use("/api/auth", authRoutes);
-
+app.use("/api/analytics", analyticsRoutes);
 const transactionRoutes = require("./routers/transactionRoutes");
 app.use("/api/transactions", transactionRoutes);
+// Homepage route to fix "Cannot GET /"
+app.get("/", (req, res) => {
+  res.send("Expense Tracker API is running successfully!");
+});
 // Start the server
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-const analyticsRoutes = require("./routers/analyticsRoutes");
-app.use("/api/analytics", analyticsRoutes);
+
+
