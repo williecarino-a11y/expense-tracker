@@ -66,6 +66,13 @@
             color: #4f46e5;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
+        .name-row {
+            display: flex;
+            gap: 12px;
+        }
+        .name-row .input-group {
+            flex: 1;
+        }
         .input-group {
             margin-bottom: 16px;
         }
@@ -125,10 +132,16 @@
         </div>
         
         <div id="form-container">
-            <!-- Name Input Field (Only shows during Sign Up) -->
-            <div class="input-group" id="name-group" style="display: none;">
-                <label for="name">Surname, First Name</label>
-                <input type="text" id="name" placeholder="Carino, Willie">
+            <!-- Separate Fields for Surname and First Name (Only shown during Sign Up) -->
+            <div class="name-row" id="name-group" style="display: none;">
+                <div class="input-group">
+                    <label for="surname">Surname</label>
+                    <input type="text" id="surname" placeholder="Carino">
+                </div>
+                <div class="input-group">
+                    <label for="firstname">First Name</label>
+                    <input type="text" id="firstname" placeholder="Willie">
+                </div>
             </div>
 
             <div class="input-group">
@@ -164,26 +177,27 @@
                 isSignup = true;
                 signupTab.classList.add('active');
                 loginTab.classList.remove('active');
-                nameGroup.style.display = 'block'; // Show name field
+                nameGroup.style.display = 'flex'; // Show separated name fields side-by-side
                 submitBtn.textContent = 'Create Account';
                 subtitle.textContent = 'Create your account to get started';
             } else {
                 isSignup = false;
                 loginTab.classList.add('active');
                 signupTab.classList.remove('active');
-                nameGroup.style.display = 'none'; // Hide name field for login
+                nameGroup.style.display = 'none'; // Hide name fields for login
                 submitBtn.textContent = 'Log In';
                 subtitle.textContent = 'Manage your finances seamlessly';
             }
         }
 
         async function handleAuth() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
+            const surname = document.getElementById('surname').value.trim();
+            const firstname = document.getElementById('firstname').value.trim();
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const msg = document.getElementById('response-msg');
 
-            if (!email || !password || (isSignup && !name)) {
+            if (!email || !password || (isSignup && (!surname || !firstname))) {
                 msg.style.color = '#dc2626';
                 msg.textContent = 'Please fill in all required fields.';
                 return;
@@ -193,7 +207,11 @@
             msg.textContent = 'Processing...';
 
             const endpoint = isSignup ? '/api/auth/register' : '/api/auth/login';
-            const payload = isSignup ? { name, email, password } : { email, password };
+            
+            // Automatically formats separate fields into "Surname, First Name" for the backend
+            const payload = isSignup 
+                ? { name: `${surname}, ${firstname}`, email, password } 
+                : { email, password };
 
             try {
                 const res = await fetch(endpoint, {
