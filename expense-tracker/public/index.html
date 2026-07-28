@@ -117,22 +117,30 @@
 
     <div class="card">
         <h2>Expense Tracker</h2>
-        <p class="subtitle">Manage your finances seamlessly</p>
+        <p class="subtitle" id="form-subtitle">Manage your finances seamlessly</p>
         
-        <div class="tab-container">
+        <div class="tab-container" id="main-tabs">
             <button class="tab active" id="login-tab" onclick="switchMode('login')">Log In</button>
             <button class="tab" id="signup-tab" onclick="switchMode('signup')">Sign Up</button>
         </div>
         
         <div id="form-container">
+            <!-- Name Input Field (Only shows during Sign Up) -->
+            <div class="input-group" id="name-group" style="display: none;">
+                <label for="name">Surname, First Name</label>
+                <input type="text" id="name" placeholder="Carino, Willie">
+            </div>
+
             <div class="input-group">
                 <label for="email">Email Address</label>
                 <input type="email" id="email" placeholder="name@example.com">
             </div>
+            
             <div class="input-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" placeholder="••••••••">
             </div>
+            
             <button class="action-btn" id="submit-btn" onclick="handleAuth()">Log In</button>
         </div>
         
@@ -146,6 +154,8 @@
             const loginTab = document.getElementById('login-tab');
             const signupTab = document.getElementById('signup-tab');
             const submitBtn = document.getElementById('submit-btn');
+            const nameGroup = document.getElementById('name-group');
+            const subtitle = document.getElementById('form-subtitle');
             const msg = document.getElementById('response-msg');
             
             msg.textContent = '';
@@ -154,24 +164,28 @@
                 isSignup = true;
                 signupTab.classList.add('active');
                 loginTab.classList.remove('active');
+                nameGroup.style.display = 'block'; // Show name field
                 submitBtn.textContent = 'Create Account';
+                subtitle.textContent = 'Create your account to get started';
             } else {
                 isSignup = false;
                 loginTab.classList.add('active');
                 signupTab.classList.remove('active');
+                nameGroup.style.display = 'none'; // Hide name field for login
                 submitBtn.textContent = 'Log In';
+                subtitle.textContent = 'Manage your finances seamlessly';
             }
         }
 
         async function handleAuth() {
+            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const msg = document.getElementById('response-msg');
-            const name = email ? email.split('@')[0] : '';
 
-            if (!email || !password) {
+            if (!email || !password || (isSignup && !name)) {
                 msg.style.color = '#dc2626';
-                msg.textContent = 'Please fill in all fields.';
+                msg.textContent = 'Please fill in all required fields.';
                 return;
             }
 
@@ -179,7 +193,6 @@
             msg.textContent = 'Processing...';
 
             const endpoint = isSignup ? '/api/auth/register' : '/api/auth/login';
-            
             const payload = isSignup ? { name, email, password } : { email, password };
 
             try {
@@ -196,7 +209,6 @@
                 } else {
                     msg.style.color = '#dc2626';
                     msg.textContent = data.error || data.message || 'Authentication failed.';
-                    
                 }
             } catch (err) {
                 msg.style.color = '#dc2626';
