@@ -195,7 +195,8 @@
                     msg.textContent = isSignup ? 'Success! Account created.' : 'Success! Logged in.';
                 } else {
                     msg.style.color = '#dc2626';
-                    msg.textContent = data.message || 'Authentication failed.';
+                    msg.textContent = data.error || data.message || 'Authentication failed.';
+                    
                 }
             } catch (err) {
                 msg.style.color = '#dc2626';
