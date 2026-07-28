@@ -6,6 +6,8 @@ const app = express();
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static('public'));
 
 // Replace YOUR_PASSWORD_HERE with your actual password
