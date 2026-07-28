@@ -6,6 +6,7 @@ const app = express();
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(express.static('public'));
 
 // Replace YOUR_PASSWORD_HERE with your actual password
 const MONGO_URI = "mongodb+srv://williecarino23_db_user:williecarino070@expense-tracker0.xoeajf4.mongodb.net/?appName=Expense-Tracker0";
