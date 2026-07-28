@@ -3,9 +3,12 @@ const bcrypt = require("bcryptjs");
 
 const registerUser = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { surname, firstname, name, email, password } = req.body;
 
-        if (!name || !email || !password) {
+        // Automatically joins Surname and First Name together
+        const fullName = name || (surname && firstname ? `${surname}, ${firstname}` : '');
+
+        if (!fullName || !email || !password) {
             return res.status(400).json({
                 message: "Please fill in all fields"
             });
@@ -22,7 +25,7 @@ const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({
-            name,
+            name: fullName,
             email,
             password: hashedPassword,
         });
@@ -53,6 +56,7 @@ const loginUser = async (req, res) => {
         }
 
         const user = await User.findOne({ email });
+
         if (!user) {
             return res.status(400).json({
                 message: "Invalid email or password"
@@ -60,6 +64,7 @@ const loginUser = async (req, res) => {
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
+
         if (!isMatch) {
             return res.status(400).json({
                 message: "Invalid email or password"
