@@ -27,7 +27,6 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             width: 100%;
             max-width: 400px;
-            transition: transform 0.3s ease;
         }
         .card h2 {
             font-size: 24px;
@@ -41,6 +40,31 @@
             color: #666;
             text-align: center;
             margin-bottom: 24px;
+        }
+        .tab-container {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            color: #64748b;
+            border: none;
+            background: transparent;
+        }
+        .tab.active {
+            background: #ffffff;
+            color: #4f46e5;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         .input-group {
             margin-bottom: 16px;
@@ -65,7 +89,7 @@
             border-color: #4f46e5;
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
         }
-        button {
+        button.action-btn {
             width: 100%;
             padding: 12px;
             background: #4f46e5;
@@ -78,7 +102,7 @@
             transition: background 0.2s;
             margin-top: 8px;
         }
-        button:hover {
+        button.action-btn:hover {
             background: #4338ca;
         }
         .message {
@@ -95,6 +119,11 @@
         <h2>Expense Tracker</h2>
         <p class="subtitle">Manage your finances seamlessly</p>
         
+        <div class="tab-container">
+            <button class="tab active" id="login-tab" onclick="switchMode('login')">Log In</button>
+            <button class="tab" id="signup-tab" onclick="switchMode('signup')">Sign Up</button>
+        </div>
+        
         <div id="form-container">
             <div class="input-group">
                 <label for="email">Email Address</label>
@@ -104,13 +133,36 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" placeholder="••••••••">
             </div>
-            <button onclick="handleAuth()">Sign Up / Log In</button>
+            <button class="action-btn" id="submit-btn" onclick="handleAuth()">Log In</button>
         </div>
         
         <div class="message" id="response-msg"></div>
     </div>
 
     <script>
+        let isSignup = false;
+
+        function switchMode(mode) {
+            const loginTab = document.getElementById('login-tab');
+            const signupTab = document.getElementById('signup-tab');
+            const submitBtn = document.getElementById('submit-btn');
+            const msg = document.getElementById('response-msg');
+            
+            msg.textContent = '';
+
+            if (mode === 'signup') {
+                isSignup = true;
+                signupTab.classList.add('active');
+                loginTab.classList.remove('active');
+                submitBtn.textContent = 'Create Account';
+            } else {
+                isSignup = false;
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+                submitBtn.textContent = 'Log In';
+            }
+        }
+
         async function handleAuth() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -135,7 +187,7 @@
                 
                 if (res.ok) {
                     msg.style.color = '#16a34a';
-                    msg.textContent = 'Success! Account ready.';
+                    msg.textContent = isSignup ? 'Success! Account created.' : 'Success! Logged in.';
                 } else {
                     msg.style.color = '#dc2626';
                     msg.textContent = data.message || 'Authentication failed.';
