@@ -178,7 +178,8 @@
             msg.style.color = '#4b5563';
             msg.textContent = 'Processing...';
 
-            const endpoint = isSignup ? '/api/users/register' : '/api/users/login';
+            const endpoint = isSignup ? '/api/auth/register' : '/api/auth/login';
+            
             const payload = isSignup ? { name, email, password } : { email, password };
 
             try {
