@@ -6,83 +6,145 @@
     <title>Expense Tracker Dashboard</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
             margin: 0;
             padding: 0;
-            color: #333;
         }
         .top-banner {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
+            background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+            color: #ffffff;
             padding: 18px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
         .top-banner h1 {
             margin: 0;
-            font-size: 22px;
-            letter-spacing: 0.5px;
+            font-size: 20px;
+            font-weight: 600;
         }
         .dashboard-container {
             max-width: 500px;
             margin: 20px auto;
-            padding: 0 15px;
+            padding: 0 15px 80px 15px;
         }
         h2 {
-            color: #2c3e50;
-            margin-top: 0;
-            font-size: 20px;
+            color: #ffffff;
+            font-size: 18px;
             margin-bottom: 15px;
         }
         .card {
-            background: #ffffff;
+            background: #1e1e1e;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
             margin-bottom: 20px;
+            border: 1px solid #2c2c2c;
         }
         .card h3 {
             margin-top: 0;
-            color: #2c3e50;
+            color: #ffffff;
+            font-size: 16px;
         }
         .amount {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
-            color: #27ae60;
+            color: #2ecc71;
             margin: 10px 0 0 0;
         }
         label {
             display: block;
-            margin-top: 10px;
-            font-weight: bold;
-            font-size: 14px;
+            margin-top: 12px;
+            font-weight: 500;
+            font-size: 13px;
+            color: #aaa;
         }
         input, select {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 12px;
+            margin-top: 6px;
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 8px;
             box-sizing: border-box;
+            font-size: 14px;
+        }
+        input:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
         }
         .btn {
             display: block;
             width: 100%;
-            background-color: #007bff;
+            background-color: #3498db;
             color: white;
             padding: 12px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 20px;
+            transition: background 0.2s;
         }
         .btn:hover {
-            background-color: #0056b3;
+            background-color: #2980b9;
+        }
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #3498db;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .fab:hover {
+            background-color: #2980b9;
+        }
+        /* Modal Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            border: 1px solid #333;
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #aaa;
+            cursor: pointer;
         }
         .menu-container {
             position: relative;
@@ -91,18 +153,17 @@
             background: none;
             border: none;
             color: white;
-            font-size: 24px;
+            font-size: 22px;
             cursor: pointer;
-            padding: 0 5px;
         }
         .dropdown-content {
             position: absolute;
             right: 0;
             top: 35px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            background: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             z-index: 100;
             min-width: 140px;
             overflow: hidden;
@@ -110,17 +171,17 @@
         .dropdown-content a, .dropdown-content button {
             display: block;
             width: 100%;
-            padding: 10px 15px;
+            padding: 12px 15px;
             text-align: left;
             background: none;
             border: none;
             font-size: 14px;
-            color: #333;
+            color: #fff;
             text-decoration: none;
             cursor: pointer;
         }
         .dropdown-content a:hover, .dropdown-content button:hover {
-            background-color: #f1f1f1;
+            background-color: #383838;
         }
         .hidden {
             display: none;
@@ -134,7 +195,7 @@
             <button id="menu-toggle" class="three-dots-btn" onclick="document.getElementById('dropdown-menu').classList.toggle('hidden')">⋮</button>
             <div id="dropdown-menu" class="dropdown-content hidden">
                 <button id="upgrade-btn">Upgrade to Pro</button>
-                <a href="/logout" style="color: #dc3545; font-weight: bold;">Log Out</a>
+                <a href="/logout" style="color: #e74c3c; font-weight: bold;">Log Out</a>
             </div>
         </div>
     </div>
@@ -156,38 +217,21 @@
             <p class="amount" id="total-amount">$0.00</p>
         </div>
 
-        <script>
-        const currencySymbols = {
-            'USD': '$',
-            'NGN': '₦',
-            'EUR': '€',
-            'GBP': '£'
-        };
-
-        let currentCurrency = localStorage.getItem('selectedCurrency') || 'USD';
-        document.getElementById('currency-select').value = currentCurrency;
-
-        function changeCurrency(val) {
-            currentCurrency = val;
-            localStorage.setItem('selectedCurrency', val);
-            loadMonthTotal();
-        }
-
-        async function loadMonthTotal() {
-            try {
-                const response = await fetch('/api/expenses/total');
-                const data = await response.json();
-                const symbol = currencySymbols[currentCurrency] || '$';
-                document.getElementById('total-amount').innerText = `${symbol}${data.total.toFixed(2)}`;
-            } catch (err) {
-                console.error('Failed to load total', err);
-            }
-        }
-
-        loadMonthTotal();
-        </script>
-
         <div class="card">
+            <h3>Recent Transactions</h3>
+            <div id="transactions-list">
+                <p style="color: #888;">No transactions recorded yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" onclick="openModal()">+</button>
+
+    <!-- Modal Form -->
+    <div id="expense-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
             <h3>Add New Expense</h3>
             <form id="expense-form">
                 <label for="amount">Amount</label>
@@ -195,11 +239,11 @@
                 
                 <label for="category">Category</label>
                 <select id="category" required>
-                    <option value="Food & Groceries">Food & Groceries</option>
-                    <option value="Rent & Utilities">Rent & Utilities</option>
-                    <option value="Transportation">Transportation</option>
-                    <option value="Entertainment">Entertainment</option>
-                    <option value="Others">Others</option>
+                    <option value="Food & Groceries">🍔 Food & Groceries</option>
+                    <option value="Rent & Utilities">🏠 Rent & Utilities</option>
+                    <option value="Transportation">🚗 Transportation</option>
+                    <option value="Entertainment">🎮 Entertainment</option>
+                    <option value="Others">📦 Others</option>
                 </select>
 
                 <label for="note">Note (Optional)</label>
@@ -208,13 +252,45 @@
                 <button type="submit" class="btn">Add Expense</button>
             </form>
         </div>
-
-        <div class="card">
-            <h3>Recent Transactions</h3>
-            <div id="transactions-list">
-                <p style="color: #666;">No transactions recorded yet.</p>
-            </div>
-        </div>
     </div>
+
+    <script>
+    const currencySymbols = {
+        'USD': '$',
+        'NGN': '₦',
+        'EUR': '€',
+        'GBP': '£'
+    };
+
+    let currentCurrency = localStorage.getItem('selectedCurrency') || 'USD';
+    document.getElementById('currency-select').value = currentCurrency;
+
+    function changeCurrency(val) {
+        currentCurrency = val;
+        localStorage.setItem('selectedCurrency', val);
+        loadMonthTotal();
+    }
+
+    function openModal() {
+        document.getElementById('expense-modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('expense-modal').style.display = 'none';
+    }
+
+    async function loadMonthTotal() {
+        try {
+            const response = await fetch('/api/expenses/total');
+            const data = await response.json();
+            const symbol = currencySymbols[currentCurrency] || '$';
+            document.getElementById('total-amount').innerText = `${symbol}${data.total.toFixed(2)}`;
+        } catch (err) {
+            console.error('Failed to load total', err);
+        }
+    }
+
+    loadMonthTotal();
+    </script>
 </body>
 </html>
