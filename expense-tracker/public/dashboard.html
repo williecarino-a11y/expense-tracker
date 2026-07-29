@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker Dashboard</title>
+    <!-- Paystack Inline JS SDK -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <style>
         :root {
             --bg-color: #121212;
@@ -212,6 +214,30 @@
         .dropdown-content a:hover, .dropdown-content button:hover {
             background-color: var(--dropdown-hover);
         }
+        .plan-option {
+            background: var(--input-bg);
+            border: 2px solid var(--card-border);
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 12px;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            color: var(--text-color);
+            transition: border-color 0.2s;
+        }
+        .plan-option:hover {
+            border-color: #3498db;
+        }
+        .plan-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        .plan-price {
+            color: #2ecc71;
+            font-size: 15px;
+        }
         .hidden {
             display: none;
         }
@@ -224,7 +250,7 @@
             <button id="menu-toggle" class="three-dots-btn" onclick="document.getElementById('dropdown-menu').classList.toggle('hidden')">⋮</button>
             <div id="dropdown-menu" class="dropdown-content hidden">
                 <button onclick="toggleTheme()" id="theme-toggle-text">Switch to Light Mode</button>
-                <button id="upgrade-btn">Upgrade to Pro</button>
+                <button onclick="openUpgradeModal()">Upgrade to Pro</button>
                 <a href="/logout" style="color: #e74c3c; font-weight: bold;">Log Out</a>
             </div>
         </div>
@@ -258,7 +284,7 @@
     <!-- Floating Action Button -->
     <button class="fab" onclick="openModal()">+</button>
 
-    <!-- Modal Form -->
+    <!-- Add Expense Modal -->
     <div id="expense-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -281,6 +307,27 @@
 
                 <button type="submit" class="btn">Add Expense</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Pro Upgrade Plans Modal -->
+    <div id="upgrade-modal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close-btn" onclick="closeUpgradeModal()">&times;</span>
+            <h3>Unlock Pro Features</h3>
+            <p style="opacity: 0.8; font-size: 14px; margin-bottom: 20px;">Choose a plan that fits your goals</p>
+            
+            <!-- Monthly Plan Button (Edit the amount in kobo/cents here later) -->
+            <button class="plan-option" onclick="payWithPaystack(200000, 'Monthly Pro Plan')">
+                <div class="plan-title">Monthly Pro Plan</div>
+                <div class="plan-price">₦2,000 / month</div>
+            </button>
+
+            <!-- Yearly Plan Button (Edit the amount in kobo/cents here later) -->
+            <button class="plan-option" onclick="payWithPaystack(2000000, 'Yearly Pro Plan')">
+                <div class="plan-title">Yearly Pro Plan</div>
+                <div class="plan-price">₦20,000 / year (Save 17%)</div>
+            </button>
         </div>
     </div>
 
@@ -309,6 +356,42 @@
     function updateThemeButtonText(theme) {
         const btnText = document.getElementById('theme-toggle-text');
         btnText.innerText = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+    }
+
+    function openUpgradeModal() {
+        document.getElementById('dropdown-menu').classList.add('hidden');
+        document.getElementById('upgrade-modal').style.display = 'flex';
+    }
+
+    function closeUpgradeModal() {
+        document.getElementById('upgrade-modal').style.display = 'none';
+    }
+
+    // Paystack Integration Setup
+    function payWithPaystack(amountInKobo, planName) {
+        closeUpgradeModal();
+        let handler = PaystackPop.setup({
+            key: 'pk_test_your_actual_key_here', // Replace with your public key
+            email: 'user@example.com', // Dynamic user email will be wired here
+            amount: amountInKobo, // Dynamic amount passed from button
+            currency: 'NGN',
+            metadata: {
+                custom_fields: [
+                    {
+                        display_name: "Selected Plan",
+                        variable_name: "selected_plan",
+                        value: planName
+                    }
+                ]
+            },
+            callback: function(response){
+                alert(`Successfully subscribed to ${planName}! Reference: ` + response.reference);
+            },
+            onClose: function(){
+                console.log('Transaction window closed.');
+            }
+        });
+        handler.openIframe();
     }
 
     let currentCurrency = localStorage.getItem('selectedCurrency') || 'USD';
