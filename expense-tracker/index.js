@@ -6,6 +6,9 @@ const app = express();
 const analyticsRoutes = require("./routers/analyticsRoutes");
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static('public'));
 
 // Replace YOUR_PASSWORD_HERE with your actual password
 const MONGO_URI = "mongodb+srv://williecarino23_db_user:williecarino070@expense-tracker0.xoeajf4.mongodb.net/?appName=Expense-Tracker0";
@@ -18,12 +21,23 @@ mongoose.connect(MONGO_URI)
   .catch((err) => {
     console.error("Connection error:", err);
   });
+<<<<<<< HEAD
 app.use("/api/analytics", analyticsRoutes);
 // Mount Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
+=======
+
+const analyticsRoutes = require("./routers/analyticsRoutes");// Mount Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/analytics", analyticsRoutes);
+>>>>>>> 404cf61d68bb22624b87632b471cd9341440bfcf
 const transactionRoutes = require("./routers/transactionRoutes");
 app.use("/api/transactions", transactionRoutes);
+// Homepage route to fix "Cannot GET /"
+app.get("/", (req, res) => {
+  res.send("Expense Tracker API is running successfully!");
+});
 // Start the server
 const PORT = 3000;
 app.listen(PORT, () => {
