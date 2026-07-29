@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker Dashboard</title>
-    <!-- Paystack Inline JS SDK -->
-    <script src="https://js.paystack.co/v1/inline.js"></script>
     <style>
         :root {
             --bg-color: #121212;
@@ -60,7 +58,7 @@
         .dashboard-container {
             max-width: 500px;
             margin: 20px auto;
-            padding: 0 15px 80px 15px;
+            padding: 0 15px 40px 15px;
         }
         h2 {
             font-size: 18px;
@@ -92,7 +90,7 @@
             font-size: 13px;
             opacity: 0.8;
         }
-        input, select {
+        select {
             width: 100%;
             padding: 12px;
             margin-top: 6px;
@@ -103,7 +101,7 @@
             box-sizing: border-box;
             font-size: 14px;
         }
-        input:focus, select:focus {
+        select:focus {
             border-color: #3498db;
             outline: none;
         }
@@ -112,70 +110,20 @@
             width: 100%;
             background-color: #3498db;
             color: white;
-            padding: 12px;
+            padding: 14px;
+            text-align: center;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
+            text-decoration: none;
+            box-sizing: border-box;
+            margin-bottom: 15px;
             transition: background 0.2s;
         }
         .btn:hover {
             background-color: #2980b9;
-        }
-        /* Floating Action Button */
-        .fab {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background-color: #3498db;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: none;
-            font-size: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
-            cursor: pointer;
-            z-index: 1000;
-        }
-        .fab:hover {
-            background-color: #2980b9;
-        }
-        /* Modal Popup */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: var(--card-bg);
-            color: var(--text-color);
-            padding: 20px;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 400px;
-            position: relative;
-            border: 1px solid var(--card-border);
-        }
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            opacity: 0.7;
         }
         .menu-container {
             position: relative;
@@ -214,30 +162,6 @@
         .dropdown-content a:hover, .dropdown-content button:hover {
             background-color: var(--dropdown-hover);
         }
-        .plan-option {
-            background: var(--input-bg);
-            border: 2px solid var(--card-border);
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 12px;
-            cursor: pointer;
-            text-align: left;
-            width: 100%;
-            color: var(--text-color);
-            transition: border-color 0.2s;
-        }
-        .plan-option:hover {
-            border-color: #3498db;
-        }
-        .plan-title {
-            font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 4px;
-        }
-        .plan-price {
-            color: #2ecc71;
-            font-size: 15px;
-        }
         .hidden {
             display: none;
         }
@@ -250,7 +174,7 @@
             <button id="menu-toggle" class="three-dots-btn" onclick="document.getElementById('dropdown-menu').classList.toggle('hidden')">⋮</button>
             <div id="dropdown-menu" class="dropdown-content hidden">
                 <button onclick="toggleTheme()" id="theme-toggle-text">Switch to Light Mode</button>
-                <button onclick="openUpgradeModal()">Upgrade to Pro</button>
+                <a href="/upgrade.html">Upgrade to Pro</a>
                 <a href="/logout" style="color: #e74c3c; font-weight: bold;">Log Out</a>
             </div>
         </div>
@@ -258,6 +182,9 @@
 
     <div class="dashboard-container">
         <h2>Dashboard</h2>
+
+        <!-- Action Button inside Dashboard Layout instead of floating -->
+        <a href="/add-expense.html" class="btn">+ Add New Expense</a>
 
         <div class="card">
             <div style="margin-bottom: 15px;">
@@ -278,56 +205,6 @@
             <div id="transactions-list">
                 <p style="opacity: 0.6;">No transactions recorded yet.</p>
             </div>
-        </div>
-    </div>
-
-    <!-- Floating Action Button -->
-    <button class="fab" onclick="openModal()">+</button>
-
-    <!-- Add Expense Modal -->
-    <div id="expense-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h3>Add New Expense</h3>
-            <form id="expense-form">
-                <label for="amount">Amount</label>
-                <input type="number" id="amount" placeholder="e.g. 5000" required>
-                
-                <label for="category">Category</label>
-                <select id="category" required>
-                    <option value="Food & Groceries">🍔 Food & Groceries</option>
-                    <option value="Rent & Utilities">🏠 Rent & Utilities</option>
-                    <option value="Transportation">🚗 Transportation</option>
-                    <option value="Entertainment">🎮 Entertainment</option>
-                    <option value="Others">📦 Others</option>
-                </select>
-
-                <label for="note">Note (Optional)</label>
-                <input type="text" id="note" placeholder="What was this for?">
-
-                <button type="submit" class="btn">Add Expense</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Pro Upgrade Plans Modal -->
-    <div id="upgrade-modal" class="modal">
-        <div class="modal-content" style="text-align: center;">
-            <span class="close-btn" onclick="closeUpgradeModal()">&times;</span>
-            <h3>Unlock Pro Features</h3>
-            <p style="opacity: 0.8; font-size: 14px; margin-bottom: 20px;">Choose a plan that fits your goals</p>
-            
-            <!-- Monthly Plan Button (Edit the amount in kobo/cents here later) -->
-            <button class="plan-option" onclick="payWithPaystack(200000, 'Monthly Pro Plan')">
-                <div class="plan-title">Monthly Pro Plan</div>
-                <div class="plan-price">₦2,000 / month</div>
-            </button>
-
-            <!-- Yearly Plan Button (Edit the amount in kobo/cents here later) -->
-            <button class="plan-option" onclick="payWithPaystack(2000000, 'Yearly Pro Plan')">
-                <div class="plan-title">Yearly Pro Plan</div>
-                <div class="plan-price">₦20,000 / year (Save 17%)</div>
-            </button>
         </div>
     </div>
 
@@ -358,42 +235,6 @@
         btnText.innerText = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
     }
 
-    function openUpgradeModal() {
-        document.getElementById('dropdown-menu').classList.add('hidden');
-        document.getElementById('upgrade-modal').style.display = 'flex';
-    }
-
-    function closeUpgradeModal() {
-        document.getElementById('upgrade-modal').style.display = 'none';
-    }
-
-    // Paystack Integration Setup
-    function payWithPaystack(amountInKobo, planName) {
-        closeUpgradeModal();
-        let handler = PaystackPop.setup({
-            key: 'pk_test_your_actual_key_here', // Replace with your public key
-            email: 'user@example.com', // Dynamic user email will be wired here
-            amount: amountInKobo, // Dynamic amount passed from button
-            currency: 'NGN',
-            metadata: {
-                custom_fields: [
-                    {
-                        display_name: "Selected Plan",
-                        variable_name: "selected_plan",
-                        value: planName
-                    }
-                ]
-            },
-            callback: function(response){
-                alert(`Successfully subscribed to ${planName}! Reference: ` + response.reference);
-            },
-            onClose: function(){
-                console.log('Transaction window closed.');
-            }
-        });
-        handler.openIframe();
-    }
-
     let currentCurrency = localStorage.getItem('selectedCurrency') || 'USD';
     document.getElementById('currency-select').value = currentCurrency;
 
@@ -401,14 +242,6 @@
         currentCurrency = val;
         localStorage.setItem('selectedCurrency', val);
         loadMonthTotal();
-    }
-
-    function openModal() {
-        document.getElementById('expense-modal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('expense-modal').style.display = 'none';
     }
 
     async function loadMonthTotal() {
