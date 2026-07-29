@@ -226,11 +226,11 @@
             </select>
         </div>
 
-        <!-- Recent Transactions List with Icons -->
+        <!-- Recent Transactions List -->
         <div class="card">
             <h3 style="margin-top: 0;">Recent Transactions</h3>
             <div id="transactions-list">
-                <p style="opacity: 0.6; text-align: center;">No transactions recorded yet.</p>
+                <p style="opacity: 0.6; text-align: center;">Loading transactions...</p>
             </div>
         </div>
     </div>
@@ -271,40 +271,53 @@
     }
 
     async function loadDashboardData() {
+        const symbol = currencySymbols[currentCurrency] || '$';
         try {
-            const res = await fetch('/api/expenses/total');
-            const data = await res.json();
-            const symbol = currencySymbols[currentCurrency] || '$';
+            // Fetch total sum
+            const totalRes = await fetch('/api/expenses/total');
+            const totalData = await totalRes.json();
             
-            // Update statistic totals
-            document.getElementById('stat-month').innerText = `${symbol}${data.total.toFixed(2)}`;
-            document.getElementById('stat-balance').innerText = `${symbol}${(15000 - data.total).toFixed(2)}`; // Mock sample balance logic
+            document.getElementById('stat-month').innerText = `${symbol}${totalData.total.toFixed(2)}`;
+            document.getElementById('stat-balance').innerText = `${symbol}${(15000 - totalData.total).toFixed(2)}`;
 
-            // Update Budget Progress (assuming $500 limit)
+            // Update Budget Progress (Limit: $500)
             const budgetLimit = 500;
-            const percentage = Math.min((data.total / budgetLimit) * 100, 100);
-            document.getElementById('budget-text').innerText = `${symbol}${data.total.toFixed(2)} / ${symbol}${budgetLimit}`;
+            const percentage = Math.min((totalData.total / budgetLimit) * 100, 100);
+            document.getElementById('budget-text').innerText = `${symbol}${totalData.total.toFixed(2)} / ${symbol}${budgetLimit}`;
             const progressBar = document.getElementById('budget-progress');
             progressBar.style.width = `${percentage}%`;
             progressBar.style.background = percentage > 85 ? '#e74c3c' : '#2ecc71';
 
-            // Render Mock or Real Transactions with category icons
-            // In future steps, this will plug directly into your database response array
+            // Fetch actual user transactions list
+            const txRes = await fetch('/api/expenses');
+            const expenses = await txRes.json();
+
             const txList = document.getElementById('transactions-list');
-            txList.innerHTML = `
-                <div class="transaction-item">
-                    <div class="tx-left">
-                        <div class="tx-icon">🍔</div>
-                        <div>
-                            <p class="tx-title">Food & Groceries</p>
-                            <p class="tx-subtitle">Today, 2:30 PM</p>
+            if (!expenses || expenses.length === 0) {
+                txList.innerHTML = `<p style="opacity: 0.6; text-align: center;">No transactions recorded yet.</p>`;
+                return;
+            }
+
+            txList.innerHTML = expenses.map(tx => {
+                const icon = categoryIcons[tx.category] || '📦';
+                const dateStr = new Date(tx.createdAt || Date.now()).toLocaleDateString();
+                return `
+                    <div class="transaction-item">
+                        <div class="tx-left">
+                            <div class="tx-icon">${icon}</div>
+                            <div>
+                                <p class="tx-title">${tx.category}</p>
+                                <p class="tx-subtitle">${tx.note || dateStr}</p>
+                            </div>
                         </div>
+                        <div class="tx-amount amount-red">-${symbol}${Number(tx.amount).toFixed(2)}</div>
                     </div>
-                    <div class="tx-amount amount-red">-${symbol}12.50</div>
-                </div>
-            `;
+                `;
+            }).join('');
+
         } catch (err) {
             console.error('Failed to load dashboard data', err);
+            document.getElementById('transactions-list').innerHTML = `<p style="opacity: 0.6; text-align: center; color: #e74c3c;">Failed to load data.</p>`;
         }
     }
 
