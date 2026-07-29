@@ -6,6 +6,7 @@ const expenseRoutes = require("./routers/expenseRoutes");
 const transactionRoutes = require("./routers/transactionRoutes");
 const subscriptionRoutes = require("./routers/subscriptionRoutes");
 const analyticsRoutes = require("./routers/analyticsRoutes");
+const exportRoutes = require("./routers/exportRoutes");
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use("/api/expenses", expenseRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/subscription", subscriptionRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/export", exportRoutes);
 
 // Start the server
 const PORT = 3000;
