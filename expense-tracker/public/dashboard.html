@@ -71,25 +71,49 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             margin-bottom: 20px;
             border: 1px solid var(--card-border);
-            transition: background 0.3s, border 0.3s;
         }
-        .card h3 {
-            margin-top: 0;
-            font-size: 16px;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
         }
-        .amount {
-            font-size: 32px;
+        .stat-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+        }
+        .stat-card h4 {
+            margin: 0 0 8px 0;
+            font-size: 12px;
+            opacity: 0.7;
+            text-transform: uppercase;
+        }
+        .stat-card p {
+            margin: 0;
+            font-size: 20px;
             font-weight: bold;
-            color: #2ecc71;
-            margin: 10px 0 0 0;
         }
-        label {
-            display: block;
+        .amount-green { color: #2ecc71; }
+        .amount-red { color: #e74c3c; }
+        .amount-blue { color: #3498db; }
+
+        .progress-container {
+            background: var(--input-bg);
+            border-radius: 10px;
+            height: 10px;
+            width: 100%;
             margin-top: 12px;
-            font-weight: 500;
-            font-size: 13px;
-            opacity: 0.8;
+            overflow: hidden;
         }
+        .progress-bar {
+            background: #2ecc71;
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
         select {
             width: 100%;
             padding: 12px;
@@ -100,10 +124,6 @@
             border-radius: 8px;
             box-sizing: border-box;
             font-size: 14px;
-        }
-        select:focus {
-            border-color: #3498db;
-            outline: none;
         }
         .btn {
             display: block;
@@ -119,61 +139,49 @@
             cursor: pointer;
             text-decoration: none;
             box-sizing: border-box;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             transition: background 0.2s;
         }
-        .btn:hover {
-            background-color: #2980b9;
+        .btn:hover { background-color: #2980b9; }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--card-border);
         }
-        .menu-container {
-            position: relative;
-        }
-        .three-dots-btn {
-            background: none;
-            border: none;
-            color: inherit;
-            font-size: 22px;
-            cursor: pointer;
-        }
+        .transaction-item:last-child { border-bottom: none; }
+        .tx-left { display: flex; align-items: center; gap: 12px; }
+        .tx-icon { font-size: 24px; background: var(--input-bg); padding: 8px; border-radius: 10px; }
+        .tx-title { font-weight: 600; font-size: 14px; margin: 0; }
+        .tx-subtitle { font-size: 12px; opacity: 0.6; margin: 2px 0 0 0; }
+        .tx-amount { font-weight: bold; font-size: 15px; }
+
+        .menu-container { position: relative; }
+        .three-dots-btn { background: none; border: none; color: inherit; font-size: 22px; cursor: pointer; }
         .dropdown-content {
-            position: absolute;
-            right: 0;
-            top: 35px;
-            background: var(--dropdown-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 100;
-            min-width: 160px;
-            overflow: hidden;
+            position: absolute; right: 0; top: 35px;
+            background: var(--dropdown-bg); border: 1px solid var(--card-border);
+            border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 100; min-width: 160px; overflow: hidden;
         }
         .dropdown-content a, .dropdown-content button {
-            display: block;
-            width: 100%;
-            padding: 12px 15px;
-            text-align: left;
-            background: none;
-            border: none;
-            font-size: 14px;
-            color: var(--text-color);
-            text-decoration: none;
-            cursor: pointer;
+            display: block; width: 100%; padding: 12px 15px;
+            text-align: left; background: none; border: none;
+            font-size: 14px; color: var(--text-color); text-decoration: none; cursor: pointer;
         }
-        .dropdown-content a:hover, .dropdown-content button:hover {
-            background-color: var(--dropdown-hover);
-        }
-        .hidden {
-            display: none;
-        }
+        .dropdown-content a:hover, .dropdown-content button:hover { background-color: var(--dropdown-hover); }
+        .hidden { display: none; }
     </style>
 </head>
 <body data-theme="dark">
     <div class="top-banner">
         <h1>Expense Tracker</h1>
         <div class="menu-container">
-            <button id="menu-toggle" class="three-dots-btn" onclick="document.getElementById('dropdown-menu').classList.toggle('hidden')">⋮</button>
+            <button class="three-dots-btn" onclick="document.getElementById('dropdown-menu').classList.toggle('hidden')">⋮</button>
             <div id="dropdown-menu" class="dropdown-content hidden">
-                <button onclick="toggleTheme()" id="theme-toggle-text">Switch to Light Mode</button>
+                <button onclick="toggleTheme()" id="theme-toggle-text">Light Mode</button>
                 <a href="/upgrade.html">Upgrade to Pro</a>
                 <a href="/logout" style="color: #e74c3c; font-weight: bold;">Log Out</a>
             </div>
@@ -182,48 +190,67 @@
 
     <div class="dashboard-container">
         <h2>Dashboard</h2>
-
-        <!-- Action Button inside Dashboard Layout instead of floating -->
         <a href="/add-expense.html" class="btn">+ Add New Expense</a>
 
-        <div class="card">
-            <div style="margin-bottom: 15px;">
-                <label for="currency-select">Select Currency:</label>
-                <select id="currency-select" onchange="changeCurrency(this.value)">
-                    <option value="USD">USD ($)</option>
-                    <option value="NGN">NGN (₦)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="GBP">GBP (£)</option>
-                </select>
+        <!-- Statistics Grid Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>This Month</h4>
+                <p class="amount-green" id="stat-month">$0.00</p>
             </div>
-            <h3>Current Month Total</h3>
-            <p class="amount" id="total-amount">$0.00</p>
+            <div class="stat-card">
+                <h4>Current Balance</h4>
+                <p class="amount-blue" id="stat-balance">$0.00</p>
+            </div>
         </div>
 
+        <!-- Monthly Budget Progress Card -->
         <div class="card">
-            <h3>Recent Transactions</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0;">Monthly Budget</h3>
+                <span id="budget-text" style="font-size: 14px; opacity: 0.7;">$0 / $500</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="budget-progress"></div>
+            </div>
+        </div>
+
+        <!-- Currency Selector -->
+        <div class="card">
+            <label for="currency-select">Select Currency:</label>
+            <select id="currency-select" onchange="changeCurrency(this.value)">
+                <option value="USD">USD ($)</option>
+                <option value="NGN">NGN (₦)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="GBP">GBP (£)</option>
+            </select>
+        </div>
+
+        <!-- Recent Transactions List with Icons -->
+        <div class="card">
+            <h3 style="margin-top: 0;">Recent Transactions</h3>
             <div id="transactions-list">
-                <p style="opacity: 0.6;">No transactions recorded yet.</p>
+                <p style="opacity: 0.6; text-align: center;">No transactions recorded yet.</p>
             </div>
         </div>
     </div>
 
     <script>
-    const currencySymbols = {
-        'USD': '$',
-        'NGN': '₦',
-        'EUR': '€',
-        'GBP': '£'
+    const currencySymbols = { 'USD': '$', 'NGN': '₦', 'EUR': '€', 'GBP': '£' };
+    const categoryIcons = {
+        'Food & Groceries': '🍔',
+        'Rent & Utilities': '🏠',
+        'Transportation': '🚗',
+        'Entertainment': '🎮',
+        'Others': '📦'
     };
 
-    // Theme Setup
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.body.setAttribute('data-theme', savedTheme);
     updateThemeButtonText(savedTheme);
 
     function toggleTheme() {
-        const currentTheme = document.body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        const newTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         document.body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeButtonText(newTheme);
@@ -231,8 +258,7 @@
     }
 
     function updateThemeButtonText(theme) {
-        const btnText = document.getElementById('theme-toggle-text');
-        btnText.innerText = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        document.getElementById('theme-toggle-text').innerText = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
     }
 
     let currentCurrency = localStorage.getItem('selectedCurrency') || 'USD';
@@ -241,21 +267,48 @@
     function changeCurrency(val) {
         currentCurrency = val;
         localStorage.setItem('selectedCurrency', val);
-        loadMonthTotal();
+        loadDashboardData();
     }
 
-    async function loadMonthTotal() {
+    async function loadDashboardData() {
         try {
-            const response = await fetch('/api/expenses/total');
-            const data = await response.json();
+            const res = await fetch('/api/expenses/total');
+            const data = await res.json();
             const symbol = currencySymbols[currentCurrency] || '$';
-            document.getElementById('total-amount').innerText = `${symbol}${data.total.toFixed(2)}`;
+            
+            // Update statistic totals
+            document.getElementById('stat-month').innerText = `${symbol}${data.total.toFixed(2)}`;
+            document.getElementById('stat-balance').innerText = `${symbol}${(15000 - data.total).toFixed(2)}`; // Mock sample balance logic
+
+            // Update Budget Progress (assuming $500 limit)
+            const budgetLimit = 500;
+            const percentage = Math.min((data.total / budgetLimit) * 100, 100);
+            document.getElementById('budget-text').innerText = `${symbol}${data.total.toFixed(2)} / ${symbol}${budgetLimit}`;
+            const progressBar = document.getElementById('budget-progress');
+            progressBar.style.width = `${percentage}%`;
+            progressBar.style.background = percentage > 85 ? '#e74c3c' : '#2ecc71';
+
+            // Render Mock or Real Transactions with category icons
+            // In future steps, this will plug directly into your database response array
+            const txList = document.getElementById('transactions-list');
+            txList.innerHTML = `
+                <div class="transaction-item">
+                    <div class="tx-left">
+                        <div class="tx-icon">🍔</div>
+                        <div>
+                            <p class="tx-title">Food & Groceries</p>
+                            <p class="tx-subtitle">Today, 2:30 PM</p>
+                        </div>
+                    </div>
+                    <div class="tx-amount amount-red">-${symbol}12.50</div>
+                </div>
+            `;
         } catch (err) {
-            console.error('Failed to load total', err);
+            console.error('Failed to load dashboard data', err);
         }
     }
 
-    loadMonthTotal();
+    loadDashboardData();
     </script>
 </body>
 </html>
