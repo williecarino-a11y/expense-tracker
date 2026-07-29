@@ -1,316 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Expense Tracker Dashboard</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #f4f6f9;
-    }
-    .dashboard-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-      padding: 15px 20px;
-      background: #ffffff;
-      border-bottom: 1px solid #eaeaea;
-    }
-    .dashboard-header h2 {
-      margin: 0;
-      font-size: 20px;
-      color: #333;
-    }
-    .menu-container {
-      position: relative;
-    }
-    .three-dots-btn {
-      background: none;
-      border: none;
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-      padding: 4px 12px;
-      color: #333;
-      border-radius: 50%;
-    }
-    .three-dots-btn:hover {
-      background-color: #f0f0f0;
-    }
-    .dropdown-content {
-      position: absolute;
-      right: 0;
-      top: 45px;
-      background-color: #ffffff;
-      min-width: 180px;
-      box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
-      border-radius: 8px;
-      z-index: 100;
-      overflow: hidden;
-      border: 1px solid #eee;
-    }
-    .dropdown-content.hidden {
-      display: none;
-    }
-    .menu-item {
-      width: 100%;
-      padding: 12px 16px;
-      text-align: left;
-      background: none;
-      border: none;
-      font-size: 14px;
-      color: #333;
-      cursor: pointer;
-      text-decoration: none;
-      display: block;
-      box-sizing: border-box;
-    }
-    .menu-item:hover {
-      background-color: #f7f7f7;
-    }
-    .logout-link {
-      color: #e53935;
-    }
-    .dashboard-container {
-      padding: 20px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .card {
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    .card h3 {
-      margin-top: 0;
-      font-size: 16px;
-      color: #666;
-    }
-    .card .amount {
-      font-size: 28px;
-      font-weight: bold;
-      color: #333;
-      margin: 10px 0 0 0;
-    }
-    .form-group {
-      margin-bottom: 12px;
-    }
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      color: #555;
-      margin-bottom: 5px;
-    }
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-size: 14px;
-    }
-    .btn-submit {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 12px;
-      width: 100%;
-      border-radius: 6px;
-      font-size: 15px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .btn-submit:hover {
-      background-color: #0056b3;
-    }
-    ul.transaction-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    ul.transaction-list li {
-      padding: 10px 0;
-      border-bottom: 1px solid #f0f0f0;
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-    }
-    ul.transaction-list li:last-child {
-      border-bottom: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
-  <!-- Header with Three-Dot Menu -->
-  <div class="dashboard-header">
     <h2>Expense Tracker Dashboard</h2>
     
     <div class="menu-container">
-      <button id="menu-toggle" class="three-dots-btn" aria-label="Menu">&#8942;</button>
-      
-      <div id="dropdown-menu" class="dropdown-content hidden">
-        <button id="upgrade-btn" class="menu-item">Upgrade to Pro (₦2,000)</button>
-        <a href="/logout" class="menu-item logout-link">Log Out</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Dashboard Body Content -->
-  <div class="dashboard-container">
-    
-    <!-- Total Card -->
-    <div class="card">
-      <h3>Current Month Total</h3>
-      <p class="amount" id="total-amount">$0.00</p>
-    </div>
-<script>
-async function loadMonthTotal() {
-    try {
-        const response = await fetch('/api/expenses/total');
-        const data = await response.json();
-        document.getElementById('total-amount').innerText = `$${data.total.toFixed(2)}`;
-    } catch (err) {
-        console.error('Failed to load total', err);
-    }
-}
-loadMonthTotal();
-</script>
-
-    <!-- Add Expense Form Card -->
-    <div class="card">
-      <h3>Add New Expense</h3>
-      <form id="expense-form">
-        <div class="form-group">
-          <label for="expense-amount">Amount ($)</label>
-          <input type="number" id="expense-amount" placeholder="e.g. 5000" required step="any">
+        <button id="menu-toggle" class="three-dots-btn" aria-label="Menu">⋮</button>
+        <div id="dropdown-menu" class="dropdown-content hidden">
+            <button id="upgrade-btn" class="menu-item">Upgrade to Pro</button>
+            <a href="/logout" class="menu-item logout-link">Log Out</a>
         </div>
-        <div class="form-group">
-          <label for="expense-category">Category</label>
-          <select id="expense-category">
-            <option value="Food">Food & Groceries</option>
-            <option value="Transport">Transport</option>
-            <option value="Rent">Rent & Housing</option>
-            <option value="Utilities">Utilities & Bills</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="expense-note">Note (Optional)</label>
-          <input type="text" id="expense-note" placeholder="What was this for?">
-        </div>
-        <button type="submit" class="btn-submit">Add Expense</button>
-      </form>
     </div>
 
-    <!-- Recent Transactions Card -->
-    <div class="card">
-      <h3>Recent Transactions</h3>
-      <ul id="transaction-list" class="transaction-list">
-        <li style="color: #888;" id="no-transactions">No transactions recorded yet.</li>
-      </ul>
-    </div>
+    <div class="dashboard-container">
+        <div class="card">
+            <div style="margin-bottom: 10px;">
+                <label for="currency-select" style="font-size: 14px;">Currency: </label>
+                <select id="currency-select" onchange="changeCurrency(this.value)" style="padding: 3px;">
+                    <option value="USD">USD ($)</option>
+                    <option value="NGN">NGN (₦)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                </select>
+            </div>
+            <h3>Current Month Total</h3>
+            <p class="amount" id="total-amount">$0.00</p>
+        </div>
 
-  </div>
+        <script>
+        const currencySymbols = {
+            'USD': '$',
+            'NGN': '₦',
+            'EUR': '€',
+            'GBP': '£'
+        };
 
-  <!-- Include Paystack inline JS -->
-  <script src="https://js.paystack.co/v1/inline.js"></script>
-  <script>
-    // Three-dot menu toggle logic
-    const menuToggle = document.getElementById('menu-toggle');
-    const dropdownMenu = document.getElementById('dropdown-menu');
+        let currentCurrency = localStorage.getItem('selectedCurrency') || 'USD';
+        document.getElementById('currency-select').value = currentCurrency;
 
-    menuToggle.addEventListener('click', function(e) {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle('hidden');
-    });
-
-    window.addEventListener('click', function() {
-      if (!dropdownMenu.classList.contains('hidden')) {
-        dropdownMenu.classList.add('hidden');
-      }
-    });
-
-    // Expense Tracking Local State Logic
-    let totalSpent = 0;
-    let transactions = [];
-
-    const expenseForm = document.getElementById('expense-form');
-    const totalAmountElem = document.getElementById('total-amount');
-    const transactionListElem = document.getElementById('transaction-list');
-    const noTransactionsElem = document.getElementById('no-transactions');
-
-    expenseForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const amountInput = parseFloat(document.getElementById('expense-amount').value);
-      const categoryInput = document.getElementById('expense-category').value;
-      const noteInput = document.getElementById('expense-note').value || categoryInput;
-
-      if (isNaN(amountInput) || amountInput <= 0) return;
-
-      // Update total
-      totalSpent += amountInput;
-      totalAmountElem.textContent = `$${totalSpent.toFixed(2)}`;
-
-      // Add to array
-      transactions.unshift({ amount: amountInput, category: categoryInput, note: noteInput });
-
-      // Render list
-      renderTransactions();
-
-      // Reset form
-      expenseForm.reset();
-    });
-
-    function renderTransactions() {
-      transactionListElem.innerHTML = '';
-      if (transactions.length === 0) {
-        transactionListElem.innerHTML = '<li style="color: #888;" id="no-transactions">No transactions recorded yet.</li>';
-        return;
-      }
-
-      transactions.forEach(tx => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span><strong>${tx.note}</strong> (${tx.category})</span> <span style="color: #d9534f; font-weight: bold;">-$${tx.amount.toFixed(2)}</span>`;
-        transactionListElem.appendChild(li);
-      });
-    }
-
-    // Paystack Payment Integration Setup
-    document.getElementById('upgrade-btn').addEventListener('click', function(e) {
-      let handler = PaystackPop.setup({
-        key: 'YOUR_PAYSTACK_PUBLIC_KEY',
-        email: 'user@example.com',
-        amount: 200000,
-        currency: 'NGN',
-        callback: function(response) {
-          fetch('/verify-payment', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ reference: response.reference })
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
-              alert('Payment successful! Your account has been upgraded.');
-              location.reload();
-            } else {
-              alert('Payment verification failed.');
-            }
-          });
-        },
-        onClose: function() {
-          alert('Transaction was not completed.');
+        function changeCurrency(val) {
+            currentCurrency = val;
+            localStorage.setItem('selectedCurrency', val);
+            loadMonthTotal();
         }
-      });
-      handler.openIframe();
-    });
-  </script>
+
+        async function loadMonthTotal() {
+            try {
+                const response = await fetch('/api/expenses/total');
+                const data = await response.json();
+                const symbol = currencySymbols[currentCurrency] || '$';
+                document.getElementById('total-amount').innerText = `${symbol}${data.total.toFixed(2)}`;
+            } catch (err) {
+                console.error('Failed to load total', err);
+            }
+        }
+
+        loadMonthTotal();
+        </script>
+
+        <div class="card">
+            <h3>Add New Expense</h3>
+            <form id="expense-form">
+                <label for="amount">Amount ($)</label>
+                <input type="number" id="amount" placeholder="e.g. 5000" required>
+                
+                <label for="category">Category</label>
+                <select id="category" required>
+                    <option value="Food & Groceries">Food & Groceries</option>
+                    <option value="Rent & Utilities">Rent & Utilities</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Others">Others</option>
+                </select>
+
+                <label for="note">Note (Optional)</label>
+                <input type="text" id="note" placeholder="What was this for?">
+
+                <button type="submit" class="btn">Add Expense</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3>Recent Transactions</h3>
+            <div id="transactions-list">
+                <p>No transactions recorded yet.</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
