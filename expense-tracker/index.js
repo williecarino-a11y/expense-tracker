@@ -5,6 +5,7 @@ const expenseRoutes = require("./routers/expenseRoutes");
 const app = express();
 const analyticsRoutes = require("./routers/analyticsRoutes");
 const transactionRoutes = require("./routers/transactionRoutes");
+const subscriptionRoutes = require('./routers/subscriptionRoutes');
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -27,6 +28,7 @@ app.use("/api/analytics", analyticsRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/transactions", transactionRoutes);
+app.use("/api/subscription", subscriptionRoutes);
 // Start the server
 const PORT = 3000;
 app.listen(PORT, () => {
