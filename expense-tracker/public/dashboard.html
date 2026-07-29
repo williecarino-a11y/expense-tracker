@@ -74,14 +74,36 @@
     .logout-link {
       color: #e53935;
     }
+    /* Card Styles */
+    .dashboard-container {
+      padding: 20px;
+    }
+    .card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .card h3 {
+      margin-top: 0;
+      font-size: 16px;
+      color: #666;
+    }
+    .card .amount {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      margin: 10px 0 0 0;
+    }
   </style>
 </head>
 <body>
 
+  <!-- Header with Three-Dot Menu -->
   <div class="dashboard-header">
     <h2>Expense Tracker Dashboard</h2>
     
-    <!-- Modern Three-Dot Menu Container -->
     <div class="menu-container">
       <button id="menu-toggle" class="three-dots-btn" aria-label="Menu">&#8942;</button>
       
@@ -92,10 +114,22 @@
     </div>
   </div>
 
+  <!-- Dashboard Body Cards -->
+  <div class="dashboard-container">
+    <div class="card">
+      <h3>Current Month Total</h3>
+      <p class="amount">$0.00</p>
+    </div>
+
+    <div class="card">
+      <h3>Recent Transactions</h3>
+      <p style="color: #888;">No transactions recorded yet.</p>
+    </div>
+  </div>
+
   <!-- Include Paystack inline JS -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
   <script>
-    // Toggle dropdown on three-dot click
     const menuToggle = document.getElementById('menu-toggle');
     const dropdownMenu = document.getElementById('dropdown-menu');
 
@@ -110,11 +144,10 @@
       }
     });
 
-    // Paystack Payment Integration
     document.getElementById('upgrade-btn').addEventListener('click', function(e) {
       let handler = PaystackPop.setup({
         key: 'YOUR_PAYSTACK_PUBLIC_KEY',
-        email: '<%= typeof user !== "undefined" ? user.email : "user@example.com" %>',
+        email: 'user@example.com',
         amount: 200000,
         currency: 'NGN',
         callback: function(response) {
