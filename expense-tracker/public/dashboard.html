@@ -4,24 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker Dashboard</title>
-    <link rel="stylesheet" href="/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .dashboard-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .amount {
+            font-size: 28px;
+            font-weight: bold;
+            color: #27ae60;
+            margin: 10px 0 0 0;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .menu-container {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .three-dots-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: inline-block;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <h2>Expense Tracker Dashboard</h2>
-    
-    <div class="menu-container">
-        <button id="menu-toggle" class="three-dots-btn" aria-label="Menu">⋮</button>
-        <div id="dropdown-menu" class="dropdown-content hidden">
-            <button id="upgrade-btn" class="menu-item">Upgrade to Pro</button>
-            <a href="/logout" class="menu-item logout-link">Log Out</a>
-        </div>
-    </div>
-
     <div class="dashboard-container">
+        <div class="menu-container">
+            <button id="menu-toggle" class="three-dots-btn" onclick="document.getElementById('dropdown-menu').classList.toggle('hidden')">⋮</button>
+            <div id="dropdown-menu" class="dropdown-content hidden">
+                <a href="/logout" style="text-decoration: none; color: #dc3545; font-weight: bold;">Log Out</a>
+            </div>
+        </div>
+
+        <h2>Expense Tracker Dashboard</h2>
+
         <div class="card">
-            <div style="margin-bottom: 10px;">
-                <label for="currency-select" style="font-size: 14px;">Currency: </label>
-                <select id="currency-select" onchange="changeCurrency(this.value)" style="padding: 3px;">
+            <div style="margin-bottom: 15px;">
+                <label for="currency-select">Select Currency:</label>
+                <select id="currency-select" onchange="changeCurrency(this.value)">
                     <option value="USD">USD ($)</option>
                     <option value="NGN">NGN (₦)</option>
                     <option value="EUR">EUR (€)</option>
@@ -66,7 +148,7 @@
         <div class="card">
             <h3>Add New Expense</h3>
             <form id="expense-form">
-                <label for="amount">Amount ($)</label>
+                <label for="amount">Amount</label>
                 <input type="number" id="amount" placeholder="e.g. 5000" required>
                 
                 <label for="category">Category</label>
@@ -88,7 +170,7 @@
         <div class="card">
             <h3>Recent Transactions</h3>
             <div id="transactions-list">
-                <p>No transactions recorded yet.</p>
+                <p style="color: #666;">No transactions recorded yet.</p>
             </div>
         </div>
     </div>
