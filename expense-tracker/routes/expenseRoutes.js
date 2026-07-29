@@ -21,5 +21,18 @@ router.post("/", async (req, res) => {
     res.status(400).json({ message: "Error creating expense", error: error.message });
   }
 });
+// GET total expenses for the current month
+router.get("/total", async (req, res) => {
+    try {
+        const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+        const expenses = await Expense.find({ 
+            date: { $gte: startOfMonth } 
+        });
+        const total = expenses.reduce((sum, item) => sum + item.amount, 0);
+        res.json({ total });
+    } catch (error) {
+        res.status(500).json({ message: "Error calculating total", error: error.message });
+    }
+});
 
 module.exports = router;

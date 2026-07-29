@@ -169,6 +169,18 @@
       <h3>Current Month Total</h3>
       <p class="amount" id="total-amount">$0.00</p>
     </div>
+<script>
+async function loadMonthTotal() {
+    try {
+        const response = await fetch('/api/expenses/total');
+        const data = await response.json();
+        document.getElementById('total-amount').innerText = `$${data.total.toFixed(2)}`;
+    } catch (err) {
+        console.error('Failed to load total', err);
+    }
+}
+loadMonthTotal();
+</script>
 
     <!-- Add Expense Form Card -->
     <div class="card">
