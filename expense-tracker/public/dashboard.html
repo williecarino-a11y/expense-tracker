@@ -12,23 +12,31 @@
             padding: 0;
             color: #333;
         }
-        .top-header {
+        .top-banner {
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
-            padding: 20px;
-            text-align: center;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
+            position: relative;
         }
-        .top-header h2 {
+        .top-banner h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 22px;
             letter-spacing: 0.5px;
         }
         .dashboard-container {
             max-width: 500px;
-            margin: 0 auto;
-            padding: 0 15px 20px 15px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 20px;
+            margin-bottom: 15px;
         }
         .card {
             background: #ffffff;
@@ -77,9 +85,7 @@
             background-color: #0056b3;
         }
         .menu-container {
-            position: absolute;
-            top: 15px;
-            right: 20px;
+            position: relative;
         }
         .three-dots-btn {
             background: none;
@@ -87,17 +93,34 @@
             color: white;
             font-size: 24px;
             cursor: pointer;
+            padding: 0 5px;
         }
         .dropdown-content {
             position: absolute;
             right: 0;
             top: 35px;
-            display: inline-block;
             background: white;
             border: 1px solid #ddd;
-            padding: 8px 12px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 100;
+            min-width: 140px;
+            overflow: hidden;
+        }
+        .dropdown-content a, .dropdown-content button {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            text-align: left;
+            background: none;
+            border: none;
+            font-size: 14px;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .dropdown-content a:hover, .dropdown-content button:hover {
+            background-color: #f1f1f1;
         }
         .hidden {
             display: none;
@@ -105,17 +128,20 @@
     </style>
 </head>
 <body>
-    <div class="top-header">
-        <h2>Expense Tracker Dashboard</h2>
+    <div class="top-banner">
+        <h1>Expense Tracker</h1>
         <div class="menu-container">
             <button id="menu-toggle" class="three-dots-btn" onclick="document.getElementById('dropdown-menu').classList.toggle('hidden')">⋮</button>
             <div id="dropdown-menu" class="dropdown-content hidden">
-                <a href="/logout" style="text-decoration: none; color: #dc3545; font-weight: bold;">Log Out</a>
+                <button id="upgrade-btn">Upgrade to Pro</button>
+                <a href="/logout" style="color: #dc3545; font-weight: bold;">Log Out</a>
             </div>
         </div>
     </div>
 
     <div class="dashboard-container">
+        <h2>Dashboard</h2>
+
         <div class="card">
             <div style="margin-bottom: 15px;">
                 <label for="currency-select">Select Currency:</label>
