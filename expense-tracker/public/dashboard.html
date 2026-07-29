@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker - Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 20px 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 20px;
+            color: #1a1a1a;
+        }
+
+        .btn-logout {
+            padding: 8px 16px;
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .dashboard-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h3 {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .site-footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 13px;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Expense Tracker Dashboard</h1>
+        <button class="btn-logout" onclick="window.location.href='/'">Log Out</button>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="card">
+            <h3>Current Month Total</h3>
+            <div class="value">$0.00</div>
+        </div>
+        <div class="card">
+            <h3>Recent Transactions</h3>
+            <p style="color: #666; font-size: 14px; margin-top: 8px;">No transactions recorded yet.</p>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        Designed and Developed by Willie Carino
+    </footer>
+</body>
+</html>

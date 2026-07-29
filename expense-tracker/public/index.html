@@ -1,339 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<<<<<<< HEAD
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Expense Tracker</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 0 15px; background: #f9f9f9; color: #333; }
-    h1, h2 { color: #2c3e50; }
-    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
-    input, select, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-    button { background: #27ae60; color: white; border: none; font-weight: bold; cursor: pointer; }
-    button:hover { background: #219653; }
-    ul { padding-left: 20px; }
-    li { margin-bottom: 6px; }
-  </style>
-</head>
-<body>
-
-  <h1> Expense Tracker</h1>
-
-  <div class="card">
-    <h2>Add Expense</h2>
-    <form id="expenseForm">
-      <input type="text" id="title" placeholder="Title (e.g., Lunch)" required>
-      <input type="number" id="amount" placeholder="Amount (e.g., 1500)" required>
-      <input type="text" id="category" placeholder="Category (e.g., Food)" required>
-      <button type="submit">Add Expense</button>
-    </form>
-  </div>
-
-  <div class="card">
-    <h2>📊 Monthly Report</h2>
-    <button onclick="loadReport()">Load Current Month Report</button>
-    <div id="reportResult" style="margin-top: 15px;"></div>
-  </div>
-
-  <script>
-    const API_URL = "http://localhost:3000/api";
-
-    document.getElementById("expenseForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const title = document.getElementById("title").value;
-      const amount = Number(document.getElementById("amount").value);
-      const category = document.getElementById("category").value;
-
-      const res = await fetch(`${API_URL}/expenses`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, amount, category })
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        alert("Expense added successfully!");
-        document.getElementById("expenseForm").reset();
-        loadReport();
-      } else {
-        alert("Error: " + (data.error || "Failed to add"));
-      }
-    });
-
-    async function loadReport() {
-      const res = await fetch(`${API_URL}/reports/monthly`);
-      const data = await res.json();
-      
-      if (res.ok) {
-        let html = `<p><strong>Total Spent:</strong> ₦${data.totalSpent}</p>`;
-        html += `<p><strong>Total Items:</strong> ${data.count}</p>`;
-        html += `<h3>Category Breakdown:</h3><ul>`;
-        for (const [cat, amt] of Object.entries(data.categoryBreakdown)) {
-          html += `<li>${cat}: ₦${amt}</li>`;
-        }
-        html += `</ul>`;
-        document.getElementById("reportResult").innerHTML = html;
-      } else {
-        document.getElementById("reportResult").innerHTML = "<p style='color:red;'>Failed to load report</p>";
-      }
-    }
-
-    loadReport();
-  </script>
-<footer>
-    <p style="text-align: center; padding: 20px; color: #666; font-size: 14px;">Designed and Developed by Willie Carino</p>
-</footer>
-
-=======
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker | Welcome</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Expense Tracker</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-color: #f0f2f5;
+            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            color: #333;
+            min-height: 100vh;
         }
-        .card {
+
+        .main-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .auth-card {
             background: #ffffff;
             padding: 40px 30px;
             border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
             width: 100%;
             max-width: 400px;
-        }
-        .card h2 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #1a1a1a;
             text-align: center;
         }
+
+        .auth-card h2 {
+            font-size: 24px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
         .subtitle {
             font-size: 14px;
             color: #666;
-            text-align: center;
             margin-bottom: 24px;
         }
-        .tab-container {
-            display: flex;
-            background: #f1f5f9;
-            border-radius: 8px;
-            padding: 4px;
-            margin-bottom: 20px;
-        }
-        .tab {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            color: #64748b;
-            border: none;
-            background: transparent;
-        }
-        .tab.active {
-            background: #ffffff;
-            color: #4f46e5;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        .name-row {
-            display: flex;
-            gap: 12px;
-        }
-        .name-row .input-group {
-            flex: 1;
-        }
+
         .input-group {
+            text-align: left;
             margin-bottom: 16px;
         }
+
         .input-group label {
             display: block;
             font-size: 13px;
-            font-weight: 500;
-            color: #4a5568;
+            font-weight: 600;
+            color: #444;
             margin-bottom: 6px;
         }
-        input {
+
+        .input-group input {
             width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #cbd5e1;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: border-color 0.2s;
         }
-        input:focus {
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+
+        .input-group input:focus {
+            border-color: #6366f1;
         }
-        button.action-btn {
+
+        .btn-primary {
             width: 100%;
             padding: 12px;
-            background: #4f46e5;
+            background-color: #6366f1;
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 15px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
             margin-top: 8px;
+            transition: background-color 0.2s;
         }
-        button.action-btn:hover {
-            background: #4338ca;
+
+        .btn-primary:hover {
+            background-color: #4f46e5;
         }
-        .message {
-            margin-top: 16px;
-            font-size: 14px;
+
+        .site-footer {
+            margin-top: 24px;
+            font-size: 13px;
+            color: #888;
             text-align: center;
-            font-weight: 500;
         }
     </style>
 </head>
 <body>
-
-    <div class="card">
-        <h2>Expense Tracker</h2>
-        <p class="subtitle" id="form-subtitle">Manage your finances seamlessly</p>
-        
-        <div class="tab-container" id="main-tabs">
-            <button class="tab active" id="login-tab" onclick="switchMode('login')">Log In</button>
-            <button class="tab" id="signup-tab" onclick="switchMode('signup')">Sign Up</button>
-        </div>
-        
-        <div id="form-container">
-            <!-- Separate Fields for Surname and First Name -->
-            <div class="name-row" id="name-group" style="display: none;">
-                <div class="input-group">
-                    <label for="surname">Surname</label>
-                    <input type="text" id="surname" placeholder="Chinaza">
-                </div>
-                <div class="input-group">
-                    <label for="firstname">First Name</label>
-                    <input type="text" id="firstname" placeholder="Solomon">
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="name@example.com">
-            </div>
+    <div class="main-wrapper">
+        <div class="auth-card">
+            <h2>Expense Tracker</h2>
+            <p class="subtitle">Manage your finances seamlessly</p>
             
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="••••••••">
-            </div>
-            
-            <button class="action-btn" id="submit-btn" onclick="handleAuth()">Log In</button>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="name@example.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Log In</button>
+            </form>
         </div>
-        
-        <div class="message" id="response-msg"></div>
+
+        <footer class="site-footer">
+            Designed and Developed by Willie Carino
+        </footer>
     </div>
-
-    <script>
-        let isSignup = false;
-
-        function switchMode(mode) {
-            const loginTab = document.getElementById('login-tab');
-            const signupTab = document.getElementById('signup-tab');
-            const submitBtn = document.getElementById('submit-btn');
-            const nameGroup = document.getElementById('name-group');
-            const subtitle = document.getElementById('form-subtitle');
-            const msg = document.getElementById('response-msg');
+<script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            msg.textContent = '';
-
-            if (mode === 'signup') {
-                isSignup = true;
-                signupTab.classList.add('active');
-                loginTab.classList.remove('active');
-                nameGroup.style.display = 'flex';
-                submitBtn.textContent = 'Create Account';
-                subtitle.textContent = 'Create your account to get started';
-            } else {
-                isSignup = false;
-                loginTab.classList.add('active');
-                signupTab.classList.remove('active');
-                nameGroup.style.display = 'none';
-                submitBtn.textContent = 'Log In';
-                subtitle.textContent = 'Manage your finances seamlessly';
-            }
-        }
-
-        async function handleAuth() {
-            const msg = document.getElementById('response-msg');
-            const email = document.getElementById('email').value.trim();
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            let payload = { email, password };
-            let endpoint = isSignup ? '/api/auth/register' : '/api/auth/login';
-
-            if (isSignup) {
-                const surnameInput = document.getElementById('surname');
-                const firstnameInput = document.getElementById('firstname');
-                
-                const surname = surnameInput ? surnameInput.value.trim() : '';
-                const firstname = firstnameInput ? firstnameInput.value.trim() : '';
-
-                if (!surname || !firstname || !email || !password) {
-                    msg.style.color = '#dc2626';
-                    msg.textContent = 'Please fill in all required fields.';
-                    return;
-                }
-
-                // Explicitly send both fields and the combined name string
-                payload.surname = surname;
-                payload.firstname = firstname;
-                payload.name = `${surname}, ${firstname}`;
-            } else {
-                if (!email || !password) {
-                    msg.style.color = '#dc2626';
-                    msg.textContent = 'Please fill in all required fields.';
-                    return;
-                }
-            }
-
-            msg.style.color = '#4b5563';
-            msg.textContent = 'Processing...';
-
             try {
-                const res = await fetch(endpoint, {
+                const response = await fetch('/api/auth/login', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
                 });
-                const data = await res.json();
-                
-                if (res.ok) {
-                    msg.style.color = '#16a34a';
-                    msg.textContent = isSignup ? 'Success! Account created.' : 'Success! Logged in.';
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Redirect to dashboard on successful login
+                    window.location.href = '/dashboard.html';
                 } else {
-                    msg.style.color = '#dc2626';
-                    msg.textContent = data.message || data.error || 'Authentication failed.';
+                    alert(data.message || 'Login failed. Please check your credentials.');
                 }
             } catch (err) {
-                msg.style.color = '#dc2626';
-                msg.textContent = 'Error connecting to server.';
+                console.error('Error connecting to server:', err);
+                alert('An error occurred. Please try again.');
             }
-        }
+        });
     </script>
-<footer>
-    <p style="text-align: center; padding: 20px; color: #666; font-size: 14px;">Designed and Developed by Willie Carino</p>
-</footer>
 </body>
 </html>
