@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - Transactions</title>
+    <title>Expense Tracker - Alerts & Notices</title>
     <style>
         body {
             margin: 0;
@@ -46,30 +46,50 @@
             align-items: center;
             gap: 6px;
         }
-        .transaction-item {
+        .alert-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            gap: 12px;
             padding: 12px 0;
             border-bottom: 1px solid #334155;
         }
-        .transaction-item:last-child {
+        .alert-item:last-child {
             border-bottom: none;
         }
-        .tx-info h4 {
+        .alert-icon {
+            font-size: 1.25rem;
+            margin-top: 2px;
+        }
+        .alert-content h4 {
             margin: 0 0 4px 0;
             font-size: 0.95rem;
+            color: #f8fafc;
         }
-        .tx-info span {
-            font-size: 0.75rem;
+        .alert-content p {
+            margin: 0 0 6px 0;
+            font-size: 0.8rem;
             color: #94a3b8;
         }
-        .tx-amount {
-            font-weight: bold;
-            font-size: 0.95rem;
+        .alert-time {
+            font-size: 0.75rem;
+            color: #64748b;
         }
-        .tx-amount.expense { color: #f87171; }
-        .tx-amount.income { color: #34d399; }
+        .badge-danger {
+            background-color: rgba(248, 113, 113, 0.15);
+            color: #f87171;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .badge-warning {
+            background-color: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -101,53 +121,63 @@
 
     <!-- Top Header -->
     <div class="header">
-        <div class="logo">💳 Transactions History</div>
+        <div class="logo">🚨 Alerts & Notices</div>
     </div>
 
     <!-- Main Container -->
     <div class="container">
-        <div class="section-heading">📜 Recent Activity</div>
+        <div class="section-heading">⚠️ System Threshold Triggers</div>
         
         <div class="card">
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Cloud Hosting Server</h4>
-                    <span>Tech • Today, 2:45 PM</span>
+            <div class="alert-item">
+                <div class="alert-icon">🔥</div>
+                <div class="alert-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <h4 style="margin: 0;">Monthly Budget Warning</h4>
+                        <span class="badge-danger">CRITICAL</span>
+                    </div>
+                    <p>Primary Checking spending has reached 85% of your customized monthly threshold limit ($1,450 / $1,700).</p>
+                    <span class="alert-time">Today, 09:15 AM</span>
                 </div>
-                <div class="tx-amount expense">-$45.00</div>
             </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Client Milestone Payout</h4>
-                    <span>Income • Yesterday, 10:15 AM</span>
+
+            <div class="alert-item">
+                <div class="alert-icon">⚡</div>
+                <div class="alert-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <h4 style="margin: 0;">Webhook Payment Trigger</h4>
+                        <span class="badge-warning">NOTICE</span>
+                    </div>
+                    <p>Paystack subscription routing initialized successfully for Pro Workspace Tier ($15.00).</p>
+                    <span class="alert-time">Yesterday, 04:30 PM</span>
                 </div>
-                <div class="tx-amount income">+$1,250.00</div>
             </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Grocery Restock</h4>
-                    <span>Food • Jul 28, 630 PM</span>
+
+            <div class="alert-item">
+                <div class="alert-icon">🛡️</div>
+                <div class="alert-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <h4 style="margin: 0;">Database Cluster Sync</h4>
+                        <span class="badge-warning">INFO</span>
+                    </div>
+                    <p>MongoDB Atlas cloud database cluster verified zero sync errors during automated backup cycle.</p>
+                    <span class="alert-time">August 1, 2026</span>
                 </div>
-                <div class="tx-amount expense">-$120.50</div>
-            </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Subscription Renewal</h4>
-                    <span>Bills • Jul 25, 9:00 AM</span>
-                </div>
-                <div class="tx-amount expense">-$15.00</div>
             </div>
         </div>
     </div>
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
-        <a href="/dashboard.html" class="nav-item"><span>🏠</span><span>Home</span></a>
-        <a href="/transaction-detail.html" class="nav-item active">
+        <a href="/dashboard.html" class="nav-item">
+            <span>🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="/transactions.html" class="nav-item">
             <span>💳</span>
             <span>Transactions</span>
         </a>
-        <a href="/add-expense.html" class="nav-item">
+        <a href="/add.html" class="nav-item">
             <span>➕</span>
             <span>Add</span>
         </a>

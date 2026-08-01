@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - Transactions</title>
+    <title>Expense Tracker - Wallets & Accounts</title>
     <style>
         body {
             margin: 0;
@@ -46,30 +46,47 @@
             align-items: center;
             gap: 6px;
         }
-        .transaction-item {
+        .wallet-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
             border-bottom: 1px solid #334155;
         }
-        .transaction-item:last-child {
+        .wallet-item:last-child {
             border-bottom: none;
         }
-        .tx-info h4 {
+        .wallet-info h4 {
             margin: 0 0 4px 0;
             font-size: 0.95rem;
+            color: #f8fafc;
         }
-        .tx-info span {
-            font-size: 0.75rem;
+        .wallet-info p {
+            margin: 0;
+            font-size: 0.8rem;
             color: #94a3b8;
         }
-        .tx-amount {
+        .wallet-balance {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #38bdf8;
+        }
+        .add-wallet-btn {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
             font-weight: bold;
             font-size: 0.95rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s;
         }
-        .tx-amount.expense { color: #f87171; }
-        .tx-amount.income { color: #34d399; }
+        .add-wallet-btn:hover {
+            background-color: #2563eb;
+        }
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -101,53 +118,53 @@
 
     <!-- Top Header -->
     <div class="header">
-        <div class="logo">💳 Transactions History</div>
+        <div class="logo">💼 Wallets & Accounts</div>
     </div>
 
     <!-- Main Container -->
     <div class="container">
-        <div class="section-heading">📜 Recent Activity</div>
+        <div class="section-heading">💳 Connected Financial Accounts</div>
         
         <div class="card">
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Cloud Hosting Server</h4>
-                    <span>Tech • Today, 2:45 PM</span>
+            <div class="wallet-item">
+                <div class="wallet-info">
+                    <h4>Primary Checking</h4>
+                    <p>Global Bank • ****4821</p>
                 </div>
-                <div class="tx-amount expense">-$45.00</div>
+                <div class="wallet-balance">$4,250.00</div>
             </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Client Milestone Payout</h4>
-                    <span>Income • Yesterday, 10:15 AM</span>
+
+            <div class="wallet-item">
+                <div class="wallet-info">
+                    <h4>Savings Reserve</h4>
+                    <p>Cloud Treasury • ****9012</p>
                 </div>
-                <div class="tx-amount income">+$1,250.00</div>
+                <div class="wallet-balance">$12,800.50</div>
             </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Grocery Restock</h4>
-                    <span>Food • Jul 28, 630 PM</span>
+
+            <div class="wallet-item">
+                <div class="wallet-info">
+                    <h4>Crypto Vault</h4>
+                    <p>Solana / Multi-Chain • Web3</p>
                 </div>
-                <div class="tx-amount expense">-$120.50</div>
+                <div class="wallet-balance">$1,420.75</div>
             </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Subscription Renewal</h4>
-                    <span>Bills • Jul 25, 9:00 AM</span>
-                </div>
-                <div class="tx-amount expense">-$15.00</div>
-            </div>
+
+            <button class="add-wallet-btn" onclick="alert('Link new account modal opened!')">+ Connect New Account</button>
         </div>
     </div>
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
-        <a href="/dashboard.html" class="nav-item"><span>🏠</span><span>Home</span></a>
-        <a href="/transaction-detail.html" class="nav-item active">
+        <a href="/dashboard.html" class="nav-item">
+            <span>🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="/transactions.html" class="nav-item">
             <span>💳</span>
             <span>Transactions</span>
         </a>
-        <a href="/add-expense.html" class="nav-item">
+        <a href="/add.html" class="nav-item">
             <span>➕</span>
             <span>Add</span>
         </a>

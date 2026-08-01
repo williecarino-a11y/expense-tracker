@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - Transactions</title>
+    <title>Expense Tracker - Bills & Reminders</title>
     <style>
         body {
             margin: 0;
@@ -46,30 +46,65 @@
             align-items: center;
             gap: 6px;
         }
-        .transaction-item {
+        .bill-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
             border-bottom: 1px solid #334155;
         }
-        .transaction-item:last-child {
+        .bill-item:last-child {
             border-bottom: none;
         }
-        .tx-info h4 {
+        .bill-info h4 {
             margin: 0 0 4px 0;
             font-size: 0.95rem;
+            color: #f8fafc;
         }
-        .tx-info span {
-            font-size: 0.75rem;
+        .bill-info p {
+            margin: 0;
+            font-size: 0.8rem;
             color: #94a3b8;
         }
-        .tx-amount {
+        .bill-right {
+            text-align: right;
+        }
+        .bill-amount {
             font-weight: bold;
             font-size: 0.95rem;
+            color: #f8fafc;
+            margin-bottom: 4px;
         }
-        .tx-amount.expense { color: #f87171; }
-        .tx-amount.income { color: #34d399; }
+        .pay-btn {
+            background-color: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .pay-btn:hover {
+            background-color: #0ea5e9;
+        }
+        .add-bill-btn {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s;
+        }
+        .add-bill-btn:hover {
+            background-color: #2563eb;
+        }
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -101,53 +136,62 @@
 
     <!-- Top Header -->
     <div class="header">
-        <div class="logo">💳 Transactions History</div>
+        <div class="logo">🔔 Bills & Reminders</div>
     </div>
 
     <!-- Main Container -->
     <div class="container">
-        <div class="section-heading">📜 Recent Activity</div>
+        <div class="section-heading">📅 Upcoming Recurring Payments</div>
         
         <div class="card">
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Cloud Hosting Server</h4>
-                    <span>Tech • Today, 2:45 PM</span>
+            <div class="bill-item">
+                <div class="bill-info">
+                    <h4>Cloud Infrastructure / Render</h4>
+                    <p>Due in 3 days (Aug 4)</p>
                 </div>
-                <div class="tx-amount expense">-$45.00</div>
-            </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Client Milestone Payout</h4>
-                    <span>Income • Yesterday, 10:15 AM</span>
+                <div class="bill-right">
+                    <div class="bill-amount">$45.00</div>
+                    <button class="pay-btn" onclick="alert('Payment gateway initialized for Cloud Infrastructure!')">Pay Now</button>
                 </div>
-                <div class="tx-amount income">+$1,250.00</div>
             </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Grocery Restock</h4>
-                    <span>Food • Jul 28, 630 PM</span>
+
+            <div class="bill-item">
+                <div class="bill-info">
+                    <h4>Database Cluster / MongoDB</h4>
+                    <p>Due in 6 days (Aug 7)</p>
                 </div>
-                <div class="tx-amount expense">-$120.50</div>
-            </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Subscription Renewal</h4>
-                    <span>Bills • Jul 25, 9:00 AM</span>
+                <div class="bill-right">
+                    <div class="bill-amount">$29.00</div>
+                    <button class="pay-btn" onclick="alert('Payment gateway initialized for Database Cluster!')">Pay Now</button>
                 </div>
-                <div class="tx-amount expense">-$15.00</div>
             </div>
+
+            <div class="bill-item">
+                <div class="bill-info">
+                    <h4>Domain Registration / Xylotix</h4>
+                    <p>Due in 14 days (Aug 15)</p>
+                </div>
+                <div class="bill-right">
+                    <div class="bill-amount">$15.00</div>
+                    <button class="pay-btn" onclick="alert('Payment gateway initialized for Domain Registration!')">Pay Now</button>
+                </div>
+            </div>
+
+            <button class="add-bill-btn" onclick="alert('Add new recurring bill modal opened!')">+ Add New Bill Reminder</button>
         </div>
     </div>
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
-        <a href="/dashboard.html" class="nav-item"><span>🏠</span><span>Home</span></a>
-        <a href="/transaction-detail.html" class="nav-item active">
+        <a href="/dashboard.html" class="nav-item">
+            <span>🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="/transactions.html" class="nav-item">
             <span>💳</span>
             <span>Transactions</span>
         </a>
-        <a href="/add-expense.html" class="nav-item">
+        <a href="/add.html" class="nav-item">
             <span>➕</span>
             <span>Add</span>
         </a>

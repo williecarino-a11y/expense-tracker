@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - Transactions</title>
+    <title>Expense Tracker - Savings Goals</title>
     <style>
         body {
             margin: 0;
@@ -46,30 +46,49 @@
             align-items: center;
             gap: 6px;
         }
-        .transaction-item {
+        .goal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #334155;
+            margin-bottom: 8px;
         }
-        .transaction-item:last-child {
-            border-bottom: none;
-        }
-        .tx-info h4 {
-            margin: 0 0 4px 0;
+        .goal-title {
+            font-weight: 600;
             font-size: 0.95rem;
         }
-        .tx-info span {
-            font-size: 0.75rem;
+        .goal-amounts {
+            font-size: 0.85rem;
             color: #94a3b8;
         }
-        .tx-amount {
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background-color: #0f172a;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #38bdf8;
+            border-radius: 5px;
+        }
+        .add-goal-btn {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
             font-weight: bold;
             font-size: 0.95rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s;
         }
-        .tx-amount.expense { color: #f87171; }
-        .tx-amount.income { color: #34d399; }
+        .add-goal-btn:hover {
+            background-color: #2563eb;
+        }
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -101,53 +120,57 @@
 
     <!-- Top Header -->
     <div class="header">
-        <div class="logo">💳 Transactions History</div>
+        <div class="logo">🎯 Savings Goals</div>
     </div>
 
     <!-- Main Container -->
     <div class="container">
-        <div class="section-heading">📜 Recent Activity</div>
+        <div class="section-heading">🏆 Active Financial Targets</div>
         
         <div class="card">
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Cloud Hosting Server</h4>
-                    <span>Tech • Today, 2:45 PM</span>
-                </div>
-                <div class="tx-amount expense">-$45.00</div>
+            <div class="goal-header">
+                <span class="goal-title">🚀 Global App Infrastructure</span>
+                <span class="goal-amounts">$3,500 / $5,000</span>
             </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Client Milestone Payout</h4>
-                    <span>Income • Yesterday, 10:15 AM</span>
-                </div>
-                <div class="tx-amount income">+$1,250.00</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 70%;"></div>
             </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Grocery Restock</h4>
-                    <span>Food • Jul 28, 630 PM</span>
-                </div>
-                <div class="tx-amount expense">-$120.50</div>
+        </div>
+
+        <div class="card">
+            <div class="goal-header">
+                <span class="goal-title">🛡️ Emergency Buffer Fund</span>
+                <span class="goal-amounts">$8,200 / $10,000</span>
             </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Subscription Renewal</h4>
-                    <span>Bills • Jul 25, 9:00 AM</span>
-                </div>
-                <div class="tx-amount expense">-$15.00</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 82%; background-color: #34d399;"></div>
             </div>
+        </div>
+
+        <div class="card">
+            <div class="goal-header">
+                <span class="goal-title">💻 Advanced Workstation</span>
+                <span class="goal-amounts">$1,200 / $2,500</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 48%; background-color: #fbbf24;"></div>
+            </div>
+
+            <button class="add-goal-btn" onclick="alert('Create new savings goal modal opened!')">+ Create New Goal</button>
         </div>
     </div>
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
-        <a href="/dashboard.html" class="nav-item"><span>🏠</span><span>Home</span></a>
-        <a href="/transaction-detail.html" class="nav-item active">
+        <a href="/dashboard.html" class="nav-item">
+            <span>🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="/transactions.html" class="nav-item">
             <span>💳</span>
             <span>Transactions</span>
         </a>
-        <a href="/add-expense.html" class="nav-item">
+        <a href="/add.html" class="nav-item">
             <span>➕</span>
             <span>Add</span>
         </a>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Expense Tracker</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Account Settings</div>
+    </div>
+
+    <div class="container">
+        <div class="section-heading">Preferences & Configuration</div>
+
+        <div class="card">
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label class="form-label">Display Currency</label>
+                    <select class="form-select" id="currencySelect">
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="NGN">NGN (₦)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Language Preferences</label>
+                    <select class="form-select" id="languageSelect">
+                        <option value="en">English (Global)</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="zh">中文 (Chinese)</option>
+                    </select>
+                </div>
+
+                <div class="toggle-row">
+                    <span>Dark Theme Mode</span>
+                    <input type="checkbox" id="darkModeToggle">
+                </div>
+
+                <div class="toggle-row">
+                    <span>Push Notifications</span>
+                    <input type="checkbox" id="pushToggle" checked>
+                </div>
+
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar">
+        <a href="/dashboard.html" class="nav-item">
+            <span>🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="/transaction-detail.html" class="nav-item">
+            <span>💳</span>
+            <span>Transactions</span>
+        </a>
+        <a href="/add-expense.html" class="nav-item">
+            <span>➕</span>
+            <span>Add</span>
+        </a>
+        <a href="/analytics.html" class="nav-item">
+            <span>📈</span>
+            <span>Analytics</span>
+        </a>
+        <a href="/settings.html" class="nav-item active">
+            <span>⚙️</span>
+            <span>Settings</span>
+        </a>
+    </div>
+
+    <script>
+        document.getElementById('settingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const isDarkMode = document.getElementById('darkModeToggle').checked;
+            localStorage.setItem('darkMode', isDarkMode);
+            
+            if (isDarkMode) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedDark = localStorage.getItem('darkMode') === 'true';
+            const toggle = document.getElementById('darkModeToggle');
+            if (toggle) toggle.checked = savedDark;
+            if (savedDark) document.body.classList.add('dark');
+        });
+    </script>
+</body>
+</html>

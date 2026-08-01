@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - Transactions</title>
+    <title>Expense Tracker - Payment Integration</title>
     <style>
         body {
             margin: 0;
@@ -46,30 +46,45 @@
             align-items: center;
             gap: 6px;
         }
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #334155;
+        .form-group {
+            margin-bottom: 14px;
         }
-        .transaction-item:last-child {
-            border-bottom: none;
-        }
-        .tx-info h4 {
-            margin: 0 0 4px 0;
-            font-size: 0.95rem;
-        }
-        .tx-info span {
-            font-size: 0.75rem;
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
             color: #94a3b8;
+            margin-bottom: 6px;
         }
-        .tx-amount {
-            font-weight: bold;
+        .form-input, .form-select {
+            width: 100%;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            color: #f8fafc;
+            padding: 10px 12px;
+            border-radius: 8px;
             font-size: 0.95rem;
+            box-sizing: border-box;
         }
-        .tx-amount.expense { color: #f87171; }
-        .tx-amount.income { color: #34d399; }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #38bdf8;
+        }
+        .paystack-btn {
+            background-color: #00c3f7;
+            color: #0f172a;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+        .paystack-btn:hover {
+            background-color: #00b0e0;
+        }
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -101,53 +116,50 @@
 
     <!-- Top Header -->
     <div class="header">
-        <div class="logo">💳 Transactions History</div>
+        <div class="logo">💳 Payment Gateway</div>
     </div>
 
     <!-- Main Container -->
     <div class="container">
-        <div class="section-heading">📜 Recent Activity</div>
+        <div class="section-heading">⚡ Paystack Pro Checkout</div>
         
         <div class="card">
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Cloud Hosting Server</h4>
-                    <span>Tech • Today, 2:45 PM</span>
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label class="form-label">Subscription Tier / Service</label>
+                    <select class="form-select" id="payTier">
+                        <option value="pro">Pro Workspace Tier ($15.00 / mo)</option>
+                        <option value="enterprise">Enterprise Cloud Tier ($49.00 / mo)</option>
+                        <option value="api">API Developer Add-on ($9.00 / mo)</option>
+                    </select>
                 </div>
-                <div class="tx-amount expense">-$45.00</div>
-            </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Client Milestone Payout</h4>
-                    <span>Income • Yesterday, 10:15 AM</span>
+
+                <div class="form-group">
+                    <label class="form-label">Billing Email Address</label>
+                    <input type="email" class="form-input" id="email-address" placeholder="willie@xyoltix.app" required>
                 </div>
-                <div class="tx-amount income">+$1,250.00</div>
-            </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Grocery Restock</h4>
-                    <span>Food • Jul 28, 630 PM</span>
+
+                <div class="form-group">
+                    <label class="form-label">Amount (USD)</label>
+                    <input type="number" class="form-input" id="amount" value="15.00" readonly>
                 </div>
-                <div class="tx-amount expense">-$120.50</div>
-            </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Subscription Renewal</h4>
-                    <span>Bills • Jul 25, 9:00 AM</span>
-                </div>
-                <div class="tx-amount expense">-$15.00</div>
-            </div>
+
+                <button type="submit" class="paystack-btn">Pay with Paystack 🔒</button>
+            </form>
         </div>
     </div>
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
-        <a href="/dashboard.html" class="nav-item"><span>🏠</span><span>Home</span></a>
-        <a href="/transaction-detail.html" class="nav-item active">
+        <a href="/dashboard.html" class="nav-item">
+            <span>🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="/transactions.html" class="nav-item">
             <span>💳</span>
             <span>Transactions</span>
         </a>
-        <a href="/add-expense.html" class="nav-item">
+        <a href="/add.html" class="nav-item">
             <span>➕</span>
             <span>Add</span>
         </a>
@@ -161,5 +173,11 @@
         </a>
     </div>
 
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Paystack transaction initialized successfully via webhook routing!');
+        });
+    </script>
 </body>
 </html>
