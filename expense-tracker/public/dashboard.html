@@ -1,153 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - Transactions</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #0f172a;
-            color: #f8fafc;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            padding-bottom: 70px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            background-color: #1e293b;
-            border-bottom: 1px solid #334155;
-        }
-        .logo {
-            font-size: 1.25rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .container {
-            padding: 16px;
-        }
-        .card {
-            background-color: #1e293b;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .section-heading {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #334155;
-        }
-        .transaction-item:last-child {
-            border-bottom: none;
-        }
-        .tx-info h4 {
-            margin: 0 0 4px 0;
-            font-size: 0.95rem;
-        }
-        .tx-info span {
-            font-size: 0.75rem;
-            color: #94a3b8;
-        }
-        .tx-amount {
-            font-weight: bold;
-            font-size: 0.95rem;
-        }
-        .tx-amount.expense { color: #f87171; }
-        .tx-amount.income { color: #34d399; }
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #1e293b;
-            border-top: 1px solid #334155;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 1000;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 0.75rem;
-            gap: 4px;
-            cursor: pointer;
-        }
-        .nav-item.active {
-            color: #38bdf8;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Expense Tracker</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-    <!-- Top Header -->
-    <div class="header">
-        <div class="logo">💰 Dashboard</div>
+  <!-- Top Header -->
+  <div class="header">
+    <div class="logo">💰 Dashboard</div>
+    <div class="header-right" style="display: flex; gap: 15px; align-items: center;">
+      <span>🔔</span>
+      <span>👤</span>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+    
+    <!-- Welcome Greeting Card -->
+    <div class="card" style="margin-bottom: 20px;">
+      <h3 style="margin: 0 0 5px 0; color: #38bdf8;">👋 Good Morning, Willie</h3>
+      <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">"Take control of your finances."</p>
     </div>
 
-    <!-- Main Container -->
-    <div class="container">
-        <div class="section-heading">📜 Recent Activity</div>
-        
-        <div class="card">
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Cloud Hosting Server</h4>
-                    <span>Tech • Today, 2:45 PM</span>
-                </div>
-                <div class="tx-amount expense">-$45.00</div>
-            </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Client Milestone Payout</h4>
-                    <span>Income • Yesterday, 10:15 AM</span>
-                </div>
-                <div class="tx-amount income">+$1,250.00</div>
-            </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Grocery Restock</h4>
-                    <span>Food • Jul 28, 630 PM</span>
-                </div>
-                <div class="tx-amount expense">-$120.50</div>
-            </div>
-            <div class="transaction-item">
-                <div class="tx-info">
-                    <h4>Subscription Renewal</h4>
-                    <span>Bills • Jul 25, 9:00 AM</span>
-                </div>
-                <div class="tx-amount expense">-$15.00</div>
-            </div>
+    <!-- Total Balance Card -->
+    <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #1e293b, #0f172a);">
+      <span style="color: #94a3b8; font-size: 0.85rem;">Total Balance</span>
+      <h1 style="margin: 5px 0 15px 0; font-size: 2rem; color: #fff;">$12,540.50</h1>
+      
+      <!-- Quick Action Grid -->
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+        <a href="/add-expense.html" style="padding: 10px; background: #334155; color: #fff; text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 500;">➕ Add Income</a>
+        <a href="/add-expense.html" style="padding: 10px; background: #334155; color: #fff; text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 500;">➖ Add Expense</a>
+      </div>
+    </div>
+
+    <!-- Recent Activity Card -->
+    <div class="card">
+      <div class="section-heading" style="margin-bottom: 15px; font-weight: bold; color: #f8fafc;">📜 Recent Activity</div>
+      
+      <div class="transaction-item" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #334155;">
+        <div class="tx-info">
+          <h4 style="margin: 0; font-size: 0.95rem; color: #e2e8f0;">Cloud Hosting Server</h4>
+          <span style="font-size: 0.8rem; color: #94a3b8;">Tech • Today, 2:45 PM</span>
         </div>
+        <div class="tx-amount expense" style="color: #f87171; font-weight: bold;">-$45.00</div>
+      </div>
+
+      <div class="transaction-item" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #334155;">
+        <div class="tx-info">
+          <h4 style="margin: 0; font-size: 0.95rem; color: #e2e8f0;">Client Milestone Payout</h4>
+          <span style="font-size: 0.8rem; color: #94a3b8;">Income • Yesterday, 10:15 AM</span>
+        </div>
+        <div class="tx-amount income" style="color: #4ade80; font-weight: bold;">+$1,250.00</div>
+      </div>
+
+      <div class="transaction-item" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #334155;">
+        <div class="tx-info">
+          <h4 style="margin: 0; font-size: 0.95rem; color: #e2e8f0;">Grocery Restock</h4>
+          <span style="font-size: 0.8rem; color: #94a3b8;">Food • Jul 28, 6:30 PM</span>
+        </div>
+        <div class="tx-amount expense" style="color: #f87171; font-weight: bold;">-$120.50</div>
+      </div>
+
+      <div class="transaction-item" style="display: flex; justify-content: space-between; padding: 10px 0;">
+        <div class="tx-info">
+          <h4 style="margin: 0; font-size: 0.95rem; color: #e2e8f0;">Subscription Renewal</h4>
+          <span style="font-size: 0.8rem; color: #94a3b8;">Bills • Jul 25, 9:00 AM</span>
+        </div>
+        <div class="tx-amount expense" style="color: #f87171; font-weight: bold;">-$15.00</div>
+      </div>
     </div>
 
-    <!-- Bottom Navigation Bar -->
-<div class="nav-bar">
-  <a href="/dashboard.html" class="nav-item"><span>🏠</span><span>Home</span></a>
-  <a href="/transactions.html" class="nav-item"><span>💳</span><span>Transactions</span></a>
-  <a href="/add-expense.html" class="nav-item"><span>➕</span><span>Add</span></a>
-  <a href="/analytics.html" class="nav-item"><span>📈</span><span>Analytics</span></a>
-  <a href="/settings.html" class="nav-item"><span>⚙️</span><span>Settings</span></a>
-</div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="nav-bar">
+    <a href="/dashboard.html" class="nav-item active"><span>🏠</span><span>Home</span></a>
+    <a href="/transactions.html" class="nav-item"><span>💳</span><span>Transactions</span></a>
+    <a href="/add-expense.html" class="nav-item"><span>➕</span><span>Add</span></a>
+    <a href="/analytics.html" class="nav-item"><span>📈</span><span>Analytics</span></a>
+    <a href="/settings.html" class="nav-item"><span>⚙️</span><span>Settings</span></a>
+  </div>
 
 </body>
 </html>
