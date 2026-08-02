@@ -7,93 +7,60 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <!-- Top Header -->
     <div class="header">
-        <div class="logo">Account Settings</div>
+        <div>App Settings</div>
     </div>
 
+    <!-- Main Container -->
     <div class="container">
-        <div class="section-heading">Preferences & Configuration</div>
+        <!-- Preferences Card -->
+        <div class="card" style="margin-bottom: 20px;">
+            <div style="font-weight: bold; margin-bottom: 10px; color: #ffafc7;">Appearance</div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="color: #e2e8f0; font-size: 0.9rem;">Dark Mode Theme</span>
+                <input type="checkbox" id="themeToggle" checked style="accent-color: #f87171; width: 18px; height: 18px;">
+            </div>
+        </div>
 
+        <!-- Pro Tier Subscription Card (Paystack Integration) -->
+        <div class="card" style="margin-bottom: 20px;">
+            <div style="font-weight: bold; margin-bottom: 5px; color: #ffafc7;">Pro Tier Access</div>
+            <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 15px;">Upgrade via Paystack for advanced global analytics and automated webhook sync.</p>
+            <button id="paystackBtn" style="background-color: #f87171; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; width: 100%; cursor: pointer;">Upgrade to Pro ($10/mo)</button>
+        </div>
+
+        <!-- Account Management Card -->
         <div class="card">
-            <form id="settingsForm">
-                <div class="form-group">
-                    <label class="form-label">Display Currency</label>
-                    <select class="form-select" id="currencySelect">
-                        <option value="USD">USD ($)</option>
-                        <option value="EUR">EUR (€)</option>
-                        <option value="GBP">GBP (£)</option>
-                        <option value="NGN">NGN (₦)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Language Preferences</label>
-                    <select class="form-select" id="languageSelect">
-                        <option value="en">English (Global)</option>
-                        <option value="es">Español</option>
-                        <option value="fr">Français</option>
-                        <option value="de">Deutsch</option>
-                        <option value="zh">中文 (Chinese)</option>
-                    </select>
-                </div>
-
-                <div class="toggle-row">
-                    <span>Dark Theme Mode</span>
-                    <input type="checkbox" id="darkModeToggle">
-                </div>
-
-                <div class="toggle-row">
-                    <span>Push Notifications</span>
-                    <input type="checkbox" id="pushToggle" checked>
-                </div>
-
-                <button type="submit" class="save-btn">Save Changes</button>
-            </form>
+            <div style="font-weight: bold; margin-bottom: 10px; color: #ffafc7;">Account Actions</div>
+            <a href="/login.html" style="color: #f87171; text-decoration: none; font-size: 0.9rem; font-weight: bold;">Log Out of Session</a>
         </div>
     </div>
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
-        <a href="/dashboard.html" class="nav-item">
-            <span>🏠</span>
-            <span>Home</span>
-        </a>
-        <a href="/transaction-detail.html" class="nav-item">
-            <span>💳</span>
-            <span>Transactions</span>
-        </a>
-        <a href="/add-expense.html" class="nav-item">
-            <span>➕</span>
-            <span>Add</span>
-        </a>
-        <a href="/analytics.html" class="nav-item">
-            <span>📈</span>
-            <span>Analytics</span>
-        </a>
-        <a href="/settings.html" class="nav-item active">
-            <span>⚙️</span>
-            <span>Settings</span>
-        </a>
+        <a href="/dashboard.html" class="nav-item"><span>🔥</span><span>Home</span></a>
+        <a href="/transactions.html" class="nav-item"><span>📋</span><span>History</span></a>
+        <a href="/add-expense.html" class="nav-item"><span>➕</span><span>Add</span></a>
+        <a href="/analytics.html" class="nav-item"><span>📊</span><span>Analytics</span></a>
+        <a href="/settings.html" class="nav-item active"><span>⚙️</span><span>Settings</span></a>
     </div>
 
     <script>
-        document.getElementById('settingsForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const isDarkMode = document.getElementById('darkModeToggle').checked;
-            localStorage.setItem('darkMode', isDarkMode);
-            
-            if (isDarkMode) {
-                document.body.classList.add('dark');
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.body.style.backgroundColor = '#0f172a';
             } else {
-                document.body.classList.remove('dark');
+                document.body.style.backgroundColor = '#f8fafc';
             }
         });
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedDark = localStorage.getItem('darkMode') === 'true';
-            const toggle = document.getElementById('darkModeToggle');
-            if (toggle) toggle.checked = savedDark;
-            if (savedDark) document.body.classList.add('dark');
+        // Paystack Trigger Hook
+        const paystackBtn = document.getElementById('paystackBtn');
+        paystackBtn.addEventListener('click', () => {
+            alert('Initializing Paystack secure checkout gateway for global billing...');
         });
     </script>
 </body>

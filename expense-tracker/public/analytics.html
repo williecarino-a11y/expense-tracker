@@ -3,120 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - Analytics</title>
-    <!-- Chart.js for interactive analytics charts -->
+    <title>Financial Analytics - Expense Tracker</title>
+    <link rel="stylesheet" href="/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #0f172a;
-            color: #f8fafc;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            padding-bottom: 70px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            background-color: #1e293b;
-            border-bottom: 1px solid #334155;
-        }
-        .logo {
-            font-size: 1.25rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .container {
-            padding: 16px;
-        }
-        .card {
-            background-color: #1e293b;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #94a3b8;
-            margin: 0 0 10px 0;
-        }
-        .section-heading {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .chart-container {
-            position: relative;
-            height: 220px;
-            width: 100%;
-        }
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #1e293b;
-            border-top: 1px solid #334155;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 1000;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 0.75rem;
-            gap: 4px;
-            cursor: pointer;
-        }
-        .nav-item.active {
-            color: #38bdf8;
-        }
-    </style>
 </head>
 <body>
-
     <!-- Top Header -->
     <div class="header">
-        <div class="logo">📈 Financial Analytics</div>
+        <div>Financial Analytics</div>
     </div>
 
     <!-- Main Container -->
     <div class="container">
-        <div class="section-heading">📊 Deep-Dive Visual Reports</div>
-        
         <!-- Line Chart Card -->
-        <div class="card">
-            <h3 class="card-title">Monthly Spending Trend</h3>
-            <div class="chart-container">
+        <div class="card" style="margin-bottom: 20px;">
+            <div style="font-weight: bold; margin-bottom: 10px; color: #ffafc7;">Deep-Dive Visual Reports</div>
+            <div style="height: 220px; position: relative;">
                 <canvas id="lineChart"></canvas>
             </div>
         </div>
 
         <!-- Bar Chart Card -->
-        <div class="card">
-            <h3 class="card-title">Category Breakdown</h3>
-            <div class="chart-container">
+        <div class="card" style="margin-bottom: 20px;">
+            <div style="font-weight: bold; margin-bottom: 10px; color: #ffafc7;">Monthly Spending Trend</div>
+            <div style="height: 220px; position: relative;">
                 <canvas id="barChart"></canvas>
             </div>
         </div>
 
         <!-- Pie Chart Card -->
-        <div class="card">
-            <h3 class="card-title">Expense Distribution</h3>
-            <div class="chart-container" style="height: 250px;">
+        <div class="card" style="margin-bottom: 20px;">
+            <div style="font-weight: bold; margin-bottom: 10px; color: #ffafc7;">Expense Distribution</div>
+            <div style="height: 220px; position: relative;">
                 <canvas id="pieChart"></canvas>
             </div>
         </div>
@@ -124,26 +42,11 @@
 
     <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
-        <a href="/dashboard.html" class="nav-item">
-            <span>🏠</span>
-            <span>Home</span>
-        </a>
-        <a href="/transactions.html" class="nav-item">
-            <span>💳</span>
-            <span>Transactions</span>
-        </a>
-        <a href="/add.html" class="nav-item">
-            <span>➕</span>
-            <span>Add</span>
-        </a>
-        <a href="/analytics.html" class="nav-item active">
-            <span>📈</span>
-            <span>Analytics</span>
-        </a>
-        <a href="/settings.html" class="nav-item">
-            <span>⚙️</span>
-            <span>Settings</span>
-        </a>
+        <a href="/dashboard.html" class="nav-item"><span>🔥</span><span>Home</span></a>
+        <a href="/transactions.html" class="nav-item"><span>📋</span><span>History</span></a>
+        <a href="/add-expense.html" class="nav-item"><span>➕</span><span>Add</span></a>
+        <a href="/analytics.html" class="nav-item active"><span>📊</span><span>Analytics</span></a>
+        <a href="/settings.html" class="nav-item"><span>⚙️</span><span>Settings</span></a>
     </div>
 
     <script>
@@ -152,13 +55,12 @@
         new Chart(ctxLine, {
             type: 'line',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                 datasets: [{
                     label: 'Spending ($)',
-                    data: [400, 650, 500, 900, 750, 1100, 1450],
-                    borderColor: '#38bdf8',
-                    backgroundColor: 'rgba(56, 189, 248, 0.1)',
-                    borderWidth: 2,
+                    data: [1200, 1900, 1500, 2200, 1800, 2400],
+                    borderColor: '#f87171',
+                    backgroundColor: 'rgba(248, 113, 113, 0.1)',
                     fill: true,
                     tension: 0.3
                 }]
@@ -168,7 +70,7 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
                     y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } }
                 }
             }
@@ -182,8 +84,8 @@
                 labels: ['Food', 'Bills', 'Tech', 'Travel', 'Misc'],
                 datasets: [{
                     label: 'Amount ($)',
-                    data: [450, 300, 350, 200, 150],
-                    backgroundColor: ['#f87171', '#38bdf8', '#fbbf24', '#34d399', '#a78bfa'],
+                    data: [450, 600, 350, 500, 200],
+                    backgroundColor: '#f87171',
                     borderRadius: 6
                 }]
             },
@@ -205,8 +107,8 @@
             data: {
                 labels: ['Food', 'Bills', 'Tech', 'Travel', 'Misc'],
                 datasets: [{
-                    data: [450, 300, 350, 200, 150],
-                    backgroundColor: ['#f87171', '#38bdf8', '#fbbf24', '#34d399', '#a78bfa'],
+                    data: [450, 600, 350, 500, 200],
+                    backgroundColor: ['#f87171', '#fbbf24', '#38bdf8', '#34d399', '#a78bfa'],
                     borderWidth: 0
                 }]
             },
@@ -216,7 +118,7 @@
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: '#f8fafc', boxWidth: 12 }
+                        labels: { color: '#e2e8f0', boxWidth: 12 }
                     }
                 }
             }

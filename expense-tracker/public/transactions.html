@@ -76,6 +76,22 @@
     <a href="/analytics.html" class="nav-item"><span>📈</span><span>Analytics</span></a>
     <a href="/settings.html" class="nav-item"><span>⚙️</span><span>Settings</span></a>
   </div>
+<script>
+        const searchInput = document.querySelector('input[placeholder*="Search transactions"]');
+        const transactionItems = document.querySelectorAll('.transaction-item');
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            transactionItems.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                if (text.includes(term)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

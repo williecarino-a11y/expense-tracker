@@ -3,161 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f0f2f5;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .main-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            padding: 20px;
-        }
-
-        .auth-card {
-            background: #ffffff;
-            padding: 40px 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .auth-card h2 {
-            font-size: 24px;
-            color: #1a1a1a;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 24px;
-        }
-
-        .input-group {
-            text-align: left;
-            margin-bottom: 16px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #444;
-            margin-bottom: 6px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .input-group input:focus {
-            border-color: #6366f1;
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 12px;
-            background-color: #6366f1;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: background-color 0.2s;
-        }
-
-        .btn-primary:hover {
-            background-color: #4f46e5;
-        }
-
-        .site-footer {
-            margin-top: 24px;
-            font-size: 13px;
-            color: #888;
-            text-align: center;
-        }
-    </style>
+    <title>Xylotix Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="main-wrapper">
-        <div class="auth-card">
-            <h2>Expense Tracker</h2>
-            <p class="subtitle">Manage your finances seamlessly</p>
-            
-            <form id="loginForm">
-                <div class="input-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="name@example.com" required>
-                </div>
-                
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="••••••••" required>
-                </div>
-                
-                <button type="submit" class="btn-primary">Log In</button>
-            </form>
+<body class="dashboard-body">
+
+    <!-- Header Section -->
+    <header class="app-header">
+        <div class="header-left">
+            <span class="menu-toggle" id="menu-toggle">☰</span>
+        </div>
+        <div class="header-right">
+            <a href="notifications.html" class="icon-btn" id="notif-btn">🔔<span class="badge">3</span></a>
+            <a href="profile.html" class="icon-btn" id="profile-btn">👤</a>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Content -->
+    <main class="main-content-wrapper">
+        <section class="welcome-section">
+            <h2 id="user-greeting">Good Morning, Willie</h2>
+            <p class="insight-badge">You're spending 8% less than last week. Keep it up!</p>
+        </section>
+
+        <!-- Main Balance Card -->
+        <div class="balance-card">
+            <p>Total Balance</p>
+            <h1>$12,540.50</h1>
         </div>
 
-        <footer class="site-footer">
-            Designed and Developed by Willie Carino
-        </footer>
-    </div>
-<script>
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+        <!-- Quick Statistics Mini-Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span>Income</span>
+                <h3>$4,200.00</h3>
+            </div>
+            <div class="stat-card">
+                <span>Expenses</span>
+                <h3>$1,459.50</h3>
+            </div>
+            <div class="stat-card">
+                <span>Savings</span>
+                <h3>$3,200.00</h3>
+            </div>
+        </div>
 
-            try {
-                const response = await fetch('/api/users/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
-                });
+        <!-- Recent Transactions -->
+        <div class="section-header">
+            <h3>Recent Transactions</h3>
+            <a href="transactions.html">See All</a>
+        </div>
+        <div class="transactions-list">
+            <div class="transaction-item">
+                <div class="tx-icon food">🍔</div>
+                <div class="tx-info">
+                    <h4>Groceries</h4>
+                    <p>Today, 2:45 PM</p>
+                </div>
+                <div class="tx-amount negative">-$45.00</div>
+            </div>
+        </div>
+    </main>
 
-                const data = await response.json();
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item active">Home</a>
+        <a href="transactions.html" class="nav-item">Transactions</a>
+        <a href="add-expense.html" class="nav-item">Add</a>
+        <a href="analytics.html" class="nav-item">Analytics</a>
+        <a href="settings.html" class="nav-item">Settings</a>
+    </nav>
 
-                if (response.ok) {
-                    // Redirect to dashboard on successful login
-                    window.location.href = '/dashboard.html';
-                } else {
-                    alert(data.message || 'Login failed. Please check your credentials.');
-                }
-            } catch (err) {
-                console.error('Error connecting to server:', err);
-                alert('An error occurred. Please try again.');
-            }
-        });
-    </script>
+    <style>
+        body.dashboard-body {
+            background-color: #0f0f0f;
+            color: #ffffff;
+            font-family: sans-serif;
+            margin: 0;
+            padding-bottom: 110px; /* Crucial: Prevents bottom nav overlap */
+        }
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #222;
+        }
+        .menu-toggle {
+            font-size: 22px;
+            cursor: pointer;
+        }
+        .header-right {
+            display: flex;
+            gap: 15px;
+        }
+        .icon-btn {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 8px;
+            border-radius: 50%;
+            text-decoration: none;
+            position: relative;
+            font-size: 14px;
+        }
+        .badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 50%;
+        }
+        .main-content-wrapper {
+            padding: 20px;
+        }
+        .welcome-section h2 {
+            margin: 0 0 5px 0;
+            font-size: 20px;
+        }
+        .insight-badge {
+            color: #10b981;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .balance-card {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .balance-card p {
+            margin: 0;
+            color: #93c5fd;
+            font-size: 14px;
+        }
+        .balance-card h1 {
+            margin: 10px 0 0 0;
+            font-size: 28px;
+        }
+        .stats-grid {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            flex: 1;
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #262626;
+            text-align: center;
+        }
+        .stat-card span {
+            font-size: 12px;
+            color: #888;
+        }
+        .stat-card h3 {
+            margin: 8px 0 0 0;
+            font-size: 15px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .section-header h3 {
+            font-size: 16px;
+            margin: 0;
+        }
+        .section-header a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .transactions-list {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #262626;
+        }
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .tx-icon {
+            font-size: 18px;
+            background: #262626;
+            padding: 8px;
+            border-radius: 8px;
+            margin-right: 12px;
+        }
+        .tx-info {
+            flex: 1;
+        }
+        .tx-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+        }
+        .tx-info p {
+            margin: 0;
+            font-size: 11px;
+            color: #888;
+        }
+        .tx-amount.negative {
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #121212;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #222;
+            z-index: 1000;
+        }
+        .nav-item {
+            color: #888;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .nav-item.active {
+            color: #3b82f6;
+        }
+    </style>
 </body>
 </html>
