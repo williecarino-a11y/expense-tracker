@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xylotix - Settings</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body style="background: #0f172a; color: white; font-family: sans-serif; padding: 20px; margin: 0;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <h1 style="font-size: 1.5rem; color: #38bdf8; margin: 0;">Settings</h1>
+            <a href="/dashboard.html" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem;">&larr; Back to Dashboard</a>
+        </div>
+
+        <!-- --- Language & Currency Preferences Section --- -->
+        <div id="preferences-settings-card" style="background: #1e293b; padding: 20px; border-radius: 12px; margin-top: 20px; color: white;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #38bdf8;">App Preferences</h3>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="language-select" style="display: block; font-size: 0.9rem; margin-bottom: 5px; color: #94a3b8;">Display Language</label>
+                <select id="language-select" style="width: 100%; padding: 10px; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 8px;">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="currency-select" style="display: block; font-size: 0.9rem; margin-bottom: 5px; color: #94a3b8;">Default Currency</label>
+                <select id="currency-select" style="width: 100%; padding: 10px; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 8px;">
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="NGN">NGN (₦)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Global Dark Theme State Persistence ---
+        (function() {
+            const savedTheme = localStorage.getItem('preferred_theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+</body>
+</html>

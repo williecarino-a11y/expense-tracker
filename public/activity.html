@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xylotix - Activity Audit Trail</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body style="background: #0f172a; color: white; font-family: sans-serif; padding: 20px; margin: 0; padding-bottom: 80px;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <h1 style="font-size: 1.5rem; color: #38bdf8; margin: 0;">Activity Audit Log</h1>
+            <a href="/dashboard.html" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem;">&larr; Back</a>
+        </div>
+
+        <!-- Activity Log Card -->
+        <div style="background: #1e293b; padding: 20px; border-radius: 12px;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #38bdf8;">Recent Account Actions</h3>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #334155;">
+                <div>
+                    <span style="display: block; font-weight: bold; font-size: 0.95rem;">Profile details updated</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">IP: 197.210.xx.xx</span>
+                </div>
+                <span style="font-size: 0.8rem; color: #38bdf8;">Today, 14:30</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #334155;">
+                <div>
+                    <span style="display: block; font-weight: bold; font-size: 0.95rem;">New transaction added</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">Category: Software Subscriptions</span>
+                </div>
+                <span style="font-size: 0.8rem; color: #38bdf8;">Yesterday</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #334155;">
+                <div>
+                    <span style="display: block; font-weight: bold; font-size: 0.95rem;">Paystack subscription webhook verified</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">Pro-tier checkout</span>
+                </div>
+                <span style="font-size: 0.8rem; color: #38bdf8;">3 days ago</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                <div>
+                    <span style="display: block; font-weight: bold; font-size: 0.95rem;">Successful secure login</span>
+                    <span style="font-size: 0.8rem; color: #94a3b8;">Session authenticated</span>
+                </div>
+                <span style="font-size: 0.8rem; color: #38bdf8;">4 days ago</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 1px solid #334155; display: flex; justify-content: space-around; padding: 12px 0;">
+        <a href="/dashboard.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Dashboard</a>
+        <a href="/reports.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Reports</a>
+        <a href="/settings.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Settings</a>
+    </div>
+</body>
+</html>

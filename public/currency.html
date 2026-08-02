@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xylotix - Multi-Currency Support</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body style="background: #0f172a; color: white; font-family: sans-serif; padding: 20px; margin: 0; padding-bottom: 80px;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <h1 style="font-size: 1.5rem; color: #38bdf8; margin: 0;">Currency Settings</h1>
+            <a href="/dashboard.html" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem;">&larr; Back</a>
+        </div>
+
+        <!-- Currency Selector Card -->
+        <div style="background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #38bdf8;">Default Display Currency</h3>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 0.9rem; margin-bottom: 5px; color: #94a3b8;">Select Currency</label>
+                <select id="currency-select" style="width: 100%; padding: 10px; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 8px; box-sizing: border-box;">
+                    <option value="USD">USD ($) - US Dollar</option>
+                    <option value="EUR">EUR (€) - Euro</option>
+                    <option value="GBP">GBP (£) - British Pound</option>
+                    <option value="NGN">NGN (₦) - Nigerian Naira</option>
+                </select>
+            </div>
+            <button style="width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">Save Currency Preference</button>
+        </div>
+
+        <!-- Exchange Rate Info -->
+        <div style="background: #1e293b; padding: 20px; border-radius: 12px;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #38bdf8;">Live Conversion Rates</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin: 0;">Exchange rates update automatically to normalize totals across international transactions for global scalability.</p>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 1px solid #334155; display: flex; justify-content: space-around; padding: 12px 0;">
+        <a href="/dashboard.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Dashboard</a>
+        <a href="/reports.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Reports</a>
+        <a href="/settings.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Settings</a>
+    </div>
+</body>
+</html>

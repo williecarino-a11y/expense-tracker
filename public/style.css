@@ -78,3 +78,20 @@ body {
     color: #f87171;
     font-weight: bold;
 }
+/* --- Mobile Responsive Layout Optimizations --- */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px !important;
+    }
+    
+    .container, div[style*="max-width"] {
+        width: 100% !important;
+        padding: 12px !important;
+        box-sizing: border-box;
+    }
+
+    input, select, button {
+        font-size: 16px !important; /* Prevents auto-zoom on iOS/Android */
+        padding: 12px !important;
+    }
+}

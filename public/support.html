@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xylotix - Help & Support</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body style="background: #0f172a; color: white; font-family: sans-serif; padding: 20px; margin: 0; padding-bottom: 80px;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <h1 style="font-size: 1.5rem; color: #38bdf8; margin: 0;">Help & Support</h1>
+            <a href="/dashboard.html" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem;">&larr; Back</a>
+        </div>
+
+        <!-- Search Knowledge Base Card -->
+        <div style="background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #38bdf8;">How can we help you today?</h3>
+            <input type="text" placeholder="Search FAQs (e.g., currency, webhook, export)..." style="width: 100%; padding: 12px; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 8px; box-sizing: border-box;">
+        </div>
+
+        <!-- FAQ Accordion / List Card -->
+        <div style="background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #38bdf8;">Frequently Asked Questions</h3>
+            
+            <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #334155;">
+                <strong style="display: block; font-size: 0.95rem; margin-bottom: 5px; color: white;">How do I update my default currency?</strong>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Navigate to Settings and select Currency Settings to update your preferred display currency instantly.</p>
+            </div>
+
+            <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #334155;">
+                <strong style="display: block; font-size: 0.95rem; margin-bottom: 5px; color: white;">Are my financial records securely encrypted?</strong>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Yes, all data synced to MongoDB Atlas and transaction logs are handled with end-to-end security protocols.</p>
+            </div>
+
+            <div>
+                <strong style="display: block; font-size: 0.95rem; margin-bottom: 5px; color: white;">How do I export my transaction data?</strong>
+                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">Visit the Data Export page to download your complete logs in either CSV or JSON format.</p>
+            </div>
+        </div>
+
+        <!-- Contact Support Card -->
+        <div style="background: #1e293b; padding: 20px; border-radius: 12px;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #38bdf8;">Still need assistance?</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px;">Send a message directly to our engineering support team.</p>
+            <textarea placeholder="Describe your issue..." rows="4" style="width: 100%; padding: 10px; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 8px; box-sizing: border-box; margin-bottom: 15px;"></textarea>
+            <button style="width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; font-weight: bold; border: none; border-radius: 8px; cursor: pointer;">Submit Support Ticket</button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 1px solid #334155; display: flex; justify-content: space-around; padding: 12px 0;">
+        <a href="/dashboard.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Dashboard</a>
+        <a href="/reports.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Reports</a>
+        <a href="/settings.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Settings</a>
+    </div>
+</body>
+</html>

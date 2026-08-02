@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xylotix - Reports & Analytics</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body style="background: #0f172a; color: white; font-family: sans-serif; padding: 20px; margin: 0; padding-bottom: 80px;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+            <h1 style="font-size: 1.5rem; color: #38bdf8; margin: 0;">Reports & Analytics</h1>
+            <a href="/dashboard.html" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem;">&larr; Back</a>
+        </div>
+
+        <!-- Summary Card -->
+        <div style="background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #38bdf8;">Monthly Financial Overview</h3>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span style="color: #94a3b8;">Total Income:</span>
+                <span id="report-income" style="color: #10b981; font-weight: bold;">$0.00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span style="color: #94a3b8;">Total Expenses:</span>
+                <span id="report-expenses" style="color: #f43f5e; font-weight: bold;">$0.00</span>
+            </div>
+            <hr style="border: 0; border-top: 1px solid #334155; margin: 15px 0;">
+            <div style="display: flex; justify-content: space-between;">
+                <span style="color: #94a3b8;">Net Balance:</span>
+                <span id="report-net" style="font-weight: bold; font-size: 1.2rem;">$0.00</span>
+            </div>
+        </div>
+
+        <!-- Analytics Visual Section -->
+        <div style="background: #1e293b; padding: 20px; border-radius: 12px;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: #38bdf8;">Spending Breakdown</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin: 0;">Category distribution analysis is active based on current transaction logs.</p>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="nav-bar" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 1px solid #334155; display: flex; justify-content: space-around; padding: 12px 0;">
+        <a href="/dashboard.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Dashboard</a>
+        <a href="/reports.html" class="nav-item active" style="color: #38bdf8; text-decoration: none; font-size: 0.8rem; font-weight: bold;">Reports</a>
+        <a href="/settings.html" class="nav-item" style="color: #94a3b8; text-decoration: none; font-size: 0.8rem;">Settings</a>
+    </div>
+</body>
+</html>
