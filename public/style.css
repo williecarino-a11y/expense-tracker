@@ -1,0 +1,80 @@
+body {
+    background-color: #0f172a;
+    color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 70px;
+}
+
+.header {
+    background-color: #0f172a;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    font-weight: bold;
+    font-size: 1.25rem;
+    padding: 16px;
+    border-bottom: 1px solid #334155;
+}
+
+.container {
+    padding: 16px;
+}
+
+.card {
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #334155;
+}
+
+.nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1e293b;
+    border-top: 1px solid #334155;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.75rem;
+    gap: 4px;
+}
+
+.nav-item.active {
+    color: #38bdf8;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #334155;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.tx-amount.income {
+    color: #4ade80;
+    font-weight: bold;
+}
+
+.tx-amount.expense {
+    color: #f87171;
+    font-weight: bold;
+}
