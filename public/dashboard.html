@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Expense Tracker</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="header">
+        <div>Dashboard</div>
+        <a href="/settings.html" style="color: #f87171; text-decoration: none; font-size: 1.2rem;">⚙️</a>
+    </div>
+
+    <div class="container">
+        <!-- Welcome Card -->
+        <div class="card" style="margin-bottom: 16px;">
+          <div id="welcomeMessage" style="font-size: 1.1rem; font-weight: bold; color: #38bdf8;">👋 Welcome back</div>
+            <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">Global multi-tier tracking active.</div>
+        </div>
+
+        <!-- Balance Card -->
+        <div class="card" style="margin-bottom: 16px;">
+            <div style="font-size: 0.85rem; color: #94a3b8;">Total Balance</div>
+            <div id="totalBalance" style="font-size: 1.8rem; font-weight: bold; margin: 8px 0;">$0.00</div>
+            <div style="display: flex; gap: 10px; margin-top: 12px;">
+                <a href="/add-expense.html" style="flex: 1; text-align: center; background: #22c55e; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">+ Add Income</a>
+                <a href="/add-expense.html" style="flex: 1; text-align: center; background: #ef4444; color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">- Add Expense</a>
+            </div>
+        </div>
+
+        <!-- Live Transactions Card -->
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span style="font-weight: bold; color: #ffafc7;">Recent Activity</span>
+                <a href="/transactions.html" style="font-size: 0.8rem; color: #38bdf8; text-decoration: none;">View All</a>
+            </div>
+            <div id="transactionList">
+                <div style="color: #94a3b8; font-size: 0.9rem; text-align: center; padding: 20px;">Loading live transactions from database...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="nav-bar">
+        <a href="/dashboard.html" class="nav-item active"><span>🏠</span><span>Home</span></a>
+        <a href="/transactions.html" class="nav-item"><span>📋</span><span>History</span></a>
+        <a href="/add-expense.html" class="nav-item"><span>➕</span><span>Add</span></a>
+        <a href="/analytics.html" class="nav-item"><span>📊</span><span>Analytics</span></a>
+        <a href="/settings.html" class="nav-item"><span>⚙️</span><span>Settings</span></a>
+    </div>
+
+    <script>
+        async function loadDashboardData() {
+            try {
+                const res = await fetch('/api/transactions');
+                const data = await res.json();
+                
+                const listEl = document.getElementById('transactionList');
+                const balanceEl = document.getElementById('totalBalance');
+                
+                if (!data || data.length === 0) {
+                    listEl.innerHTML = '<div style="color: #94a3b8; font-size: 0.9rem; text-align: center; padding: 20px;">No transactions recorded yet. Click Add to start!</div>';
+                    balanceEl.textContent = '$0.00';
+                    return;
+                }
+
+                let total = 0;
+                listEl.innerHTML = '';
+                
+                // Show last 4 recent items dynamically
+                data.slice(-4).reverse().forEach(tx => {
+                    const isIncome = tx.type === 'income';
+                    total += isIncome ? Number(tx.amount) : -Number(tx.amount);
+                    
+                    const item = document.createElement('div');
+                    item.className = 'transaction-item';
+                    item.innerHTML = `
+                        <div>
+                            <div style="font-weight: bold; font-size: 0.95rem;">${tx.title}</div>
+                            <div style="font-size: 0.75rem; color: #94a3b8;">${tx.category} • ${new Date(tx.date).toLocaleDateString()}</div>
+                        </div>
+                        <div class="tx-amount ${isIncome ? 'income' : 'expense'}">
+                            ${isIncome ? '+' : '-'}$${Number(tx.amount).toFixed(2)}
+                        </div>
+                    `;
+                    listEl.appendChild(item);
+                });
+
+                balanceEl.textContent = `$${total.toFixed(2)}`;
+            } catch (err) {
+                console.error('Failed to load transactions:', err);
+            }
+        }
+        loadDashboardData();
+    </script>
+async function loadUserProfile() {
+            try {
+                const res = await fetch('/api/settings');
+                const data = await res.json();
+                if (data && data.name) {
+                    document.getElementById('welcomeMessage').textContent = `👋 Welcome back, ${data.name}`;
+                } else {
+                    document.getElementById('welcomeMessage').textContent = `👋 Welcome back, User`;
+                }
+            } catch (err) {
+                document.getElementById('welcomeMessage').textContent = `👋 Welcome back, User`;
+            }
+        }
+        loadUserProfile();
+</body>
+</html>
