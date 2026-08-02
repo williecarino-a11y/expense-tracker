@@ -1,97 +1,82 @@
+/* Global Reset & Base Styles */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+  background-color: #0f172a;
+  color: #f8fafc;
+  padding-bottom: 80px; /* Space for bottom nav bar */
+  min-height: 100vh;
 }
 
-.main-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 20px;
+/* Header Styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: #1e293b;
+  border-bottom: 1px solid #334155;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.auth-card {
-    background: #ffffff;
-    padding: 40px 30px;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
+.logo {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #f8fafc;
 }
 
-.auth-card h2 {
-    font-size: 24px;
-    color: #1a1a1a;
-    margin-bottom: 8px;
+/* Main Layout Container */
+.container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.subtitle {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 24px;
+/* Card Styling */
+.card {
+  background-color: #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.input-group {
-    text-align: left;
-    margin-bottom: 16px;
+/* Bottom Navigation Bar */
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1e293b;
+  border-top: 1px solid #334155;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  z-index: 1000;
 }
 
-.input-group label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: #444;
-    margin-bottom: 6px;
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #94a3b8;
+  font-size: 0.75srem;
+  gap: 4px;
 }
 
-.input-group input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s;
+.nav-item span:first-child {
+  font-size: 1.2rem;
 }
 
-.input-group input:focus {
-    border-color: #6366f1;
-}
-
-.btn-primary {
-    width: 100%;
-    padding: 12px;
-    background-color: #6366f1;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: background-color 0.2s;
-}
-
-.btn-primary:hover {
-    background-color: #4f46e5;
-}
-
-.site-footer {
-    margin-top: 24px;
-    font-size: 13px;
-    color: #888;
-    text-align: center;
+.nav-item.active, .nav-item:hover {
+  color: #38bdf8;
 }
