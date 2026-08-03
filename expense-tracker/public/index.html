@@ -3,29 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Expense Tracker</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Xylotix - Sign In</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-zwidth: 400px;
+            background: #111827;
+            padding: 32px 24px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid #1f2937;
+        }
+        .logo-area {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .logo-area h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #3b82f6;
+            letter-spacing: 0.5px;
+        }
+        .logo-area p {
+            color: #9ca3af;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #d1d5db;
+            margin-bottom: 8px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #3b82f6;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+        .footer-links {
+            text-align: center;
+            margin-top: 22px;
+        }
+        .footer-links a {
+            color: #60a5fa;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body class="bg-black text-white flex items-center justify-center h-screen">
-    <div class="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold mb-6 text-center">Welcome Back</h2>
+<body>
+
+    <div class="container">
+        <div class="logo-area">
+            <h1>Xylotix</h1>
+            <p>Manage your global finances seamlessly</p>
+        </div>
+        
         <form id="login-form">
-            <div class="mb-4">
-                <label class="block mb-2 text-sm">Email</label>
-                <input type="email" id="email" class="w-full p-3 rounded bg-gray-800 border border-gray-700 text-white" required>
+            <div class="input-group">
+                <label>Email address</label>
+                <input type="email" id="email" placeholder="name@example.com" required>
             </div>
-            <div class="mb-6">
-                <label class="block mb-2 text-sm">Password</label>
-                <input type="password" id="password" class="w-full p-3 rounded bg-gray-800 border border-gray-700 text-white" required>
+            
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="w-full py-3 bg-blue-600 rounded font-bold hover:bg-blue-500">Sign In</button>
+            
+            <button type="submit" class="btn-primary">Sign In</button>
         </form>
+
+        <div class="footer-links">
+            <a href="#">Forgot password?</a>
+        </div>
     </div>
+
     <script>
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            // Temporary mock login storage bypass to test dashboard flow
-            localStorage.setItem('token', 'mock_secure_token_123');
+            localStorage.setItem('token', 'xylotix_secure_token');
             window.location.href = '/dashboard.html';
         });
     </script>
