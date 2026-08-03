@@ -38,7 +38,7 @@ app.get("/d", (req, res) => {
 
 // Default root route serves the login page first
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public/login.html"));
+    res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 const PORT = process.env.PORT || 3000;
