@@ -1,38 +1,42 @@
-const Expense = require("../models/Expense");
+const Expense = require("../models/expense"); // Or your transaction model
 
 const getDashboardSummary = async (req, res) => {
     try {
-        const expenses = await Expense.find();
+        const transactions = await Expense.find(); // Or filter by user ID if using auth: { userId: req.user.id }
 
-        const totalExpenses = expenses.reduce((sum, expense) => sum + Number(expense.amount), 0);
-        const totalTransactions = expenses.length;
-        const largestExpense = expenses.length > 0 ? Math.max(...expenses.map(expense => Number(expense.amount))) : 0;
+        // Separate and calculate dynamically
+        const totalExpenses = transactions
+            .filter(t => t.type === 'expense')
+            .reduce((sum, t) => sum + Number(t.amount || 0), 0);
+
+        const totalIncome = transactions
+            .filter(t => t.type === 'income')
+            .reduce((sum, t) => sum + Number(t.amount || 0), 0);
+
+        const totalSavings = totalIncome - totalExpenses; // Or calculate from a savings model/field
+        const totalBalance = totalIncome - totalExpenses;
+        const totalTransactions = transactions.length;
 
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
 
-        const currentMonthExpenses = expenses
-            .filter(expense => {
-                const date = new Date(expense.createdAt);
-                return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+        const currentMonthExpenses = transactions
+            .filter(t => {
+                const date = new Date(t.createdAt || t.date);
+                return t.type === 'expense' && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
             })
-            .reduce((sum, expense) => sum + Number(expense.amount), 0);
-
-        // Simulated or fetched Income & Savings metrics for full summary
-        const totalIncome = 4200.00; 
-        const totalSavings = 3200.00;
-        const netBalance = totalIncome - totalExpenses;
+            .reduce((sum, t) => sum + Number(t.amount || 0), 0);
 
         res.json({
             success: true,
-            totalBalance: netBalance,
-            totalIncome: totalIncome,
-            totalExpenses: totalExpenses,
-            totalSavings: totalSavings,
-            currentMonthExpenses: currentMonthExpenses,
-            totalTransactions: totalTransactions,
-            largestExpense: largestExpense
+            totalBalance,
+            totalIncome,
+            totalExpenses,
+            totalSavings,
+            currentMonthExpenses,
+            totalTransactions,
+            recentTransactions: transactions.slice(-5).reverse() // Send last 5 recent records
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

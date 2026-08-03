@@ -14,37 +14,39 @@
             <span class="menu-toggle" id="menu-toggle">☰</span>
         </div>
         <div class="header-right">
-  <span class="notification-html">🔔</span>
-  <span class="profile-html" id="logout-btn" style="cursor: pointer;" title="Log Out">👤</span>
-</div>
+            <span class="notification-icon">🔔</span>
+            <span class="profile-icon" id="logout-btn" style="cursor: pointer;" title="logout">🚪</span>
+        </div>
     </header>
 
     <!-- Main Dashboard Content -->
     <main class="main-content-wrapper">
+        
+        <!-- Dynamic Greeting & Insight Section -->
         <section class="welcome-section">
-            <h2 id="user-greeting">Good Morning, Willie</h2>
-            <p class="insight-badge">You're spending 8% less than last week. Keep it up!</p>
+            <h2 id="user-greeting">Welcome back</h2>
+            <p class="insight-badge" id="insight-badge">Loading spending insights...</p>
         </section>
 
         <!-- Main Balance Card -->
         <div class="balance-card">
             <p>Total Balance</p>
-            <h1>$12,540.50</h1>
+            <h1 class="total-balance-amount">$0.00</h1>
         </div>
 
         <!-- Quick Statistics Mini-Cards -->
         <div class="stats-grid">
             <div class="stat-card">
                 <span>Income</span>
-                <h3>$4,200.00</h3>
+                <h3 class="income-amount">$0.00</h3>
             </div>
             <div class="stat-card">
                 <span>Expenses</span>
-                <h3>$1,459.50</h3>
+                <h3 class="expenses-amount">$0.00</h3>
             </div>
             <div class="stat-card">
                 <span>Savings</span>
-                <h3>$3,200.00</h3>
+                <h3 class="savings-amount">$0.00</h3>
             </div>
         </div>
 
@@ -53,187 +55,95 @@
             <h3>Recent Transactions</h3>
             <a href="transactions.html">See All</a>
         </div>
-        <div class="transactions-list">
-            <div class="transaction-item">
-                <div class="tx-icon food">🍔</div>
-                <div class="tx-info">
-                    <h4>Groceries</h4>
-                    <p>Today, 2:45 PM</p>
-                </div>
-                <div class="tx-amount negative">-$45.00</div>
-            </div>
+        
+        <div class="transactions-list recent-transactions-container">
+            <!-- Dynamically populated transaction rows will appear here -->
         </div>
+
     </main>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-item active">Home</a>
-        <a href="transactions.html" class="nav-item">Transactions</a>
-        <a href="add-expense.html" class="nav-item">Add</a>
-        <a href="analytics.html" class="nav-item">Analytics</a>
-        <a href="settings.html" class="nav-item">Settings</a>
-    </nav>
+    <!-- Dashboard Script for Dynamic Data & Time-based Greeting -->
+    <script>
+        // 1. Set dynamic time-based greeting for Willie
+        function setDynamicGreeting() {
+            const greetingElement = document.getElementById('user-greeting');
+            const hour = new Date().getHours();
+            let timeGreeting = "Good evening";
 
-    <style>
-        body.dashboard-body {
-            background-color: #0f0f0f;
-            color: #ffffff;
-            font-family: sans-serif;
-            margin: 0;
-            padding-bottom: 110px; /* Crucial: Prevents bottom nav overlap */
+            if (hour < 12) {
+                timeGreeting = "Good morning";
+            } else if (hour < 18) {
+                timeGreeting = "Good afternoon";
+            }
+
+            greetingElement.textContent = `${timeGreeting}, Willie`;
         }
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid #222;
+
+        // 2. Fetch live dashboard data and update DOM
+        async function fetchDashboardData() {
+            try {
+                const response = await fetch('/api/dashboard');
+                const data = await response.json();
+
+                if (data.success) {
+                    // Update main cards
+                    document.querySelector('.total-balance-amount').textContent = `$${Number(data.totalBalance || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    document.querySelector('.income-amount').textContent = `$${Number(data.totalIncome || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    document.querySelector('.expenses-amount').textContent = `$${Number(data.totalExpenses || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                    document.querySelector('.savings-amount').textContent = `$${Number(data.totalSavings || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
+                    // Update dynamic spending comparison insight
+                    const badge = document.getElementById('insight-badge');
+                    if (badge) {
+                        const current = Number(data.currentMonthExpenses || data.totalExpenses || 0);
+                        badge.textContent = `Current tracked expenses total $${current.toFixed(2)}`;
+                    }
+
+                    // Populate recent transactions feed
+                    const container = document.querySelector('.recent-transactions-container');
+                    if (container && data.recentTransactions) {
+                        container.innerHTML = '';
+                        
+                        if (data.recentTransactions.length === 0) {
+                            container.innerHTML = '<p class="no-tx" style="padding: 10px; text-align: center; color: #888;">No transactions found.</p>';
+                            return;
+                        }
+
+                        data.recentTransactions.forEach(tx => {
+                            const txElement = document.createElement('div');
+                            txElement.className = 'transaction-item';
+                            const txDate = new Date(tx.createdAt || tx.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                            
+                            txElement.innerHTML = `
+                                <div class="tx-info">
+                                    <h4 class="tx-title">${tx.title || tx.category || 'Transaction'}</h4>
+                                    <p class="tx-date">${txDate}</p>
+                                </div>
+                                <div class="tx-amount ${tx.type}">${tx.type === 'expense' ? '-' : '+'}$${Number(tx.amount || 0).toFixed(2)}</div>
+                            `;
+                            container.appendChild(txElement);
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching dashboard summary:', error);
+            }
         }
-        .menu-toggle {
-            font-size: 22px;
-            cursor: pointer;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setDynamicGreeting();
+            fetchDashboardData();
+        });
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('token');
+                window.location.href = '/index.html';
+            });
         }
-        .header-right {
-            display: flex;
-            gap: 15px;
-        }
-        .icon-btn {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            padding: 8px;
-            border-radius: 50%;
-            text-decoration: none;
-            position: relative;
-            font-size: 14px;
-        }
-        .badge {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            background: #ef4444;
-            color: white;
-            font-size: 10px;
-            padding: 2px 5px;
-            border-radius: 50%;
-        }
-        .main-content-wrapper {
-            padding: 20px;
-        }
-        .welcome-section h2 {
-            margin: 0 0 5px 0;
-            font-size: 20px;
-        }
-        .insight-badge {
-            color: #10b981;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-        .balance-card {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-        .balance-card p {
-            margin: 0;
-            color: #93c5fd;
-            font-size: 14px;
-        }
-        .balance-card h1 {
-            margin: 10px 0 0 0;
-            font-size: 28px;
-        }
-        .stats-grid {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-        .stat-card {
-            flex: 1;
-            background: #1a1a1a;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #262626;
-            text-align: center;
-        }
-        .stat-card span {
-            font-size: 12px;
-            color: #888;
-        }
-        .stat-card h3 {
-            margin: 8px 0 0 0;
-            font-size: 15px;
-        }
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .section-header h3 {
-            font-size: 16px;
-            margin: 0;
-        }
-        .section-header a {
-            color: #3b82f6;
-            text-decoration: none;
-            font-size: 13px;
-        }
-        .transactions-list {
-            background: #1a1a1a;
-            border-radius: 10px;
-            padding: 12px;
-            border: 1px solid #262626;
-        }
-        .transaction-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .tx-icon {
-            font-size: 18px;
-            background: #262626;
-            padding: 8px;
-            border-radius: 8px;
-            margin-right: 12px;
-        }
-        .tx-info {
-            flex: 1;
-        }
-        .tx-info h4 {
-            margin: 0 0 4px 0;
-            font-size: 14px;
-        }
-        .tx-info p {
-            margin: 0;
-            font-size: 11px;
-            color: #888;
-        }
-        .tx-amount.negative {
-            color: #ef4444;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #121212;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid #222;
-            z-index: 1000;
-        }
-        .nav-item {
-            color: #888;
-            text-decoration: none;
-            font-size: 12px;
-        }
-        .nav-item.active {
-            color: #3b82f6;
-        }
-    </style>
+    </script>
 </body>
 </html>
