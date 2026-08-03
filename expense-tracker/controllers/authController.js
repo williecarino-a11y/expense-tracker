@@ -69,9 +69,10 @@ exports.loginUser = async (req, res) => {
     const needsOnboarding = !user.onboardingProfile || !user.onboardingProfile.liquidityFlow;
 
     res.status(200).json({
-      success: true,
-      redirectUrl: needsOnboarding ? '/onboarding.html' : '/dashboard.html'
-    });
+  success: true,
+  token,
+  redirectUrl: needsOnboarding ? '/onboarding.html' : '/dashboard.html'
+});
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
