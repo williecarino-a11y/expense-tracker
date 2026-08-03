@@ -3,237 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xylotix Dashboard</title>
+    <title>Login - Expense Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="dashboard-body">
-
-    <!-- Header Section -->
-    <header class="app-header">
-        <div class="header-left">
-            <span class="menu-toggle" id="menu-toggle">☰</span>
-        </div>
-        <div class="header-right">
-            <a href="notifications.html" class="icon-btn" id="notif-btn">🔔<span class="badge">3</span></a>
-            <a href="profile.html" class="icon-btn" id="profile-btn">👤</a>
-        </div>
-    </header>
-
-    <!-- Main Dashboard Content -->
-    <main class="main-content-wrapper">
-        <section class="welcome-section">
-            <h2 id="user-greeting">Good Morning, Willie</h2>
-            <p class="insight-badge">You're spending 8% less than last week. Keep it up!</p>
-        </section>
-
-        <!-- Main Balance Card -->
-        <div class="balance-card">
-            <p>Total Balance</p>
-            <h1>$12,540.50</h1>
-        </div>
-
-        <!-- Quick Statistics Mini-Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span>Income</span>
-                <h3>$4,200.00</h3>
+<body class="bg-black text-white flex items-center justify-center h-screen">
+    <div class="w-full max-w-md p-6 bg-gray-900 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-6 text-center">Welcome Back</h2>
+        <form id="login-form">
+            <div class="mb-4">
+                <label class="block mb-2 text-sm">Email</label>
+                <input type="email" id="email" class="w-full p-3 rounded bg-gray-800 border border-gray-700 text-white" required>
             </div>
-            <div class="stat-card">
-                <span>Expenses</span>
-                <h3>$1,459.50</h3>
+            <div class="mb-6">
+                <label class="block mb-2 text-sm">Password</label>
+                <input type="password" id="password" class="w-full p-3 rounded bg-gray-800 border border-gray-700 text-white" required>
             </div>
-            <div class="stat-card">
-                <span>Savings</span>
-                <h3>$3,200.00</h3>
-            </div>
-        </div>
-
-        <!-- Recent Transactions -->
-        <div class="section-header">
-            <h3>Recent Transactions</h3>
-            <a href="transactions.html">See All</a>
-        </div>
-        <div class="transactions-list">
-            <div class="transaction-item">
-                <div class="tx-icon food">🍔</div>
-                <div class="tx-info">
-                    <h4>Groceries</h4>
-                    <p>Today, 2:45 PM</p>
-                </div>
-                <div class="tx-amount negative">-$45.00</div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Bottom Navigation Bar -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-item active">Home</a>
-        <a href="transactions.html" class="nav-item">Transactions</a>
-        <a href="add-expense.html" class="nav-item">Add</a>
-        <a href="analytics.html" class="nav-item">Analytics</a>
-        <a href="settings.html" class="nav-item">Settings</a>
-    </nav>
-
-    <style>
-        body.dashboard-body {
-            background-color: #0f0f0f;
-            color: #ffffff;
-            font-family: sans-serif;
-            margin: 0;
-            padding-bottom: 110px; /* Crucial: Prevents bottom nav overlap */
-        }
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid #222;
-        }
-        .menu-toggle {
-            font-size: 22px;
-            cursor: pointer;
-        }
-        .header-right {
-            display: flex;
-            gap: 15px;
-        }
-        .icon-btn {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            padding: 8px;
-            border-radius: 50%;
-            text-decoration: none;
-            position: relative;
-            font-size: 14px;
-        }
-        .badge {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            background: #ef4444;
-            color: white;
-            font-size: 10px;
-            padding: 2px 5px;
-            border-radius: 50%;
-        }
-        .main-content-wrapper {
-            padding: 20px;
-        }
-        .welcome-section h2 {
-            margin: 0 0 5px 0;
-            font-size: 20px;
-        }
-        .insight-badge {
-            color: #10b981;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-        .balance-card {
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-        .balance-card p {
-            margin: 0;
-            color: #93c5fd;
-            font-size: 14px;
-        }
-        .balance-card h1 {
-            margin: 10px 0 0 0;
-            font-size: 28px;
-        }
-        .stats-grid {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-        .stat-card {
-            flex: 1;
-            background: #1a1a1a;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #262626;
-            text-align: center;
-        }
-        .stat-card span {
-            font-size: 12px;
-            color: #888;
-        }
-        .stat-card h3 {
-            margin: 8px 0 0 0;
-            font-size: 15px;
-        }
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .section-header h3 {
-            font-size: 16px;
-            margin: 0;
-        }
-        .section-header a {
-            color: #3b82f6;
-            text-decoration: none;
-            font-size: 13px;
-        }
-        .transactions-list {
-            background: #1a1a1a;
-            border-radius: 10px;
-            padding: 12px;
-            border: 1px solid #262626;
-        }
-        .transaction-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .tx-icon {
-            font-size: 18px;
-            background: #262626;
-            padding: 8px;
-            border-radius: 8px;
-            margin-right: 12px;
-        }
-        .tx-info {
-            flex: 1;
-        }
-        .tx-info h4 {
-            margin: 0 0 4px 0;
-            font-size: 14px;
-        }
-        .tx-info p {
-            margin: 0;
-            font-size: 11px;
-            color: #888;
-        }
-        .tx-amount.negative {
-            color: #ef4444;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #121212;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid #222;
-            z-index: 1000;
-        }
-        .nav-item {
-            color: #888;
-            text-decoration: none;
-            font-size: 12px;
-        }
-        .nav-item.active {
-            color: #3b82f6;
-        }
-    </style>
+            <button type="submit" class="w-full py-3 bg-blue-600 rounded font-bold hover:bg-blue-500">Sign In</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Temporary mock login storage bypass to test dashboard flow
+            localStorage.setItem('token', 'mock_secure_token_123');
+            window.location.href = '/dashboard.html';
+        });
+    </script>
 </body>
 </html>

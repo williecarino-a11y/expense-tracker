@@ -1,90 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Expense Tracker</title>
-  <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xylotix Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dashboard-body">
 
-  <!-- Top Header -->
-  <div class="header">
-    <div class="logo">💰 Dashboard</div>
-    <div class="header-right" style="display: flex; gap: 15px; align-items: center;">
-      <span>🔔</span>
-      <span>👤</span>
-    </div>
-  </div>
-
-  <!-- Main Container -->
-  <div class="container">
-    
-    <!-- Welcome Greeting Card -->
-    <div class="card" style="margin-bottom: 20px;">
-      <h3 style="margin: 0 0 5px 0; color: #38bdf8;">👋 Good Morning, Willie</h3>
-      <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">"Take control of your finances."</p>
-    </div>
-
-    <!-- Total Balance Card -->
-    <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #1e293b, #0f172a);">
-      <span style="color: #94a3b8; font-size: 0.85rem;">Total Balance</span>
-      <h1 style="margin: 5px 0 15px 0; font-size: 2rem; color: #fff;">$12,540.50</h1>
-      
-      <!-- Quick Action Grid -->
-      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-        <a href="/add-expense.html" style="padding: 10px; background: #334155; color: #fff; text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 500;">➕ Add Income</a>
-        <a href="/add-expense.html" style="padding: 10px; background: #334155; color: #fff; text-align: center; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 500;">➖ Add Expense</a>
-      </div>
-    </div>
-
-    <!-- Recent Activity Card -->
-    <div class="card">
-      <div class="section-heading" style="margin-bottom: 15px; font-weight: bold; color: #f8fafc;">📜 Recent Activity</div>
-      
-      <div class="transaction-item" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #334155;">
-        <div class="tx-info">
-          <h4 style="margin: 0; font-size: 0.95rem; color: #e2e8f0;">Cloud Hosting Server</h4>
-          <span style="font-size: 0.8rem; color: #94a3b8;">Tech • Today, 2:45 PM</span>
+    <!-- Header Section -->
+    <header class="app-header">
+        <div class="header-left">
+            <span class="menu-toggle" id="menu-toggle">☰</span>
         </div>
-        <div class="tx-amount expense" style="color: #f87171; font-weight: bold;">-$45.00</div>
-      </div>
-
-      <div class="transaction-item" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #334155;">
-        <div class="tx-info">
-          <h4 style="margin: 0; font-size: 0.95rem; color: #e2e8f0;">Client Milestone Payout</h4>
-          <span style="font-size: 0.8rem; color: #94a3b8;">Income • Yesterday, 10:15 AM</span>
+        <div class="header-right">
+            <a href="notifications.html" class="icon-btn" id="notif-btn">🔔<span class="badge">3</span></a>
+            <a href="profile.html" class="icon-btn" id="profile-btn">👤</a>
         </div>
-        <div class="tx-amount income" style="color: #4ade80; font-weight: bold;">+$1,250.00</div>
-      </div>
+    </header>
 
-      <div class="transaction-item" style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #334155;">
-        <div class="tx-info">
-          <h4 style="margin: 0; font-size: 0.95rem; color: #e2e8f0;">Grocery Restock</h4>
-          <span style="font-size: 0.8rem; color: #94a3b8;">Food • Jul 28, 6:30 PM</span>
+    <!-- Main Dashboard Content -->
+    <main class="main-content-wrapper">
+        <section class="welcome-section">
+            <h2 id="user-greeting">Good Morning, Willie</h2>
+            <p class="insight-badge">You're spending 8% less than last week. Keep it up!</p>
+        </section>
+
+        <!-- Main Balance Card -->
+        <div class="balance-card">
+            <p>Total Balance</p>
+            <h1>$12,540.50</h1>
         </div>
-        <div class="tx-amount expense" style="color: #f87171; font-weight: bold;">-$120.50</div>
-      </div>
 
-      <div class="transaction-item" style="display: flex; justify-content: space-between; padding: 10px 0;">
-        <div class="tx-info">
-          <h4 style="margin: 0; font-size: 0.95rem; color: #e2e8f0;">Subscription Renewal</h4>
-          <span style="font-size: 0.8rem; color: #94a3b8;">Bills • Jul 25, 9:00 AM</span>
+        <!-- Quick Statistics Mini-Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span>Income</span>
+                <h3>$4,200.00</h3>
+            </div>
+            <div class="stat-card">
+                <span>Expenses</span>
+                <h3>$1,459.50</h3>
+            </div>
+            <div class="stat-card">
+                <span>Savings</span>
+                <h3>$3,200.00</h3>
+            </div>
         </div>
-        <div class="tx-amount expense" style="color: #f87171; font-weight: bold;">-$15.00</div>
-      </div>
-    </div>
 
-  </div>
+        <!-- Recent Transactions -->
+        <div class="section-header">
+            <h3>Recent Transactions</h3>
+            <a href="transactions.html">See All</a>
+        </div>
+        <div class="transactions-list">
+            <div class="transaction-item">
+                <div class="tx-icon food">🍔</div>
+                <div class="tx-info">
+                    <h4>Groceries</h4>
+                    <p>Today, 2:45 PM</p>
+                </div>
+                <div class="tx-amount negative">-$45.00</div>
+            </div>
+        </div>
+    </main>
 
-  <!-- Bottom Navigation Bar -->
-  <div class="nav-bar">
-    <a href="/dashboard.html" class="nav-item active"><span>🏠</span><span>Home</span></a>
-    <a href="/transactions.html" class="nav-item"><span>💳</span><span>Transactions</span></a>
-    <a href="/add-expense.html" class="nav-item"><span>➕</span><span>Add</span></a>
-    <a href="/analytics.html" class="nav-item"><span>📈</span><span>Analytics</span></a>
-    <a href="/settings.html" class="nav-item"><span>⚙️</span><span>Settings</span></a>
-  </div>
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item active">Home</a>
+        <a href="transactions.html" class="nav-item">Transactions</a>
+        <a href="add-expense.html" class="nav-item">Add</a>
+        <a href="analytics.html" class="nav-item">Analytics</a>
+        <a href="settings.html" class="nav-item">Settings</a>
+    </nav>
 
+    <style>
+        body.dashboard-body {
+            background-color: #0f0f0f;
+            color: #ffffff;
+            font-family: sans-serif;
+            margin: 0;
+            padding-bottom: 110px; /* Crucial: Prevents bottom nav overlap */
+        }
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #222;
+        }
+        .menu-toggle {
+            font-size: 22px;
+            cursor: pointer;
+        }
+        .header-right {
+            display: flex;
+            gap: 15px;
+        }
+        .icon-btn {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 8px;
+            border-radius: 50%;
+            text-decoration: none;
+            position: relative;
+            font-size: 14px;
+        }
+        .badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 50%;
+        }
+        .main-content-wrapper {
+            padding: 20px;
+        }
+        .welcome-section h2 {
+            margin: 0 0 5px 0;
+            font-size: 20px;
+        }
+        .insight-badge {
+            color: #10b981;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .balance-card {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .balance-card p {
+            margin: 0;
+            color: #93c5fd;
+            font-size: 14px;
+        }
+        .balance-card h1 {
+            margin: 10px 0 0 0;
+            font-size: 28px;
+        }
+        .stats-grid {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            flex: 1;
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #262626;
+            text-align: center;
+        }
+        .stat-card span {
+            font-size: 12px;
+            color: #888;
+        }
+        .stat-card h3 {
+            margin: 8px 0 0 0;
+            font-size: 15px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .section-header h3 {
+            font-size: 16px;
+            margin: 0;
+        }
+        .section-header a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        .transactions-list {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #262626;
+        }
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .tx-icon {
+            font-size: 18px;
+            background: #262626;
+            padding: 8px;
+            border-radius: 8px;
+            margin-right: 12px;
+        }
+        .tx-info {
+            flex: 1;
+        }
+        .tx-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+        }
+        .tx-info p {
+            margin: 0;
+            font-size: 11px;
+            color: #888;
+        }
+        .tx-amount.negative {
+            color: #ef4444;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #121212;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #222;
+            z-index: 1000;
+        }
+        .nav-item {
+            color: #888;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .nav-item.active {
+            color: #3b82f6;
+        }
+    </style>
 </body>
 </html>
