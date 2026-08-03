@@ -1,0 +1,76 @@
+/* Base Reset & Theme Styles */
+body {
+    background-color: #020617; /* slate-950 */
+    color: #f8fafc; /* slate-50 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Onboarding Wrapper */
+.onboarding-container {
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+/* Progress Bar */
+.progress-track {
+    width: 100%;
+    background-color: #1e293b; /* slate-800 */
+    height: 4px;
+    border-radius: 9999px;
+    margin-bottom: 32px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background-color: #10b981; /* emerald-500 */
+    height: 100%;
+    width: 25%;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Headings and Text */
+h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+    color: #ffffff;
+}
+
+/* Interactive Option Buttons */
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-card {
+    width: 100%;
+    text-align: left;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #0f172a; /* slate-900 */
+    border: 1px solid #1e293b; /* slate-800 */
+    color: #f8fafc;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.option-card:hover, .option-card:focus {
+    border-color: #10b981; /* emerald-500 */
+    background-color: #1e293b;
+    outline: none;
+}
