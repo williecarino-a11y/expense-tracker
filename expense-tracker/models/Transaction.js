@@ -15,6 +15,12 @@ const TransactionSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+currency: {
+    type: String,
+    required: true,
+    uppercase: true,
+    default: 'USD'
+},
   category: {
     type: String,
     required: true,
