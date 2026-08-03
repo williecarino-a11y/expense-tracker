@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 localStorage.removeItem('token');
                 sessionStorage.removeItem('token');
-                window.location.href = '/';
+                window.location.href = '/index.html';
             });
         }
     }
