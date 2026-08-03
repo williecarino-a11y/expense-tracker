@@ -142,12 +142,12 @@
 
                 const data = await response.json();
 
-                if (response.ok) {
-                    localStorage.setItem('token', data.token);
-                    window.location.href = '/dashboard.html';
-                } else {
-                    alert(data.message || 'Invalid email or password');
-                }
+          if (response.ok) {
+            localStorage.setItem('token', data.token);
+            window.location.href = data.redirectUrl || '/dashboard.html';
+          } else {
+            alert(data.message || 'Invalid email or password');
+          }
             } catch (err) {
                 console.error('Login error:', err);
                 alert('Network error. Please check your connection.');
