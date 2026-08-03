@@ -1,4 +1,4 @@
-const Expense = require("../models/expense"); // Or your transaction model
+const Expense = require('../models/Expense'); // Or your transaction model
 
 const getDashboardSummary = async (req, res) => {
     try {
