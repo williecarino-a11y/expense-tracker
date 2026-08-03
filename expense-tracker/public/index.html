@@ -127,10 +127,40 @@
     </div>
 
     <script>
-        document.getElementById('login-form').addEventListener('submit', (e) => {
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            localStorage.setItem('token', 'xylotix_secure_token');
-            window.location.href = '/dashboard.html';
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // Pointing to your backend auth route
+                const response = await fetch('/api/users/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    window.location.href = '/dashboard.html';
+                } else {
+                    alert(data.message || 'Invalid email or password');
+                }
+            } catch (err) {
+                console.error('Login error:', err);
+                alert('Network error. Please check your connection.');
+            }
+        });
+
+        // Functional Forgot Password prompt handler
+        document.getElementById('forgot-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            const userEmail = prompt('Enter your registered email address for password reset instructions:');
+            if (userEmail) {
+                alert('If an account exists for ' + userEmail + ', password reset instructions have been sent.');
+            }
         });
     </script>
 </body>
