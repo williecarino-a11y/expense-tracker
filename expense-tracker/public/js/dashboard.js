@@ -1,4 +1,4 @@
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const navItems = document.querySelectorAll('.nav-item');
     const mainContent = document.getElementById('main-content');
 
@@ -17,11 +17,11 @@ window.addEventListener('load', () => {
                 </div>
             </div>
         `,
-        transactions: `
+        logs: `
             <div class="space-y-4 p-2">
-                <h2 class="text-lg font-bold text-white">Transactions</h2>
+                <h2 class="text-lg font-bold text-white">Activity Logs</h2>
                 <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <p class="text-sm text-gray-300">All transactions list goes here.</p>
+                    <p class="text-sm text-gray-300">Transaction history logs go here.</p>
                 </div>
             </div>
         `,
@@ -36,32 +36,47 @@ window.addEventListener('load', () => {
         metrics: `
             <div class="space-y-4 p-2">
                 <h2 class="text-lg font-bold text-white">Metrics & Analytics</h2>
+                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                    <p class="text-sm text-gray-300">Analytics overview.</p>
+                </div>
             </div>
         `,
         config: `
             <div class="space-y-4 p-2">
                 <h2 class="text-lg font-bold text-white">Configuration</h2>
+                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                    <p class="text-sm text-gray-300">App settings and preferences.</p>
+                </div>
             </div>
         `
     };
 
-    // 1. Render default home view on load
-    if (mainContent && views.home) {
+    // Safely remove any static loading text if present
+    const loadingEl = document.querySelector('.loading-insights, h2 + p');
+    if (loadingEl && loadingEl.textContent.includes('Loading')) {
+        loadingEl.textContent = 'Welcome back!';
+    }
+
+    // Render home view initially if mainContent exists
+    if (mainContent) {
         mainContent.innerHTML = views.home;
     }
 
-    // 2. Attach click listeners to bottom navigation items
+    // Handle bottom navigation clicks dynamically based on text or data attribute
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
-            
-            // Remove active styles from all nav items if needed
-            navItems.forEach(nav => nav.classList.remove('text-emerald-400'));
-            item.classList.add('text-emerald-400');
 
-            const viewKey = item.getAttribute('data-view') || item.textContent.trim().toLowerCase();
-            if (mainContent && views[viewKey]) {
-                mainContent.innerHTML = views[viewKey];
+            // Highlight active tab
+            navItems.forEach(nav => nav.classList.remove('text-emerald-400', 'font-bold'));
+            item.classList.add('text-emerald-400', 'font-bold');
+
+            // Determine which view to load based on text content (Home, Logs, Metrics, Config)
+            const textKey = item.textContent.trim().toLowerCase();
+            const targetView = views[textKey] ? textKey : 'home';
+
+            if (mainContent) {
+                mainContent.innerHTML = views[targetView];
             }
         });
     });
