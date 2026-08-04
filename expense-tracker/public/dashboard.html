@@ -320,7 +320,8 @@ if (hour >= 12 && hour < 17) timeDay = 'Afternoon';
 else if (hour >= 17) timeDay = 'Evening';
 
 if (userGreeting) {
-    userGreeting.textContent = `Good ${timeDay}, User`;
+    const savedName = localStorage.getItem('username') || localStorage.getItem('name') || 'User';
+    userGreeting.textContent = `Good ${timeDay}, ${savedName}`;
 }
 
 // 2. Safe Dashboard Data Fetcher
