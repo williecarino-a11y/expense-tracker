@@ -1,4 +1,3 @@
-// public/js/dashboard.js
 window.addEventListener('load', () => {
     const navItems = document.querySelectorAll('.nav-item');
     const mainContent = document.getElementById('main-content');
@@ -7,22 +6,22 @@ window.addEventListener('load', () => {
         home: `
             <div class="space-y-4">
                 <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <h2 class="font-semibold text-sm text-gray-400">Total Balance</h2>
+                    <h2 class="font-semibold text-sm text-gray-400">Group Wallet</h2>
                     <p class="text-2xl font-bold text-emerald-400">$0.00</p>
                 </div>
                 <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
                     <h3 class="font-medium mb-2 text-gray-200">Recent Transactions</h3>
                     <div id="transaction-list" class="space-y-2">
-                        <p class="text-sm text-gray-400">No transactions recorded yet.</p>
+                        <p class="text-sm text-gray-400">No transactions yet.</p>
                     </div>
                 </div>
             </div>
         `,
         transactions: `
             <div class="space-y-4 p-2">
-                <h2 class="text-lg font-bold text-white">Transaction Logs</h2>
+                <h2 class="text-lg font-bold text-white">Transactions</h2>
                 <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <p class="text-sm text-gray-300">All transaction records will be displayed here.</p>
+                    <p class="text-sm text-gray-300">All transactions list goes here.</p>
                 </div>
             </div>
         `,
@@ -30,46 +29,39 @@ window.addEventListener('load', () => {
             <div class="space-y-4 p-2">
                 <h2 class="text-lg font-bold text-white">Add New Transaction</h2>
                 <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <p class="text-sm text-gray-300">Form inputs for recording income or expenses.</p>
+                    <p class="text-sm text-gray-300">Form inputs for new entry.</p>
                 </div>
             </div>
         `,
-        analytics: `
+        metrics: `
             <div class="space-y-4 p-2">
-                <h2 class="text-lg font-bold text-white">Spending Metrics</h2>
-                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <p class="text-sm text-gray-300">Analytics and charts summary.</p>
-                </div>
+                <h2 class="text-lg font-bold text-white">Metrics & Analytics</h2>
             </div>
         `,
-        settings: `
+        config: `
             <div class="space-y-4 p-2">
                 <h2 class="text-lg font-bold text-white">Configuration</h2>
-                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <p class="text-sm text-gray-300">App settings and preferences.</p>
-                </div>
             </div>
         `
     };
 
-    // Ensure home view loads initially
-    if (mainContent) {
+    // 1. Render default home view on load
+    if (mainContent && views.home) {
         mainContent.innerHTML = views.home;
     }
 
+    // 2. Attach click listeners to bottom navigation items
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
+            
+            // Remove active styles from all nav items if needed
+            navItems.forEach(nav => nav.classList.remove('text-emerald-400'));
+            item.classList.add('text-emerald-400');
 
-            // Reset active states
-            navItems.forEach(nav => {
-                nav.style.color = '#9ca3af';
-            });
-            item.style.color = '#34d399';
-
-            const targetView = item.getAttribute('data-target');
-            if (views[targetView] && mainContent) {
-                mainContent.innerHTML = views[targetView];
+            const viewKey = item.getAttribute('data-view') || item.textContent.trim().toLowerCase();
+            if (mainContent && views[viewKey]) {
+                mainContent.innerHTML = views[viewKey];
             }
         });
     });
