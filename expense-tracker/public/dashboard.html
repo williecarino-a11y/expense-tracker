@@ -312,126 +312,123 @@ if (closeExportModal) {
 if (menuProFeatures) {
   menuProFeatures.addEventListener("click", openUpgradeModal);
 }
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Dynamic Greeting Logic
-    const userGreeting = document.getElementById('user-greeting');
-    const hour = new Date().getHours();
-    let timeDay = 'Morning';
-    if (hour >= 12 && hour < 17) timeDay = 'Afternoon';
-    else if (hour >= 17) timeDay = 'Evening';
-    
-    if (userGreeting) {
-        userGreeting.textContent = `Good ${timeDay}, User`;
-    }
+// 1. Dynamic Greeting Logic
+const userGreeting = document.getElementById('user-greeting');
+const hour = new Date().getHours();
+let timeDay = 'Morning';
+if (hour >= 12 && hour < 17) timeDay = 'Afternoon';
+else if (hour >= 17) timeDay = 'Evening';
 
-    // 2. Safe Dashboard Data Fetcher (Wrapped in try/catch so it never freezes the app)
-    async function loadDashboardData() {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) return;
-            
-            const res = await fetch('/api/dashboard', {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (!res.ok) return;
-            const data = await res.json();
-            
-            // Populate fields if data exists
-            if (data.balance) document.getElementById('total-balance').textContent = `$${data.balance}`;
-            if (data.income) document.getElementById('income-amount').textContent = `$${data.income}`;
-            if (data.expenses) document.getElementById('expenses-amount').textContent = `$${data.expenses}`;
-            if (data.savings) document.getElementById('savings-amount').textContent = `$${data.savings}`;
-        } catch (err) {
-            console.log('Dashboard fetch skipped or offline');
+if (userGreeting) {
+    userGreeting.textContent = `Good ${timeDay}, User`;
+}
+
+// 2. Safe Dashboard Data Fetcher
+async function loadDashboardData() {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+        
+        const res = await fetch('/api/dashboard', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        
+        if (data.balance) document.getElementById('total-balance').textContent = `$${data.balance}`;
+        if (data.income) document.getElementById('income-amount').textContent = `$${data.income}`;
+        if (data.expenses) document.getElementById('expenses-amount').textContent = `$${data.expenses}`;
+        if (data.savings) document.getElementById('savings-amount').textContent = `$${data.savings}`;
+    } catch (err) {
+        console.log('Dashboard fetch offline');
+    }
+}
+loadDashboardData();
+
+// 3. Navigation & Views Logic
+const navItems = document.querySelectorAll('.nav-item');
+const mainContent = document.getElementById('main-content');
+
+const views = {
+    home: `
+        <div class="space-y-4">
+            <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                <h2 class="font-semibold text-sm text-gray-400">Group Wallet</h2>
+                <p class="text-2xl font-bold text-emerald-400">$0.00</p>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                <h3 class="font-medium mb-2 text-gray-200">Recent Transactions</h3>
+                <div id="transaction-list" class="space-y-2">
+                    <p class="text-sm text-gray-400">No transactions yet.</p>
+                </div>
+            </div>
+        </div>
+    `,
+    logs: `
+        <div class="space-y-4 p-2">
+            <h2 class="text-lg font-bold text-white">Activity Logs</h2>
+            <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                <p class="text-sm text-gray-300">Transaction history logs go here.</p>
+            </div>
+        </div>
+    `,
+    add: `
+        <div class="space-y-4 p-2">
+            <h2 class="text-lg font-bold text-white">Add New Transaction</h2>
+            <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                <p class="text-sm text-gray-300">Form inputs for new entry.</p>
+            </div>
+        </div>
+    `,
+    metrics: `
+        <div class="space-y-4 p-2">
+            <h2 class="text-lg font-bold text-white">Metrics & Analytics</h2>
+            <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                <p class="text-sm text-gray-300">Analytics overview.</p>
+            </div>
+        </div>
+    `,
+    config: `
+        <div class="space-y-4 p-2">
+            <h2 class="text-lg font-bold text-white">Configuration</h2>
+            <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                <p class="text-sm text-gray-300">App settings and preferences.</p>
+            </div>
+        </div>
+    `
+};
+
+// Render default home view immediately
+if (mainContent) {
+    mainContent.innerHTML = views.home;
+}
+
+// Handle bottom navigation tab clicks
+navItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        navItems.forEach(nav => nav.classList.remove('text-emerald-400', 'font-bold'));
+        item.classList.add('text-emerald-400', 'font-bold');
+
+        const textKey = item.textContent.trim().toLowerCase();
+        const targetView = views[textKey] ? textKey : 'home';
+
+        if (mainContent) {
+            mainContent.innerHTML = views[targetView];
         }
-    }
-    loadDashboardData();
-
-    // 3. Navigation & Views Logic
-    const navItems = document.querySelectorAll('.nav-item');
-    const mainContent = document.getElementById('main-content'); // Ensure your main container has this ID
-
-    const views = {
-        home: `
-            <div class="space-y-4">
-                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <h2 class="font-semibold text-sm text-gray-400">Group Wallet</h2>
-                    <p class="text-2xl font-bold text-emerald-400">$0.00</p>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <h3 class="font-medium mb-2 text-gray-200">Recent Transactions</h3>
-                    <div id="transaction-list" class="space-y-2">
-                        <p class="text-sm text-gray-400">No transactions yet.</p>
-                    </div>
-                </div>
-            </div>
-        `,
-        logs: `
-            <div class="space-y-4 p-2">
-                <h2 class="text-lg font-bold text-white">Activity Logs</h2>
-                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <p class="text-sm text-gray-300">Transaction history logs go here.</p>
-                </div>
-            </div>
-        `,
-        add: `
-            <div class="space-y-4 p-2">
-                <h2 class="text-lg font-bold text-white">Add New Transaction</h2>
-                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <p class="text-sm text-gray-300">Form inputs for new entry.</p>
-                </div>
-            </div>
-        `,
-        metrics: `
-            <div class="space-y-4 p-2">
-                <h2 class="text-lg font-bold text-white">Metrics & Analytics</h2>
-                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <p class="text-sm text-gray-300">Analytics overview.</p>
-                </div>
-            </div>
-        `,
-        config: `
-            <div class="space-y-4 p-2">
-                <h2 class="text-lg font-bold text-white">Configuration</h2>
-                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
-                    <p class="text-sm text-gray-300">App settings and preferences.</p>
-                </div>
-            </div>
-        `
-    };
-
-    // Render default home view
-    if (mainContent) {
-        mainContent.innerHTML = views.home;
-    }
-
-    // Handle bottom navigation tab clicks
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            navItems.forEach(nav => nav.classList.remove('text-emerald-400', 'font-bold'));
-            item.classList.add('text-emerald-400', 'font-bold');
-
-            const textKey = item.textContent.trim().toLowerCase();
-            const targetView = views[textKey] ? textKey : 'home';
-
-            if (mainContent) {
-                mainContent.innerHTML = views[targetView];
-            }
-        });
     });
-
-    // Menu toggle handlers from your existing code setup
-    const menuBtn = document.getElementById('menu-btn');
-    const menuDrawer = document.getElementById('menu-drawer');
-    const menuOverlay = document.getElementById('menu-overlay');
-    if (menuBtn && menuDrawer) {
-        menuBtn.addEventListener('click', () => {
-            menuDrawer.classList.toggle('open');
-            if (menuOverlay) menuOverlay.classList.toggle('active');
-        });
-    }
 });
+
+// Menu toggles
+const menuBtn = document.getElementById('menu-btn');
+const menuDrawer = document.getElementById('menu-drawer');
+const menuOverlay = document.getElementById('menu-overlay');
+if (menuBtn && menuDrawer) {
+    menuBtn.addEventListener('click', () => {
+        menuDrawer.classList.toggle('open');
+        if (menuOverlay) menuOverlay.classList.toggle('active');
+    });
+}
   </script>
 </body>
 </html>
