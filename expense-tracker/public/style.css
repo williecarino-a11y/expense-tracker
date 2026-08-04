@@ -7,80 +7,70 @@
 }
 
 body {
-  background-color: #0f172a;
-  color: #f8fafc;
-  padding-bottom: 80px; /* Space for bottom nav bar */
+  background-color: #0b1120;
+  color: #f9fafb;
   min-height: 100vh;
 }
 
+body.dashboard-body {
+  padding-bottom: 70px; /* Space for fixed bottom nav bar */
+}
+
 /* Header Styling */
-.header {
+.app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  background-color: #1e293b;
-  border-bottom: 1px solid #334155;
+  background-color: #111827;
+  border-bottom: 1px solid #1f2937;
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-.logo {
+.menu-toggle {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #f9fafb;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.notification-icon, .profile-icon {
   font-size: 1.1rem;
-  font-weight: bold;
-  color: #f8fafc;
+  cursor: pointer;
 }
 
 /* Main Layout Container */
-.container {
+.main-content-wrapper {
   padding: 20px;
   max-width: 600px;
   margin: 0 auto;
 }
 
-/* Card Styling */
-.card {
-  background-color: #1e293b;
-  border-radius: 12px;
-  padding: 20px;
+/* Welcome Section */
+.welcome-section {
   margin-bottom: 20px;
-  border: 1px solid #334155;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-/* Bottom Navigation Bar */
-.nav-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #1e293b;
-  border-top: 1px solid #334155;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  z-index: 1000;
+.welcome-section h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #f9fafb;
 }
 
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: #94a3b8;
-  font-size: 0.75srem;
-  gap: 4px;
+.insight-badge {
+  font-size: 0.85rem;
+  color: #10b981;
+  margin-top: 4px;
 }
 
-.nav-item span:first-child {
-  font-size: 1.2rem;
-}
-
-.nav-item.active, .nav-item:hover {
-  color: #38bdf8;
-}
-/* Dashboard Cards & Grid Integration */
+/* Balance Card */
 .balance-card {
   background-color: #111827;
   border: 1px solid #1f2937;
@@ -95,7 +85,7 @@ body {
   color: #9ca3af;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin: 0 0 8px 0;
+  margin-bottom: 8px;
 }
 
 .total-balance-amount {
@@ -105,10 +95,11 @@ body {
   margin: 0;
 }
 
+/* Stats Grid - 3 Columns */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
@@ -116,18 +107,75 @@ body {
   background-color: #111827;
   border: 1px solid #1f2937;
   border-radius: 12px;
-  padding: 16px;
+  padding: 12px 8px;
+  text-align: center;
 }
 
 .stat-card span {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #9ca3af;
   text-transform: uppercase;
 }
 
 .stat-card h3 {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
+  color: #f9fafb;
+  margin: 4px 0 0 0;
+}
+
+.stat-card h3.income {
   color: #10b981;
-  margin: 6px 0 0 0;
+}
+
+/* Transactions Section */
+.transactions-section {
+  background-color: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-header h3 {
+  font-size: 1rem;
+  color: #f9fafb;
+}
+
+/* Bottom Navigation Bar */
+.nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #111827;
+  border-top: 1px solid #1f2937;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #9ca3af;
+  font-size: 0.7rem;
+  gap: 2px;
+}
+
+.nav-item span:first-child {
+  font-size: 1.1rem;
+}
+
+.nav-item.active, .nav-item:hover {
+  color: #3b82f6;
 }
