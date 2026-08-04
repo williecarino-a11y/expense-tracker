@@ -8,6 +8,67 @@
 </head>
 <body class="dashboard-body">
 
+<!-- Sliding Hamburger Menu Drawer -->
+<div id="menuDrawer" class="menu-drawer">
+  <div class="menu-header">
+    <h3>Menu</h3>
+    <span id="closeMenu" class="close-menu">&times;</span>
+  </div>
+  <ul class="menu-links">
+    <li><a href="#" id="menuProFeatures">Pro Features</a></li>
+    <li><a href="#" id="menuUpgrade">Upgrade to Pro</a></li>
+    <li><a href="#" id="menuExport">Export Data / Report</a></li>
+    <li><a href="#" id="menuHelp">Help Centre</a></li>
+    <li><a href="profile.html" id="menuProfile">Profile / Account Settings</a></li>
+    <li><a href="terms.html" id="menuTerms">Terms of Service & Privacy Policy</a></li>
+  </ul>
+</div>
+<!-- Overlay background when menu is open -->
+  <div id="menuOverlay" class="menu-overlay"></div>
+
+  <!-- Upgrade to Pro Modal -->
+  <div id="upgradeModal" class="upgrade-modal">
+    <div class="upgrade-modal-content">
+      <span id="closeUpgradeModal" class="close-upgrade">&times;</span>
+      <h2>Upgrade to Pro</h2>
+      <p>Unlock the full potential of your financial tracking with advanced tools and automated insights.</p>
+      
+      <div class="pricing-cards">
+        <!-- Monthly Card -->
+        <div class="pricing-card">
+          <h3>Monthly Plan</h3>
+          <p class="price">₦7,900 <span>/ month</span></p>
+          <p class="billing">Billed monthly, cancel anytime.</p>
+          <button class="upgrade-btn" onclick="initializePaystack('monthly')">Choose Monthly</button>
+        </div>
+
+        <!-- Yearly Card -->
+        <div class="pricing-card popular">
+          <span class="badge">Best Value</span>
+          <h3>Yearly Plan</h3>
+          <p class="price">₦95,000 <span>/ year</span></p>
+          <p class="billing">Billed annually, save more over the year.</p>
+          <button class="upgrade-btn" onclick="initializePaystack('yearly')">Choose Yearly</button>
+        </div>
+      </div>
+
+      <div class="pro-features-summary">
+        <h4>What’s Included in Pro:</h4>
+        <ul>
+          <li>✨ **Unlimited AI Financial Assistant Access:** Real-time smart insights and automated analysis.</li>
+          <li>📊 **Exclusive Data Exports:** Generate and download full transaction reports (CSV/PDF).</li>
+          <li>🔔 **Advanced Budget Tracking:** Custom budget thresholds with warning triggers.</li>
+          <li>⭐ **Priority Support:** Direct access to the Help Centre and assistance.</li>
+        </ul>
+      </div>
+      
+      <p class="secure-text">Secure payments powered by Paystack.</p>
+    </div>
+  </div>
+  <!-- Modal Overlay -->
+  <div id="upgradeOverlay" class="upgrade-overlay"></div>
+
+
   <!-- Header Section -->
   <header class="app-header">
     <div class="header-left">
@@ -147,6 +208,51 @@
         window.location.href = '/index.html';
       });
     }
+// Hamburger Menu Toggle Logic
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menu-toggle");
+  const menuDrawer = document.getElementById("menuDrawer");
+  const menuOverlay = document.getElementById("menuOverlay");
+  const closeMenu = document.getElementById("closeMenu");
+
+  function toggleMenu() {
+    if (menuDrawer) menuDrawer.classList.toggle("open");
+    if (menuOverlay) menuOverlay.classList.toggle("active");
+  }
+
+  if (menuToggle) menuToggle.addEventListener("click", toggleMenu);
+  if (closeMenu) closeMenu.addEventListener("click", toggleMenu);
+  if (menuOverlay) menuOverlay.addEventListener("click", toggleMenu);
+});
+// Upgrade Modal Trigger Logic
+const upgradeModal = document.getElementById("upgradeModal");
+const upgradeOverlay = document.getElementById("upgradeOverlay");
+const menuUpgradeBtn = document.getElementById("menuUpgrade");
+const closeUpgradeModal = document.getElementById("closeUpgradeModal");
+
+function openUpgradeModal(e) {
+  if (e) e.preventDefault();
+  if (upgradeModal) upgradeModal.classList.add("open");
+  if (upgradeOverlay) upgradeOverlay.classList.add("active");
+  const menuDrawer = document.getElementById("menuDrawer");
+  const menuOverlay = document.getElementById("menuOverlay");
+  if (menuDrawer) menuDrawer.classList.remove("open");
+  if (menuOverlay) menuOverlay.classList.remove("active");
+}
+
+function closeUpgradeModalFn() {
+  if (upgradeModal) upgradeModal.classList.remove("open");
+  if (upgradeOverlay) upgradeOverlay.classList.remove("active");
+}
+
+if (menuUpgradeBtn) menuUpgradeBtn.addEventListener("click", openUpgradeModal);
+if (closeUpgradeModal) closeUpgradeModal.addEventListener("click", closeUpgradeModalFn);
+if (upgradeOverlay) upgradeOverlay.addEventListener("click", closeUpgradeModalFn);
+
+function initializePaystack(plan) {
+  const amount = plan === 'yearly' ? 95000 : 7900;
+  alert(`Initiating Paystack secure checkout for the ${plan} plan (₦${amount.toLocaleString()})...`);
+}
   </script>
 </body>
 </html>

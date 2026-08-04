@@ -179,3 +179,257 @@ body.dashboard-body {
 .nav-item.active, .nav-item:hover {
   color: #3b82f6;
 }
+
+/* Hamburger Menu Drawer Styles */
+.menu-drawer {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 280px;
+  height: 100%;
+  background-color: #111827;
+  border-right: 1px solid #1f2937;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  padding: 20px;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.menu-drawer.open {
+  left: 0;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #1f2937;
+  padding-bottom: 12px;
+}
+
+.menu-header h3 {
+  font-size: 1.2rem;
+  color: #f9fafb;
+}
+
+.close-menu {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #9ca3af;
+}
+
+.close-menu:hover {
+  color: #f9fafb;
+}
+
+.menu-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menu-links li a {
+  text-decoration: none;
+  color: #d1d5db;
+  font-size: 0.95rem;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.menu-links li a:hover {
+  background-color: #1f2937;
+  color: #3b82f6;
+}
+
+/* Background Overlay */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 999;
+}
+
+.menu-overlay.active {
+  display: block;
+}
+
+/* Upgrade Modal Styles */
+.upgrade-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: 90%;
+  max-width: 500px;
+  background-color: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 24px;
+  z-index: 1001;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.upgrade-modal.open {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.upgrade-modal-content h2 {
+  color: #f9fafb;
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.upgrade-modal-content > p {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.close-upgrade {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #9ca3af;
+}
+
+.close-upgrade:hover {
+  color: #f9fafb;
+}
+
+.pricing-cards {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.pricing-card {
+  flex: 1;
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  position: relative;
+}
+
+.pricing-card.popular {
+  border-color: #3b82f6;
+  background-color: #1e293b;
+}
+
+.badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #3b82f6;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.pricing-card h3 {
+  color: #f9fafb;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.price {
+  color: #34d399;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.price span {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.billing {
+  color: #9ca3af;
+  font-size: 0.75rem;
+  margin-bottom: 12px;
+}
+
+.upgrade-btn {
+  width: 100%;
+  background-color: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.upgrade-btn:hover {
+  background-color: #2563eb;
+}
+
+.pro-features-summary {
+  background-color: #1f2937;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.pro-features-summary h4 {
+  color: #f9fafb;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.pro-features-summary ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.pro-features-summary li {
+  color: #d1d5db;
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+}
+
+.secure-text {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.75rem;
+}
+
+/* Modal Overlay */
+.upgrade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  z-index: 1000;
+}
+
+.upgrade-overlay.active {
+  display: block;
+}
