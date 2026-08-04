@@ -80,3 +80,54 @@ body {
 .nav-item.active, .nav-item:hover {
   color: #38bdf8;
 }
+/* Dashboard Cards & Grid Integration */
+.balance-card {
+  background-color: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.balance-card p {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 8px 0;
+}
+
+.total-balance-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f9fafb;
+  margin: 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background-color: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.stat-card span {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+}
+
+.stat-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #10b981;
+  margin: 6px 0 0 0;
+}
