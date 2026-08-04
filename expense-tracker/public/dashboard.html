@@ -68,6 +68,31 @@
   <!-- Modal Overlay -->
   <div id="upgradeOverlay" class="upgrade-overlay"></div>
 
+<!-- Help Centre Modal -->
+<div id="helpModal" class="upgrade-modal">
+  <div class="upgrade-modal-content">
+    <span id="closeHelpModal" class="close-upgrade">&times;</span>
+    <h2>Help Centre</h2>
+    <p>Need assistance? Contact our support team or browse our FAQs.</p>
+    <ul style="color: #d1d5db; font-size: 0.9rem; padding-left: 20px; margin-bottom: 20px;">
+      <li>Email support: support@mylotix.com</li>
+      <li>Live chat available 24/7 for Pro users.</li>
+    </ul>
+    <button class="upgrade-btn" onclick="document.getElementById('helpModal').classList.remove('open'); document.getElementById('upgradeOverlay').classList.remove('active');">Close</button>
+  </div>
+</div>
+
+<!-- Export Data Modal -->
+<div id="exportModal" class="upgrade-modal">
+  <div class="upgrade-modal-content">
+    <span id="closeExportModal" class="close-upgrade">&times;</span>
+    <h2>Export Data / Report</h2>
+    <p>Download your transaction history and financial analytics reports.</p>
+    <button class="upgrade-btn" style="margin-bottom: 10px;" onclick="alert('Exporting transactions as CSV...');">Download CSV Report</button>
+    <button class="upgrade-btn" style="background-color: #10b981;" onclick="alert('Exporting full financial summary as PDF...');">Download PDF Report</button>
+  </div>
+</div>
+
 
   <!-- Header Section -->
   <header class="app-header">
@@ -252,6 +277,58 @@ if (upgradeOverlay) upgradeOverlay.addEventListener("click", closeUpgradeModalFn
 function initializePaystack(plan) {
   const amount = plan === 'yearly' ? 95000 : 7900;
   alert(`Initiating Paystack secure checkout for the ${plan} plan (₦${amount.toLocaleString()})...`);
+}
+// Help & Export Modals Logic
+const helpModal = document.getElementById("helpModal");
+const exportModal = document.getElementById("exportModal");
+
+const menuHelp = document.getElementById("menuHelp");
+const menuExport = document.getElementById("menuExport");
+const menuProFeatures = document.getElementById("menuProFeatures");
+
+const closeHelpModal = document.getElementById("closeHelpModal");
+const closeExportModal = document.getElementById("closeExportModal");
+
+if (menuHelp) {
+  menuHelp.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (helpModal) helpModal.classList.add("open");
+    if (upgradeOverlay) upgradeOverlay.classList.add("active");
+    const menuDrawer = document.getElementById("menuDrawer");
+    const menuOverlay = document.getElementById("menuOverlay");
+    if (menuDrawer) menuDrawer.classList.remove("open");
+    if (menuOverlay) menuOverlay.classList.remove("active");
+  });
+}
+
+if (closeHelpModal) {
+  closeHelpModal.addEventListener("click", () => {
+    if (helpModal) helpModal.classList.remove("open");
+    if (upgradeOverlay) upgradeOverlay.classList.remove("active");
+  });
+}
+
+if (menuExport) {
+  menuExport.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (exportModal) exportModal.classList.add("open");
+    if (upgradeOverlay) upgradeOverlay.classList.add("active");
+    const menuDrawer = document.getElementById("menuDrawer");
+    const menuOverlay = document.getElementById("menuOverlay");
+    if (menuDrawer) menuDrawer.classList.remove("open");
+    if (menuOverlay) menuOverlay.classList.remove("active");
+  });
+}
+
+if (closeExportModal) {
+  closeExportModal.addEventListener("click", () => {
+    if (exportModal) exportModal.classList.remove("open");
+    if (upgradeOverlay) upgradeOverlay.classList.remove("active");
+  });
+}
+
+if (menuProFeatures) {
+  menuProFeatures.addEventListener("click", openUpgradeModal);
 }
   </script>
 </body>
