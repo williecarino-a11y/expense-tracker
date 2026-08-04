@@ -1,77 +1,76 @@
 // public/js/dashboard.js
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     const navItems = document.querySelectorAll('.nav-item');
     const mainContent = document.getElementById('main-content');
 
-    // Define custom views matching your dashboard layout
     const views = {
         home: `
             <div class="space-y-4">
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm">
-                    <h2 class="font-semibold text-sm text-gray-500">Total Balance</h2>
-                    <p class="text-2xl font-bold text-emerald-600">$0.00</p>
+                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                    <h2 class="font-semibold text-sm text-gray-400">Total Balance</h2>
+                    <p class="text-2xl font-bold text-emerald-400">$0.00</p>
                 </div>
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm">
-                    <h3 class="font-medium mb-2">Recent Transactions</h3>
+                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                    <h3 class="font-medium mb-2 text-gray-200">Recent Transactions</h3>
                     <div id="transaction-list" class="space-y-2">
-                        <!-- Dynamic transaction rows inject here -->
+                        <p class="text-sm text-gray-400">No transactions recorded yet.</p>
                     </div>
                 </div>
             </div>
         `,
         transactions: `
-            <div class="space-y-4">
-                <h2 class="text-lg font-bold">Transaction Logs</h2>
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm">
-                    <p class="text-sm text-gray-500">All transaction records will be displayed here.</p>
+            <div class="space-y-4 p-2">
+                <h2 class="text-lg font-bold text-white">Transaction Logs</h2>
+                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                    <p class="text-sm text-gray-300">All transaction records will be displayed here.</p>
                 </div>
             </div>
         `,
         add: `
-            <div class="space-y-4">
-                <h2 class="text-lg font-bold">Add New Transaction</h2>
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm">
-                    <p class="text-sm text-gray-500">Form inputs for recording income or expenses.</p>
+            <div class="space-y-4 p-2">
+                <h2 class="text-lg font-bold text-white">Add New Transaction</h2>
+                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                    <p class="text-sm text-gray-300">Form inputs for recording income or expenses.</p>
                 </div>
             </div>
         `,
         analytics: `
-            <div class="space-y-4">
-                <h2 class="text-lg font-bold">Spending Metrics</h2>
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm">
-                    <p class="text-sm text-gray-500">Analytics and charts summary.</p>
+            <div class="space-y-4 p-2">
+                <h2 class="text-lg font-bold text-white">Spending Metrics</h2>
+                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                    <p class="text-sm text-gray-300">Analytics and charts summary.</p>
                 </div>
             </div>
         `,
         settings: `
-            <div class="space-y-4">
-                <h2 class="text-lg font-bold">Configuration</h2>
-                <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm">
-                    <p class="text-sm text-gray-500">App settings and preferences.</p>
+            <div class="space-y-4 p-2">
+                <h2 class="text-lg font-bold text-white">Configuration</h2>
+                <div class="bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-700">
+                    <p class="text-sm text-gray-300">App settings and preferences.</p>
                 </div>
             </div>
         `
     };
 
-    // Initial load defaults to home
+    // Ensure home view loads initially
     if (mainContent) {
         mainContent.innerHTML = views.home;
     }
 
-    // Handle navigation clicks
-navItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-        e.preventDefault(); // Stop any default anchor/form action if present
-        
-        navItems.forEach(nav => nav.classList.remove('text-emerald-400', 'text-emerald-600'));
-        navItems.forEach(nav => nav.classList.add('text-gray-400'));
-        
-        item.classList.remove('text-gray-400');
-        item.classList.add('text-emerald-400');
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
 
-        const targetView = item.getAttribute('data-target');
-        if (views[targetView] && mainContent) {
-            mainContent.innerHTML = views[targetView];
-        }
+            // Reset active states
+            navItems.forEach(nav => {
+                nav.style.color = '#9ca3af';
+            });
+            item.style.color = '#34d399';
+
+            const targetView = item.getAttribute('data-target');
+            if (views[targetView] && mainContent) {
+                mainContent.innerHTML = views[targetView];
+            }
+        });
     });
 });
