@@ -59,18 +59,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle navigation clicks
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            navItems.forEach(nav => nav.classList.remove('text-emerald-400', 'text-emerald-600'));
-            navItems.forEach(nav => nav.classList.add('text-gray-400'));
-            
-            item.classList.remove('text-gray-400');
-            item.classList.add('text-emerald-400');
+navItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault(); // Stop any default anchor/form action if present
+        
+        navItems.forEach(nav => nav.classList.remove('text-emerald-400', 'text-emerald-600'));
+        navItems.forEach(nav => nav.classList.add('text-gray-400'));
+        
+        item.classList.remove('text-gray-400');
+        item.classList.add('text-emerald-400');
 
-            const targetView = item.getAttribute('data-target');
-            if (views[targetView] && mainContent) {
-                mainContent.innerHTML = views[targetView];
-            }
-        });
+        const targetView = item.getAttribute('data-target');
+        if (views[targetView] && mainContent) {
+            mainContent.innerHTML = views[targetView];
+        }
     });
 });
