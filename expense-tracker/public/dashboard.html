@@ -119,6 +119,13 @@
       <p>Total Balance</p>
       <h1 class="total-balance-amount" id="total-balance">$0.00</h1>
     </div>
+<!-- Notification Alert Bar -->
+<div id="notification-banner" class="notification-banner">
+    <div class="notification-content">
+        <span>⚠️ Low Wallet Balance Warning: Check your primary cash flow.</span>
+    </div>
+    <button id="close-notification">&times;</button>
+</div>
 
     <!-- Quick Statistics 3-Column Cards Grid -->
     <div class="stats-grid">
@@ -156,6 +163,17 @@
 </nav>
 
   <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const banner = document.getElementById('notification-banner');
+    const closeBtn = document.getElementById('close-notification');
+
+    if (closeBtn && banner) {
+        closeBtn.addEventListener('click', () => {
+            banner.classList.add('hidden');
+        });
+    }
+});
+
     // Dynamic Time-based Greeting Function
     function setDynamicGreeting(userName = 'User') {
       const greetingEl = document.getElementById('user-greeting');
