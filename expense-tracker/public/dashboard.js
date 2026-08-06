@@ -90,14 +90,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
             
-            // Populate DOM elements with live backend data
-            if (document.getElementById('total-balance')) {
-                document.getElementById('total-balance.textContent = data.totalBalance;
+            const balanceEl = document.getElementById('total-balance');
+            if (balanceEl) {
+                balanceEl.textContent = data.totalBalance;
             }
-            // Update other income, expense, and transaction fields accordingly...
             
         } catch (err) {
             console.error('Error loading dashboard insights:', err);
+            const balanceEl = document.getElementById('total-balance');
+            if (balanceEl) {
+                balanceEl.textContent = "Error: " + err.message;
+            }
         }
     }
 
