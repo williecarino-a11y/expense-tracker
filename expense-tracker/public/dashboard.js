@@ -72,3 +72,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// 5. Fetch Dashboard Data and Metrics
+document.addEventListener('DOMContentLoaded', () => {
+    async function loadDashboardData() {
+        try {
+            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+            const response = await fetch('/api/dashboard', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) throw new Error('Failed to fetch dashboard metrics');
+
+            const data = await response.json();
+            
+            // Populate DOM elements with live backend data
+            if (document.getElementById('total-balance')) {
+                document.getElementById('total-balance.textContent = data.totalBalance;
+            }
+            // Update other income, expense, and transaction fields accordingly...
+            
+        } catch (err) {
+            console.error('Error loading dashboard insights:', err);
+        }
+    }
+
+    loadDashboardData();
+});
