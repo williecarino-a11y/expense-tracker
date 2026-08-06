@@ -430,6 +430,39 @@ if (menuBtn && menuDrawer) {
         if (menuOverlay) menuOverlay.classList.toggle('active');
     });
 }
+// Fetch Dashboard Data and Metrics
+document.addEventListener('DOMContentLoaded', () => {
+    async function loadDashboardData() {
+        try {
+            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+            const response = await fetch('/api/dashboard', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) throw new Error('Failed to fetch dashboard metrics');
+
+            const data = await response.json();
+            
+            const balanceEl = document.getElementById('total-balance');
+            if (balanceEl) {
+                balanceEl.textContent = data.totalBalance;
+            }
+            
+        } catch (err) {
+            console.error('Error loading dashboard insights:', err);
+            const balanceEl = document.getElementById('total-balance');
+            if (balanceEl) {
+                balanceEl.textContent = "Error: " + err.message;
+            }
+        }
+    }
+
+    loadDashboardData();
+});
   </script>
 </body>
 </html>
