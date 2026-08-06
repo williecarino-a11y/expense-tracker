@@ -430,7 +430,6 @@ if (menuBtn && menuDrawer) {
         if (menuOverlay) menuOverlay.classList.toggle('active');
     });
 }
-// Fetch Dashboard Data and Metrics
 document.addEventListener('DOMContentLoaded', () => {
     async function loadDashboardData() {
         try {
@@ -447,16 +446,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
             
-            const balanceEl = document.getElementById('total-balance');
-            if (balanceEl) {
-                balanceEl.textContent = data.totalBalance;
+            // Populate Balance and Summary Cards
+            if (document.getElementById('total-balance')) {
+                document.getElementById('total-balance').textContent = `$${Number(data.totalBalance || 0).toLocaleString()}`;
             }
-            
+
         } catch (err) {
             console.error('Error loading dashboard insights:', err);
             const balanceEl = document.getElementById('total-balance');
             if (balanceEl) {
-                balanceEl.textContent = "Error: " + err.message;
+                balanceEl.textContent = "Error loading";
             }
         }
     }
