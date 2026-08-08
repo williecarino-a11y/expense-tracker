@@ -111,7 +111,7 @@
     <!-- Dynamic Greeting & Insight Section -->
     <section class="welcome-section">
       <h2 id="user-greeting">Welcome</h2>
-      <p class="insight-badge" id="insight-badge">Loading spending insights...</p>
+      <p class="insight-badge" id="insight-badge">Loading spending insights totat balance</p>
     </section>
 
     <!-- Main Balance Card -->
@@ -153,15 +153,13 @@
         <!-- Dynamic transaction rows inject here -->
       </div>
     </section>
-
-<nav style="position: fixed; bottom: 16px; left: 16px; right: 16px; background-color: #111827; border: 1px solid #1f2937; border-radius: 16px; display: flex; justify-content: space-around; align-items: center; padding: 10px; z-index: 9999;">
-    <button data-target="home" class="nav-item" style="color: #34d399; font-size: 11px; font-weight: bold; background: none; border: none; cursor: pointer;">Home</button>
-    <button data-target="transactions" class="nav-item" style="color: #9ca3af; font-size: 11px; font-weight: bold; background: none; border: none; cursor: pointer;">Logs</button>
-    <button data-target="add" class="nav-item" style="background-color: #059669; color: white; padding: 8px 12px; border-radius: 10px; font-weight: bold; font-size: 16px; border: none; cursor: pointer;">+</button>
-    <button data-target="analytics" class="nav-item" style="color: #9ca3af; font-size: 11px; font-weight: bold; background: none; border: none; cursor: pointer;">Metrics</button>
-    <button data-target="settings" class="nav-item" style="color: #9ca3af; font-size: 11px; font-weight: bold; background: none; border: none; cursor: pointer;">Config</button>
+<nav style="...">
+  <button data-target="home" class="nav-item" style="...">Home</button>
+  <button data-target="logs" class="nav-item" style="...">Logs</button>
+  <button data-target="add" class="nav-item" style="...">+</button>
+  <button data-target="metrics" class="nav-item" style="...">Metrics</button>
+  <button data-target="config" class="nav-item" style="...">Config</button>
 </nav>
-
   <script>
 document.addEventListener('DOMContentLoaded', () => {
     const banner = document.getElementById('notification-banner');

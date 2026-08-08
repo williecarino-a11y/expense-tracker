@@ -62,22 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
         mainContent.innerHTML = views.home;
     }
 
-    // Handle bottom navigation clicks dynamically based on text or data attribute
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
+// Handle bottom navigation clicks dynamically using data-target
+navItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
 
-            // Highlight active tab
-            navItems.forEach(nav => nav.classList.remove('text-emerald-400', 'font-bold'));
-            item.classList.add('text-emerald-400', 'font-bold');
+        // Highlight active tab
+        navItems.forEach(nav => nav.classList.remove('text-emerald-400', 'font-bold'));
+        item.classList.add('text-emerald-400', 'font-bold');
 
-            // Determine which view to load based on text content (Home, Logs, Metrics, Config)
-            const textKey = item.textContent.trim().toLowerCase();
-            const targetView = views[textKey] ? textKey : 'home';
+        // Get target view safely from a data-target attribute
+        const targetView = item.getAttribute('data-target') || 'home';
 
-            if (mainContent) {
-                mainContent.innerHTML = views[targetView];
-            }
-        });
+        if (mainContent && views[targetView]) {
+            mainContent.innerHTML = views[targetView];
+        }
     });
 });
