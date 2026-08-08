@@ -150,6 +150,7 @@ body.dashboard-body {
 
 /* Bottom Navigation Bar */
 .nav-bar {
+nav {
   position: fixed;
   bottom: 0;
   left: 0;
